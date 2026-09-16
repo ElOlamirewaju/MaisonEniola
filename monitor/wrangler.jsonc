@@ -6,7 +6,7 @@
   "compatibility_date": "2026-09-16",
   "workers_dev": false,
   "triggers": { "crons": ["*/5 * * * *"] },
-  "send_email": [{ "name": "EMAIL" }],
+  // RESEND_API_KEY is a secret on this Worker too (`npx wrangler secret put RESEND_API_KEY` in this folder).
   "kv_namespaces": [{ "binding": "REVIEWS", "id": "1e11c2d197a542749480984f94108422" }],
   "vars": { "ENQUIRY_TO": "maisoneniola@gmail.com", "ENQUIRY_FROM": "enquiries@maisoneniola.bid", "SITE_URL": "https://maisoneniola.bid" },
   "observability": { "enabled": true }

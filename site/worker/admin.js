@@ -22,7 +22,7 @@ export async function admin(request, env, url) {
     if (parseInt((await env.REVIEWS.get(k)) || '0', 10) >= 3) return shell('Slow down', '<h1>Too many requests. Try again in an hour.</h1>');
     await env.REVIEWS.put(k, String(parseInt((await env.REVIEWS.get(k)) || '0', 10) + 1), { expirationTtl: 3600 });
     const link = await signedLink(env, '/admin', { login: '1' }, 30 * 60);
-    try { await send(env, { to: env.ENQUIRY_TO, subject: '[Admin] Your sign-in link', text: `Sign in to the Maison Eniola admin page (valid 30 minutes):\n${link}\n\nIf you did not ask for this, ignore it.` }); } catch (e) { return shell('Email failed', '<h1>Could not send the link.</h1><p>Email Sending is not enabled yet for the domain.</p>'); }
+    try { await send(env, { to: env.ENQUIRY_TO, subject: '[Admin] Your sign-in link', text: `Sign in to the Maison Eniola admin page (valid 30 minutes):\n${link}\n\nIf you did not ask for this, ignore it.` }); } catch (e) { return shell('Email failed', '<h1>Could not send the link.</h1><p>The email service is not configured yet (RESEND_API_KEY).</p>'); }
     return shell('Check your email', `<h1>Link sent.</h1><p>Check ${esc(env.ENQUIRY_TO)} and open the link within 30 minutes.</p>`);
   }
   // 2. arriving with a signed login link

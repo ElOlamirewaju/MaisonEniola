@@ -14,11 +14,10 @@
     // /__scheduled only exists under `wrangler dev --test-scheduled`, to trigger the cron jobs by hand.
     "run_worker_first": ["/api/*", "/admin", "/admin/*", "/__scheduled"]
   },
-  // Email Sending must be enabled for maisoneniola.bid (dashboard: Email Service > Email Sending > Onboard domain).
-  "send_email": [{ "name": "EMAIL" }],
   // Review submissions (pending and approved). Export with scripts/export-reviews.sh.
   "kv_namespaces": [{ "binding": "REVIEWS", "id": "1e11c2d197a542749480984f94108422" }],
-  // REVIEW_SECRET (signs the approve/decline links) is a secret: `wrangler secret put REVIEW_SECRET`; locally in .dev.vars.
+  // Secrets (`wrangler secret put ...`; locally in .dev.vars): REVIEW_SECRET signs links and the admin cookie,
+  // RESEND_API_KEY sends email through resend.com from ENQUIRY_FROM (domain verified at Resend).
   "vars": {
     "ENQUIRY_TO": "maisoneniola@gmail.com",
     "ENQUIRY_FROM": "enquiries@maisoneniola.bid",

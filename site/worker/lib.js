@@ -34,9 +34,19 @@ export async function checkSigned(env, url) {
   return exp > Math.floor(Date.now() / 1000);
 }
 
+/* Email goes out through Resend (https://resend.com). RESEND_API_KEY is a Worker secret; "dev" in .dev.vars only logs. */
+const b64 = s => { const bytes = new TextEncoder().encode(s); let bin = ''; bytes.forEach(b => { bin += String.fromCharCode(b); }); return btoa(bin); };
 export async function send(env, { to, subject, text, replyTo, attachments }) {
-  const from = { email: env.ENQUIRY_FROM, name: 'Maison Eniola' };
-  return env.EMAIL.send({ to, from, replyTo: replyTo || undefined, subject, text, html: pre(text), attachments });
+  if (!env.RESEND_API_KEY) throw new Error('RESEND_API_KEY is not set');
+  const body = {
+    from: `Maison Eniola <${env.ENQUIRY_FROM}>`, to: Array.isArray(to) ? to : [to], subject, text, html: pre(text),
+    ...(replyTo ? { reply_to: replyTo } : {}),
+    ...(attachments?.length ? { attachments: attachments.map(a => ({ filename: a.filename, content: b64(a.content), content_type: a.type })) } : {}),
+  };
+  if (env.RESEND_API_KEY === 'dev') { console.log('EMAIL (dev, not sent):', JSON.stringify({ to: body.to, subject })); return { id: 'dev' }; }
+  const r = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' }, body: JSON.stringify(body) });
+  if (!r.ok) throw new Error(`Resend ${r.status}: ${(await r.text()).slice(0, 200)}`);
+  return r.json();
 }
 export const notify = (env, subject, text) => send(env, { to: env.ENQUIRY_TO, subject, text });
 

@@ -29,5 +29,8 @@ async function run(env) {
   await env.REVIEWS.put('mon:state', JSON.stringify(state));
 }
 async function mail(env, subject, text) {
-  try { await env.EMAIL.send({ to: env.ENQUIRY_TO, from: { email: env.ENQUIRY_FROM, name: 'Maison Eniola monitor' }, subject, text, html: `<pre>${text.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))}</pre>` }); } catch (e) { console.error('monitor mail failed', e && e.message); }
+  try {
+    const r = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' }, body: JSON.stringify({ from: `Maison Eniola monitor <${env.ENQUIRY_FROM}>`, to: [env.ENQUIRY_TO], subject, text, html: `<pre>${text.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))}</pre>` }) });
+    if (!r.ok) console.error('monitor mail failed', r.status, (await r.text()).slice(0, 200));
+  } catch (e) { console.error('monitor mail failed', e && e.message); }
 }
