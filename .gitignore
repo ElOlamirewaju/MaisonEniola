@@ -5,3 +5,6 @@ dist/
 
 # Original photos (large, and they carry phone location data). Exports live in site/public/images.
 MaisonEniola Pictures/
+
+# the Resend API key, only while it is being installed as a secret
+.resend-key

@@ -15,7 +15,8 @@
     "run_worker_first": ["/api/*", "/admin", "/admin/*", "/__scheduled"]
   },
   // Review submissions (pending and approved). Export with scripts/export-reviews.sh.
-  "kv_namespaces": [{ "binding": "REVIEWS", "id": "1e11c2d197a542749480984f94108422" }],
+  // preview_id keeps `wrangler dev` on a separate store, so local tests never touch live data.
+  "kv_namespaces": [{ "binding": "REVIEWS", "id": "1e11c2d197a542749480984f94108422", "preview_id": "ec5b28b09ac14d1fb802bc1933a6835d" }],
   // Secrets (`wrangler secret put ...`; locally in .dev.vars): REVIEW_SECRET signs links and the admin cookie,
   // RESEND_API_KEY sends email through resend.com from ENQUIRY_FROM (domain verified at Resend).
   "vars": {
