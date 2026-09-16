@@ -28,9 +28,10 @@ const addonPrice = a => {
   <p class="tier-best drift d4"><b>{t(UI.bestFor, lang)}:</b> {t(tr.best, lang)}</p>
   <div class="tier-body">
     <p class="tier-label" id={`inc-${key}`}>{t(UI.included, lang)}</p>
-    <ul class="inc" aria-labelledby={`inc-${key}`}>
+    <ul class="inc" id={`incl-${key}`} aria-labelledby={`inc-${key}`} data-inc>
       {tr.rows.map(r => <li><Fragment set:html={ICON.check} /><div><b>{t(r[0], lang)}</b><span>{t(r[1], lang)}</span></div></li>)}
     </ul>
+    <button type="button" class="inc-more" data-inc-toggle aria-controls={`incl-${key}`} aria-expanded="false" data-more={t(UI.showAll, lang, { n: tr.rows.length })} data-less={t(UI.showFewer, lang)} hidden>{t(UI.showAll, lang, { n: tr.rows.length })}</button>
     <dl class="facts">
       <div><dt>{t(UI.scope, lang)}</dt><dd>{t(tr.scope, lang)}</dd></div>
       <div><dt>{t(UI.turnaround, lang)}</dt><dd>{t(tr.turn, lang)}</dd></div>

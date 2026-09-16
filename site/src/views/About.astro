@@ -9,6 +9,7 @@ import { t } from '../lib/i18n.js';
 interface Props { lang: string }
 const { lang } = Astro.props;
 const A = COPY.about, H = COPY.home;
+const story = t(A.story, lang).trim().split(/\n\s*\n/).filter(Boolean);
 ---
 <Base lang={lang} slug="about" title={t(A.title, lang)} description={t(A.lead, lang)}>
   <PageHero lang={lang} place="lisbon" kicker={t(A.kicker, lang)} title={t(A.heading, lang)} lead={t(A.lead, lang)} short />
@@ -18,7 +19,7 @@ const A = COPY.about, H = COPY.home;
         <img src="/images/maryann-portrait-800.webp" srcset="/images/maryann-portrait-800.webp 800w, /images/maryann-portrait-1600.webp 1600w" sizes="(min-width: 960px) 34vw, 100vw" width="800" height="1000" alt={t(A.portraitAlt, lang)} decoding="async" loading="lazy" />
       </figure>
       <div style="display:grid;gap:2rem">
-        <p class="placeholder" data-reveal style="--d:1">{t(A.storyPlaceholder, lang)}</p>
+        {story.length > 0 && <div class="story" data-reveal style="--d:1">{story.map(p => <p class="lead">{p}</p>)}</div>}
         <div class="bound-night" data-reveal style="--d:2">
           <h2 class="title-l" style="font-size:1.6rem">{t(UI.boundTitle, lang)}</h2>
           <p>{t(UI.boundText, lang)}</p>

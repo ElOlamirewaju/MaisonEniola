@@ -13,8 +13,8 @@ export const SERVICE_PAGES = [
 
 /* The two explorer links in the floating navigation island. */
 export const NAV = [
-  { slug: 'venues', label: { en: 'The Sourcing Matrix', es: 'La Matriz de Espacios' } },
-  { slug: 'travel', label: { en: 'The Chronicles', es: 'Las Crónicas' } },
+  { slug: 'venues', label: { en: 'The Sourcing Matrix', es: 'La Matriz de Espacios' }, hint: { en: 'Venue sourcing', es: 'Búsqueda de espacios' } },
+  { slug: 'travel', label: { en: 'The Chronicles', es: 'Las Crónicas' }, hint: { en: 'Travel & journeys', es: 'Viajes' } },
 ];
 
 /* Every page, for the full-screen menu and the footer. */
@@ -176,7 +176,8 @@ export const COPY = {
     kicker: { en: 'About', es: 'Sobre mí' },
     heading: { en: 'Planning that tells you the truth about a place.', es: 'Una planificación que te cuenta la verdad de cada lugar.' },
     lead: { en: 'I’m Maryann Eniola. I plan trips, find wedding venues and organise travel for proposals, weddings and the guests who come to them, in English and Spanish.', es: 'Soy Maryann Eniola. Planifico viajes, busco espacios para bodas y organizo los desplazamientos de pedidas, bodas e invitados, en inglés y en español.' },
-    storyPlaceholder: { en: '[Maryann’s story: how she started planning travel and weddings, where she’s based and what she loves about it. Add it in site/src/data/site.js.]', es: '[La historia de Maryann: cómo empezó a planificar viajes y bodas, dónde vive y qué le gusta de su trabajo. Añádela en site/src/data/site.js.]' },
+    // Maryann's story. Leave both empty and the block is not rendered. Paragraphs are separated by a blank line.
+    story: { en: '', es: '' },
     portraitAlt: { en: 'Maryann Eniola seated on a leather bench in a navy suit, looking at the camera', es: 'Maryann Eniola sentada en un banco de cuero con traje azul marino, mirando a la cámara' },
     principlesTitle: { en: 'What you can count on', es: 'Con lo que puedes contar' },
   },

@@ -14,6 +14,27 @@ function setup() {
   if (calc && !calc.dataset.mounted) { calc.dataset.mounted = '1'; mountCalculator(calc, { sentText: calc.dataset.sent }); }
   const enq = document.getElementById('enq');
   if (enq && !enq.dataset.mounted) { enq.dataset.mounted = '1'; mountEnquiry(enq); }
+  collapseInclusions();
+}
+
+/* Pricing cards on phones: show three inclusions, the rest behind a button. */
+function collapseInclusions() {
+  const narrow = window.matchMedia('(max-width: 767px)').matches;
+  document.querySelectorAll('[data-inc]').forEach(ul => {
+    const btn = ul.nextElementSibling;
+    if (!narrow || ul.children.length <= 4) return;
+    ul.classList.add('is-collapsed');
+    if (btn?.matches('[data-inc-toggle]')) btn.hidden = false;
+  });
+  if (!window.__meIncBound) {
+    window.__meIncBound = true;
+    document.addEventListener('click', e => {
+      const b = e.target.closest('[data-inc-toggle]'); if (!b) return;
+      const ul = b.previousElementSibling, open = ul.classList.toggle('is-collapsed') === false;
+      b.setAttribute('aria-expanded', String(open)); b.textContent = open ? b.dataset.less : b.dataset.more;
+      if (!open) ul.scrollIntoView({ block: 'nearest' });
+    });
+  }
 }
 
 function teardown() {

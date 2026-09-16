@@ -1,5 +1,5 @@
-/* Enquiry form (browser). Three steps; sending opens WhatsApp or email with the message written.
-   Nothing is stored on the site. An estimate added on /estimate arrives through sessionStorage
+/* Enquiry form (browser). Three steps; "Send enquiry" posts to /api/enquiry (worker/index.js), which emails
+   Maryann and sends the visitor a copy. WhatsApp, copy and email remain as fallbacks. Nothing is stored on the site. An estimate added on /estimate arrives through sessionStorage
    and is cleared once the form is submitted or the estimate removed. */
 import { PLAN_CHOICES, QUESTIONS, SERVICES, UI, CONTACT } from '../data/content.js';
 import { t as tr, esc, pageLang, href } from '../lib/i18n.js';
@@ -10,7 +10,7 @@ export function mountEnquiry(form) {
   const lang = pageLang();
   const t = (o, v) => tr(o, lang, v);
   const $ = (s, r = form) => r.querySelector(s);
-  const F = { step: 1, choice: null, ans: {}, name: '', email: '', phone: '', pref: '', notes: '', bound: false, privacy: false, estimate: null, errors: {} };
+  const F = { step: 1, choice: null, ans: {}, name: '', email: '', phone: '', pref: '', notes: '', bound: false, privacy: false, estimate: null, errors: {}, website: '' };
 
   function preselect(svc, tier) {
     const key = SERVICES[svc]?.key; if (!key) return;
@@ -62,10 +62,11 @@ export function mountEnquiry(form) {
         <div class="bound"><h3>${t(UI.boundTitle)}</h3><p>${esc(t(UI.boundText))}</p></div>
         <div class="check"><input type="checkbox" id="f-bound" data-c="bound" ${F.bound ? 'checked' : ''}${inv('bound')}><div><label for="f-bound">${t(UI.tickBound)}</label>${errHTML('bound')}</div></div>
         <div class="check"><input type="checkbox" id="f-privacy" data-c="privacy" ${F.privacy ? 'checked' : ''}${inv('privacy')}><div><label for="f-privacy">${t(UI.tickPrivacy)}</label> <a href="${href(lang, 'privacy')}" target="_blank" rel="noopener">${t(UI.privacyLink)}</a>.${errHTML('privacy')}</div></div>
-      </fieldset><p class="status" id="send-status" role="status"></p>`;
+        <div class="hp" aria-hidden="true"><label for="f-website">Website</label><input id="f-website" data-f="website" tabindex="-1" autocomplete="off" value=""></div>
+      </fieldset><p class="status" id="send-status" role="status" aria-live="polite"></p>`;
     }
     const nav = F.step === 3
-      ? `<div class="form-nav"><button type="button" class="btn btn-ghost" data-back>${t(UI.back)}</button><div class="right"><button type="button" class="btn btn-ghost" data-send="copy">${t(UI.copyMsg)}</button><button type="button" class="btn btn-ghost" data-send="email">${t(UI.sendEmail)}</button><button type="button" class="btn btn-wa" data-send="wa">${ICON.wa}${t(UI.sendWa)}</button></div></div>`
+      ? `<div class="form-nav"><button type="button" class="btn btn-ghost" data-back>${t(UI.back)}</button><div class="right"><button type="button" class="btn btn-wa" data-send="wa">${ICON.wa}${t(UI.sendWa)}</button><button type="button" class="btn btn-primary" data-send="site">${t(UI.sendSite)}</button></div></div><p class="alt-send">${t(UI.altSend)} <button type="button" class="linklike" data-send="copy">${t(UI.copyMsg)}</button> · <button type="button" class="linklike" data-send="email">${t(UI.sendEmail)}</button></p>`
       : `<div class="form-nav">${F.step > 1 ? `<button type="button" class="btn btn-ghost" data-back>${t(UI.back)}</button>` : ''}<div class="right"><button type="button" class="btn btn-primary" data-next>${t(UI.continue)}</button></div></div>`;
     return `<div class="progress"><span>${t(UI.step, { n: F.step })}</span><span class="progress-bar" aria-hidden="true"><i style="width:${F.step * 33.4}%"></i></span></div>${body}${nav}`;
   }
@@ -135,6 +136,28 @@ export function mountEnquiry(form) {
       if (!validate()) { render(); focusFirstError(); return; }
       const msg = composeMessage(), st = $('#send-status');
       if (d.send === 'copy') { const ok = await copyText(msg); st.textContent = ok ? t(UI.copied) : msg; return; }
+      if (d.send === 'site') {
+        const c = PLAN_CHOICES.find(x => x.id === F.choice);
+        form.querySelectorAll('button').forEach(x => { x.disabled = true; });
+        st.textContent = t(UI.sending);
+        let ok = false;
+        try {
+          const r = await fetch('/api/enquiry', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({
+            name: F.name.trim(), email: F.email.trim(), phone: F.phone.trim(), lang: F.pref || lang, website: F.website,
+            subject: `${t(c.label)} — ${F.name.trim()}`, message: msg,
+          }) });
+          ok = r.ok && (await r.json()).ok === true;
+        } catch (err) { ok = false; }
+        if (ok) {
+          clearEstimate();
+          form.innerHTML = `<div class="sent" role="status" tabindex="-1"><h2>${t(UI.sentTitle)}</h2><p>${esc(t(UI.sentBody, { email: F.email.trim() }))}</p></div>`;
+          $('.sent')?.focus({ preventScroll: true });
+        } else {
+          form.querySelectorAll('button').forEach(x => { x.disabled = false; });
+          st.textContent = t(UI.sentFail, { email: CONTACT.email });
+        }
+        return;
+      }
       if (d.send === 'wa') openExternal(`https://wa.me/${CONTACT.wa}?text=${encodeURIComponent(msg)}`);
       if (d.send === 'email') openExternal(`mailto:${CONTACT.email}?subject=${encodeURIComponent((lang === 'es' ? 'Consulta: ' : 'Enquiry: ') + t(PLAN_CHOICES.find(x => x.id === F.choice).label))}&body=${encodeURIComponent(msg)}`);
       st.textContent = t(UI.opened, { wa: CONTACT.waLabel, email: CONTACT.email });

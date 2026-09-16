@@ -161,6 +161,13 @@ legend{font-family:var(--serif);font-size:1.3rem;color:var(--heading);margin-bot
 }
 .enq{margin-inline:auto}
 .linkbtn{background:none;border:0;padding:0;color:var(--teal-ink);text-decoration:underline;cursor:pointer;font-size:inherit}
+/* On phones the first three inclusions show; the rest open on request (scripts/main.js). */
+.inc-more{display:none;margin:.4rem 0 .2rem;padding:.55rem 0;border:0;background:none;font:inherit;font-size:.9rem;font-weight:600;color:var(--ocean);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+@media (max-width:767px){.inc.is-collapsed>li:nth-child(n+4){display:none}.inc-more:not([hidden]){display:inline-flex}}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.alt-send{margin-top:1rem;font-size:.88rem;color:var(--ink-soft,inherit)}
+.linklike{border:0;background:none;padding:0;font:inherit;color:var(--ocean);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.enq .sent{padding:1rem 0}.enq .sent h2{font-size:1.6rem;margin-bottom:.6rem}
 .legal-doc{max-width:720px}
 .legal-doc p{margin-bottom:.9rem}
 .legal-doc dl{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1.2rem;margin:0 0 1.2rem}

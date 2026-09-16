@@ -116,6 +116,11 @@ em.accent{font-style:italic;color:var(--glow)}
 /* ---- reveals (only when scripts run and motion is allowed) ---- */
 .motion [data-reveal]{opacity:0;transform:translate3d(0,28px,0);filter:blur(10px);transition:opacity 1.1s var(--luxury-ease),transform 1.1s var(--luxury-ease),filter 1.1s var(--luxury-ease);transition-delay:calc(var(--d,0) * 90ms)}
 .motion [data-reveal].is-in{opacity:1;transform:none;filter:none}
+/* Hero copy never waits for scripts: it enters with a CSS keyframe as soon as the page paints. */
+.motion .hero [data-reveal],.motion .page-hero [data-reveal]{animation:enter .9s var(--luxury-ease) both;animation-delay:calc(var(--d,0) * 90ms + 120ms);transition:none}
+.motion .hero .split .ln>span,.motion .page-hero .split .ln>span{animation:rise 1.2s var(--luxury-ease) both;animation-delay:calc(var(--i,0) * 100ms + 100ms);transition:none}
+@keyframes enter{from{opacity:0;transform:translate3d(0,28px,0);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+@keyframes rise{from{transform:translate3d(0,108%,0) rotate(2deg)}to{transform:none}}
 .split .ln{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
 .split .ln>span{display:inline-block}
 .motion .split .ln>span{transform:translate3d(0,108%,0) rotate(2deg);transform-origin:0 100%;transition:transform 1.3s var(--luxury-ease);transition-delay:calc(var(--i,0) * 110ms + 150ms)}

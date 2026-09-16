@@ -20,7 +20,7 @@ const C = COPY.common;
     </a>
 
     <nav class="explore" aria-label={lang === 'es' ? 'Explorar' : 'Explore'} data-magnetic>
-      {NAV.map(n => <a class="nav-item" href={href(lang, n.slug)} data-slug={n.slug} aria-current={current === n.slug ? 'page' : undefined}><span>{t(n.label, lang)}</span></a>)}
+      {NAV.map(n => <a class="nav-item" href={href(lang, n.slug)} data-slug={n.slug} aria-current={current === n.slug ? 'page' : undefined}><span>{t(n.label, lang)}</span><small>{t(n.hint, lang)}</small></a>)}
     </nav>
 
     <div class="lang" role="group" aria-label="Language / Idioma">
@@ -52,11 +52,12 @@ const C = COPY.common;
   .brand-sub{color:var(--coral-ink-fixed)}
 
   .explore{display:flex;gap:clamp(1.2rem,2.4vw,2rem);margin-left:auto}
-  .nav-item{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 .1rem;text-decoration:none;
+  .nav-item{position:relative;display:inline-grid;align-content:center;justify-items:center;gap:.15rem;min-height:44px;padding:0 .1rem;text-decoration:none;
     font-family:var(--sans);font-weight:500;text-transform:uppercase;letter-spacing:.1em;font-size:13px;color:var(--ocean-fixed);
     will-change:transform;transition:transform .6s var(--luxury-ease),color .4s var(--luxury-ease)}
   /* Liquid underline: 1px of coral that grows from the centre. */
-  .nav-item::after{content:"";position:absolute;left:0;right:0;bottom:8px;height:1px;background:#E75B24;transform:scaleX(0);transform-origin:center;
+  .nav-item small{font-size:10px;font-weight:400;letter-spacing:.04em;text-transform:none;color:rgba(6,58,92,.62);white-space:nowrap}
+  .nav-item::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:1px;background:#E75B24;transform:scaleX(0);transform-origin:center;
     transition:transform .6s var(--luxury-ease)}
   .nav-item:hover::after,.nav-item:focus-visible::after,.nav-item[aria-current="page"]::after{transform:scaleX(1)}
   .nav-item[aria-current="page"]{color:var(--coral-ink-fixed)}

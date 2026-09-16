@@ -64,6 +64,8 @@ function films() {
   if (!vids.length) return;
   const conn = navigator.connection;
   if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ''))) return;
+  // Phones keep the still poster: the films are about 1 MB per page on mobile data.
+  if (window.matchMedia('(max-width: 767px)').matches) return;
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       const v = e.target;
@@ -105,7 +107,8 @@ function portal() {
   const copy = portal.querySelector('.portal-copy');
   const narrow = window.matchMedia('(max-width: 767px)').matches;
   const from = narrow ? 'inset(16% 12% 12% 12% round 50vw 50vw 14px 14px)' : 'inset(14% 30% 10% 30% round 50vw 50vw 18px 18px)';
-  gsap.timeline({ scrollTrigger: { trigger: portal, start: 'top top', end: '+=140%', pin: true, scrub: 0.6 } })
+  // The pinned stretch is shorter on phones, so the service doors arrive sooner.
+  gsap.timeline({ scrollTrigger: { trigger: portal, start: 'top top', end: narrow ? '+=60%' : '+=140%', pin: true, scrub: 0.6 } })
     .fromTo(win, { clipPath: from }, { clipPath: 'inset(0% 0% 0% 0% round 0px 0px 0px 0px)', ease: 'power2.inOut', duration: 1 })
     .fromTo(copy, { opacity: 0, y: 40, filter: 'blur(12px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', ease: 'power2.out', duration: 0.5 }, 0.45);
 }
