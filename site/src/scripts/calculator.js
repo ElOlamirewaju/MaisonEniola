@@ -1,7 +1,7 @@
 /* Estimate calculator (browser).
    Pricing rules (from the Q4 2026 price guides):
      - base fee + add-ons; quantity add-ons multiply by their unit price
-     - rush adds 30% to the fee above it (confirm with Maryann if this should apply to the base fee only)
+     - rush adds 30% of the base fee only; other add-ons are never increased (confirmed by Maryann, 16 Sept 2026)
      - the Destination Match fee (€350) is credited against a Venue Shortlist booked within 30 days
      - in-person days show "plus travel at cost"; the €75/hour mass disruption rate is never bookable here
    "Add this estimate to my enquiry" stores the summary in sessionStorage and opens the enquiry page. */
@@ -44,7 +44,7 @@ export class EstimateCalculator {
       if (a.type === 'pct') rush = a.pct;
     });
     let total = sub;
-    if (rush) { const r = Math.round(sub * rush / 100); total += r; lines.push({ label: this.t(UI.estRush), amount: r }); }
+    if (rush) { const r = Math.round(tier.price * rush / 100); total += r; lines.push({ label: this.t(UI.estRush), amount: r }); }
     if (tier.credit && st.credit) { total -= tier.credit; lines.push({ label: this.t(UI.estCredit), amount: -tier.credit, credit: true }); }
     return { tier, lines, total, travel, plus: tier.plus, format: n => (n < 0 ? '−' + this.money(-n) : this.money(n)) };
   }
