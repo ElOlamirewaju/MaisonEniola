@@ -1,0 +1,47 @@
+/* Design tokens: Mediterranean Sunset palette with accessible text variants.
+   White text is only used on --btn-bg (#C84A16, 4.7:1) and teal (4.9:1).
+   Marigold is decorative; gold text on cream uses --gold-ink (5.6:1). */
+:root{
+  --ocean:#063A5C; --coral:#E75B24; --coral-ink:#C84A16; --teal:#047E84; --teal-ink:#047E84;
+  --gold:#E6A123; --gold-ink:#8A5E0A;
+  --bg:#FFFDF4; --surface:#FFFFFF; --surface-2:#FBF5E6; --text:#2B2B2B; --muted:#5E5A52; --opt-muted:#4A4A4A; --heading:#063A5C;
+  --line:#E9DFCC; --line-strong:#D6C8AE;
+  --btn-bg:#C84A16; --btn-text:#FFFFFF; --btn-hover:#AE3F12; --wa-text:#FFFFFF;
+  --ticket-head:#063A5C; --ticket-head-text:#FFFDF4; --footer-bg:#063A5C;
+  --overlay:rgba(6,58,92,.35); --overlay-solid:rgba(6,58,92,.85);
+  --shadow:0 1px 0 rgba(6,58,92,.06),0 12px 28px -18px rgba(6,58,92,.35);
+  --shadow-lift:0 30px 60px rgba(6,58,92,.08),0 10px 24px -12px rgba(6,58,92,.25);
+  --focus:#047E84;
+  --serif:"DM Serif Display",Georgia,"Times New Roman",serif;
+  --sans:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --radius-s:6px; --radius-m:10px;
+
+  /* Luxury motion: one weighted curve for every hover, lift and dialog. */
+  --luxury-ease:cubic-bezier(0.16,1,0.3,1);
+  --luxury-duration:.7s;
+  /* Components list the properties they animate instead of "all",
+     so layout properties never animate and scrolling stays smooth. */
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ocean:#9CCBE6; --coral:#F08A5D; --coral-ink:#F08A5D; --teal:#3BB8BE; --teal-ink:#3BB8BE; --gold:#F2B84B; --gold-ink:#F2B84B;
+    --bg:#0B2233; --surface:#10304A; --surface-2:#0E2A40; --text:#EEF2F4; --muted:#B9C6CF; --opt-muted:#C9D3DA; --heading:#FFFDF4;
+    --line:#1F4764; --line-strong:#2C5A7B;
+    --btn-bg:#F08A5D; --btn-text:#0B2233; --btn-hover:#F5A27D; --wa-text:#0B2233;
+    --ticket-head:#06243A; --footer-bg:#06243A;
+    --overlay:rgba(3,18,29,.45); --overlay-solid:rgba(3,18,29,.9);
+    --shadow:0 12px 28px -18px rgba(0,0,0,.7); --shadow-lift:0 30px 60px rgba(0,0,0,.35);
+    --focus:#3BB8BE; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ocean:#9CCBE6; --coral:#F08A5D; --coral-ink:#F08A5D; --teal:#3BB8BE; --teal-ink:#3BB8BE; --gold:#F2B84B; --gold-ink:#F2B84B;
+  --bg:#0B2233; --surface:#10304A; --surface-2:#0E2A40; --text:#EEF2F4; --muted:#B9C6CF; --opt-muted:#C9D3DA; --heading:#FFFDF4;
+  --line:#1F4764; --line-strong:#2C5A7B;
+  --btn-bg:#F08A5D; --btn-text:#0B2233; --btn-hover:#F5A27D; --wa-text:#0B2233;
+  --ticket-head:#06243A; --footer-bg:#06243A;
+  --overlay:rgba(3,18,29,.45); --overlay-solid:rgba(3,18,29,.9);
+  --shadow:0 12px 28px -18px rgba(0,0,0,.7); --shadow-lift:0 30px 60px rgba(0,0,0,.35);
+  --focus:#3BB8BE; color-scheme:dark;
+}

@@ -1,0 +1,23 @@
+---
+/* The closing scene on night pages: a quiet film and one invitation. */
+import Media from './Media.astro';
+import { COPY } from '../data/site.js';
+import { CONTACT } from '../data/content.js';
+import { t, href } from '../lib/i18n.js';
+import { ICON } from '../lib/icons.js';
+
+interface Props { lang: string; place?: string; title?: string; text?: string }
+const { lang, place = 'iceland', title = t(COPY.home.finalTitle, lang), text = t(COPY.home.finalText, lang) } = Astro.props;
+---
+<section class="final">
+  <Media place={place} lang={lang} video zoom parallax={0.15} decorative />
+  <div class="mist"></div>
+  <div class="wrap final-in">
+    <h2 class="display split"><span class="ln"><span>{title}</span></span></h2>
+    <p class="lead" data-reveal style="--d:2">{text}</p>
+    <div class="hero-actions" data-reveal style="--d:3">
+      <a class="btn btn-light" href={href(lang, 'enquire')}>{t(COPY.common.startEnquiry, lang)}<Fragment set:html={ICON.arrow} /></a>
+      <a class="btn btn-glass" href={`https://wa.me/${CONTACT.wa}`} target="_blank" rel="noopener"><Fragment set:html={ICON.wa} />WhatsApp</a>
+    </div>
+  </div>
+</section>

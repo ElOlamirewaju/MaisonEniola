@@ -1,0 +1,7 @@
+{
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.root": "/",
+  "liveServer.settings.ignoreFiles": [".vscode/**", "node_modules/**", "scripts/**", "dist/**"],
+  "editor.formatOnSave": false,
+  "files.exclude": { ".frames": true }
+}

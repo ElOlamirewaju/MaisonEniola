@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Media from '../components/Media.astro';
+import FinalCall from '../components/FinalCall.astro';
+import { COPY, PLACE_META } from '../data/site.js';
+import { PLACES } from '../data/content.js';
+import { t, href } from '../lib/i18n.js';
+
+interface Props { lang: string }
+const { lang } = Astro.props;
+const D = COPY.destinations;
+---
+<Base lang={lang} slug="destinations" title={t(D.title, lang)} description={t(D.lead, lang)}>
+  <PageHero lang={lang} place="iceland" kicker={t(D.kicker, lang)} title={t(D.title, lang)} lead={t(D.lead, lang)} short />
+  <section class="scene">
+    <div class="wrap atlas-track" style="padding-inline:0">
+      {PLACES.map((p, i) => (
+        <a class="atlas-panel" href={href(lang, `destinations/${p.id}`)} data-reveal>
+          <Media place={p.id} lang={lang} video parallax={0.1} decorative />
+          <div class="atlas-body">
+            <span class="atlas-num">0{i + 1} / 0{PLACES.length}</span>
+            <h2 class="title-xl">{t(p.name, lang)}</h2>
+            <span class="chip"><i></i>{t(p.step, lang)}</span>
+            <p>{t(p.caption, lang)}</p>
+            <span class="coords">{PLACE_META[p.id].coords}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+  <FinalCall lang={lang} place="amalfi" />
+</Base>

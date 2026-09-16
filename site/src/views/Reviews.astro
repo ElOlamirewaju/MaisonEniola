@@ -1,0 +1,59 @@
+---
+/* Reviews: real client stories only, how they're checked, and how to share one. */
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Voices from '../components/Voices.astro';
+import FinalCall from '../components/FinalCall.astro';
+import { COPY, PROFILES } from '../data/site.js';
+import { CONTACT } from '../data/content.js';
+import { t } from '../lib/i18n.js';
+import { ICON } from '../lib/icons.js';
+
+interface Props { lang: string }
+const { lang } = Astro.props;
+const R = COPY.reviews;
+const msg = encodeURIComponent(t(R.shareMessage, lang));
+const subject = encodeURIComponent(lang === 'es' ? 'Mi opinión' : 'My review');
+const links = [
+  ['Google', PROFILES.google], ['Bodas.net', PROFILES.bodas], ['Hitched', PROFILES.hitched], ['Instagram', PROFILES.instagram], ['Pinterest', PROFILES.pinterest],
+].filter(([, u]) => u);
+---
+<Base lang={lang} slug="reviews" title={t(R.title, lang)} description={t(R.lead, lang)}>
+  <PageHero lang={lang} place="mallorca" kicker={t(R.kicker, lang)} title={t(R.heading, lang)} lead={t(R.lead, lang)} short />
+
+  <section class="scene">
+    <div class="wrap">
+      <Voices lang={lang} />
+      <div class="verify" data-reveal style="margin-top:2.5rem">
+        <Fragment set:html={ICON.shield} />
+        <p>{t(R.verify, lang)}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" style="padding-top:0">
+    <div class="wrap share">
+      <div class="scene-head" style="margin-bottom:0">
+        <span class="kicker" data-reveal>{t(R.shareKicker, lang)}</span>
+        <h2 class="title-l" data-reveal style="--d:1">{t(R.shareTitle, lang)}</h2>
+        <p class="lead" data-reveal style="--d:2">{t(R.shareText, lang)}</p>
+      </div>
+      <div style="display:grid;gap:1.2rem;align-content:start" data-reveal style="--d:3">
+        <div class="share-actions">
+          <a class="btn btn-light" href={`https://wa.me/${CONTACT.wa}?text=${msg}`} target="_blank" rel="noopener"><Fragment set:html={ICON.wa} />{t(R.shareWa, lang)}</a>
+          <a class="btn btn-glass" href={`mailto:${CONTACT.email}?subject=${subject}&body=${msg}`}><Fragment set:html={ICON.mail} />{t(R.shareEmail, lang)}</a>
+          {PROFILES.googleReview && <a class="btn btn-glass" href={PROFILES.googleReview} target="_blank" rel="noopener"><Fragment set:html={ICON.star} />{t(R.shareGoogle, lang)}</a>}
+        </div>
+        <p class="fine-night">{t(R.shareConsent, lang)}</p>
+        {links.length > 0 && (
+          <div>
+            <p class="fine-night">{t(R.elsewhere, lang)}</p>
+            <div class="platforms">{links.map(([n, u]) => <a class="btn btn-glass" href={u} target="_blank" rel="noopener">{n}</a>)}</div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <FinalCall lang={lang} place="amalfi" />
+</Base>

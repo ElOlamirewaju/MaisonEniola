@@ -1,0 +1,21 @@
+{
+  "name": "maison-eniola-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bilingual website for Maison Eniola (Maryann Eniola): travel planning, venue sourcing, weddings and proposals.",
+  "scripts": {
+    "dev": "npm --prefix site install && npm --prefix site run dev",
+    "build": "npm --prefix site install && npm --prefix site run build",
+    "preview": "npm --prefix site run preview",
+    "assets": "node scripts/generate-assets.mjs",
+    "assets:images": "node scripts/generate-assets.mjs --skip-video",
+    "start": "npx --yes serve -l 5173 .",
+    "build:single": "node scripts/build-single-file.mjs"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

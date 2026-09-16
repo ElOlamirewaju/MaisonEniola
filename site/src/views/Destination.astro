@@ -1,0 +1,67 @@
+---
+/* One destination: full-screen film, live local time, the story, how it gets checked, and a door to the next place. */
+import Base from '../layouts/Base.astro';
+import Media from '../components/Media.astro';
+import { COPY, PLACE_META, SERVICE_PAGES } from '../data/site.js';
+import { PLACES, SERVICES } from '../data/content.js';
+import { t, href } from '../lib/i18n.js';
+import { ICON } from '../lib/icons.js';
+
+interface Props { lang: string; place: string }
+const { lang, place } = Astro.props;
+const i = PLACES.findIndex(p => p.id === place), p = PLACES[i], m = PLACE_META[place];
+const next = PLACES[(i + 1) % PLACES.length];
+const D = COPY.destinations, C = COPY.common;
+const sp = SERVICE_PAGES.find(x => x.slug === m.service), svc = SERVICES[sp.index];
+---
+<Base lang={lang} slug={`destinations/${place}`} title={t(p.name, lang)} description={t(p.caption, lang)} image={`/images/places/${place}-wide-1280.webp`}>
+  <section class="page-hero">
+    <Media place={place} lang={lang} video eager zoom parallax={0.25} decorative />
+    <div class="mist"></div><div class="mist b"></div>
+    <div class="shade"></div>
+    <div class="wrap page-hero-in">
+      <p class="crumbs" data-reveal><a href={href(lang)}>{t(C.home, lang)}</a><span>/</span><a href={href(lang, 'destinations')}>{t(D.title, lang)}</a></p>
+      <span class="kicker" data-reveal>0{i + 1} / 0{PLACES.length}</span>
+      <h1 class="display split"><span class="ln"><span>{t(p.name, lang)}</span></span></h1>
+      <p class="dest-live" data-reveal style="--d:3">
+        <span>{t(m.town, lang)} · <b data-clock={m.tz}></b> {t(C.localTime, lang).toLowerCase()}</span>
+        <span>{m.coords}</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="scene">
+    <div class="wrap dest-story">
+      <div>
+        <span class="chip" data-reveal><i></i>{t(p.step, lang)}</span>
+        <p class="big" data-reveal style="--d:1;margin-top:1.4rem">{t(p.caption, lang)}</p>
+      </div>
+      <div class="dest-frame" data-reveal style="--d:2">
+        <Media place={place} lang={lang} variant="card" parallax={0.12} />
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" style="padding-top:0">
+    <div class="wrap">
+      <div class="dest-check" data-reveal>
+        <dl>
+          <div><dt>{t(D.checked, lang)}</dt><dd>{t(p.detail, lang)}</dd></div>
+          <div><dt>{t(D.service, lang)}</dt><dd><a href={href(lang, sp.slug)}>{t(svc.short, lang)}</a> · {t(svc.title, lang)}</dd></div>
+        </dl>
+        <p class="dest-note">{t(D.example, lang)}</p>
+        <div class="hero-actions" style="margin-top:.4rem">
+          <a class="btn btn-light" href={`${href(lang, 'enquire')}?plan=${p.choice}&dest=${encodeURIComponent(t(p.name, lang))}`}>{lang === 'es' ? 'Planificar algo así' : 'Plan something like this'}<Fragment set:html={ICON.arrow} /></a>
+          <a class="btn btn-glass" href={href(lang, sp.slug)}>{t(C.seePrices, lang)}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <a class="next-dest" href={href(lang, `destinations/${next.id}`)}>
+    <Media place={next.id} lang={lang} parallax={0.15} decorative />
+    <span class="kicker" style="justify-content:center">{t(C.next, lang)}</span>
+    <span class="title-xl" style="font-family:var(--serif)">{t(next.name, lang)}</span>
+    <span class="coords">{PLACE_META[next.id].coords}</span>
+  </a>
+</Base>

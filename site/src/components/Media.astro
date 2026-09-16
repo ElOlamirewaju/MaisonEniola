@@ -1,0 +1,22 @@
+---
+/* A destination photo, with the looping film layered on top when `video` is set.
+   The film has no src until scripts confirm motion is allowed and the scene is near the screen
+   (see scripts/motion.js), so reduced-motion visitors and slow connections only load the still. */
+import { PLACE_META } from '../data/site.js';
+import { t } from '../lib/i18n.js';
+
+interface Props { place: string; lang: string; variant?: 'wide' | 'card'; video?: boolean; eager?: boolean; zoom?: boolean; parallax?: number; decorative?: boolean; class?: string; vt?: string }
+const { place, lang, variant = 'wide', video = false, eager = false, zoom = false, parallax = 0, decorative = false, class: cls = '', vt } = Astro.props;
+const base = `/images/places/${place}`;
+const src = variant === 'wide' ? `${base}-wide-1280.webp` : `${base}-card-1280.webp`;
+const srcset = variant === 'card' ? `${base}-card-640.webp 640w, ${base}-card-1280.webp 1280w` : undefined;
+const alt = decorative ? '' : t(PLACE_META[place]?.alt, lang);
+---
+<div class:list={['media', cls]} style={vt ? `view-transition-name:${vt}` : undefined}>
+  <div class:list={['zoom', { drift: zoom }]} data-parallax={parallax || undefined}>
+    <img src={src} srcset={srcset} sizes={srcset ? '(min-width: 900px) 50vw, 100vw' : undefined} width="1280" height={variant === 'wide' ? 720 : 880} alt={alt} decoding="async" loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} />
+    {video && (
+      <video muted loop playsinline preload="none" aria-hidden="true" data-film data-webm={`/video/${place}.webm`} data-mp4={`/video/${place}.mp4`} poster={src}></video>
+    )}
+  </div>
+</div>

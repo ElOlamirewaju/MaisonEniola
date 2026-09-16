@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import { LEGAL } from '../data/content.js';
+import { t } from '../lib/i18n.js';
+
+interface Props { lang: string; doc: 'legal' | 'privacy' }
+const { lang, doc } = Astro.props;
+const d = LEGAL[doc];
+---
+<Base lang={lang} slug={doc} title={t(d.title, lang)}>
+  <div style="height:110px"></div>
+  <div class="horizon"></div>
+  <section class="paper section">
+    <div class="wrap legal-doc">
+      <h1 class="title-l" style="margin-bottom:1.5rem">{t(d.title, lang)}</h1>
+      <Fragment set:html={t(d.body, lang)} />
+    </div>
+  </section>
+  <div class="horizon to-night"></div>
+</Base>

@@ -1,0 +1,91 @@
+---
+/* Three destination postcards on a 3D canvas: staggered baseline rotations and depths, so they
+   read as casually placed photographs, plus per-card mouse tilt (pitch and yaw, capped at ±8°)
+   and a heavy, slow reset when the cursor leaves. Hidden below 1080px, where the hero stacks. */
+import { PLACES } from '../data/content.js';
+import { PLACE_META } from '../data/site.js';
+import { t, href } from '../lib/i18n.js';
+
+interface Props { lang: string; label?: string }
+const { lang, label } = Astro.props;
+
+/* Baseline offsets: rotation, depth (translateZ) and stacking order. */
+const CARDS = [
+  { id: 'amalfi', r: -4, z: 0, zi: 10, left: '2%', top: '3%', width: '52%' },
+  { id: 'iceland', r: 3, z: 12, zi: 20, left: '40%', top: '15%', width: '50%' },
+  { id: 'mallorca', r: -1, z: -5, zi: 15, left: '12%', top: '56%', width: '46%' },
+];
+---
+<div class="gallery" data-postcards aria-label={label}>
+  {CARDS.map((c, i) => {
+    const place = PLACES.find(p => p.id === c.id);
+    return (
+      <a class="postcard" href={href(lang, `destinations/${c.id}`)} data-card style={`--r:${c.r}deg;--z:${c.z}px;z-index:${c.zi};left:${c.left};top:${c.top};width:${c.width};--bob:${-i * 2.3}s`}>
+        <span class="paper">
+          <img src={`/images/places/${c.id}-card-640.webp`} srcset={`/images/places/${c.id}-card-640.webp 640w, /images/places/${c.id}-card-1280.webp 1280w`} sizes="26vw" width="640" height="440" alt={t(PLACE_META[c.id].alt, lang)} decoding="async" />
+          <span class="caption">{t(place.name, lang)}</span>
+        </span>
+      </a>
+    );
+  })}
+</div>
+
+<style>
+  /* The canvas: the viewer's eye sits 1200px from the plane; every layer keeps true 3D. */
+  .gallery{position:relative;height:clamp(300px,36vw,460px);perspective:1200px;transform-style:preserve-3d;align-self:center;margin-bottom:6vh}
+  @media (max-width:1079px){.gallery{display:none}}
+
+  .postcard{--rx:0deg;--ry:0deg;--lift:0px;--fwd:0px;--s:1;
+    position:absolute;display:block;text-decoration:none;color:#063A5C;transform-style:preserve-3d;will-change:transform;
+    transform:rotate(var(--r)) translateZ(calc(var(--z) + var(--fwd))) rotateX(var(--rx)) rotateY(var(--ry)) translateY(var(--lift)) scale(var(--s));
+    /* Soft, layered ambient shadow, like deep afternoon sun. Alpha is raised from the cream-page values because these sit on film. */
+    filter:drop-shadow(0 10px 30px rgba(6,58,92,.22)) drop-shadow(0 30px 60px rgba(3,19,31,.35));
+    transition:transform .8s var(--luxury-ease),filter .8s var(--luxury-ease)}
+  .postcard:hover,.postcard:focus-visible{--s:1.04;--lift:-10px;--fwd:30px;z-index:30!important;
+    filter:drop-shadow(0 20px 40px rgba(6,58,92,.28)) drop-shadow(0 50px 100px rgba(3,19,31,.5))}
+  .paper{display:block;background:#FFFEF9;padding:9px 9px 0;border-radius:3px;transform-style:preserve-3d;
+    box-shadow:0 2px 6px rgba(0,0,0,.18),inset 0 0 0 1px rgba(6,58,92,.04)}
+  .paper img{aspect-ratio:16/11;width:100%;height:auto;object-fit:cover;border-radius:2px;display:block}
+  .caption{display:block;font-family:var(--serif);font-size:1rem;padding:.4rem .15rem .55rem}
+
+  /* Gentle float, on the separate `translate` property so it never fights the tilt transform. */
+  @media (prefers-reduced-motion:no-preference){
+    .postcard{animation:pc-bob 7s ease-in-out infinite;animation-delay:var(--bob)}
+    .postcard:hover{animation-play-state:paused}
+    @keyframes pc-bob{0%,100%{translate:0 0}50%{translate:0 -9px}}
+  }
+</style>
+
+<script>
+  /* Per-card yaw and pitch from the cursor's offset to the card's midpoint, capped at ±8°.
+     Tracking is deliberately slow and heavy: the transform transition stays on while the cursor moves,
+     so the card follows with weight, and eases back to its baseline over 0.8s on leave. */
+  const TILT = 8;
+  const clamp = (n: number) => Math.max(-TILT, Math.min(TILT, n));
+
+  function bind() {
+    const gallery = document.querySelector<HTMLElement>('[data-postcards]');
+    if (!gallery || gallery.dataset.bound) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    gallery.dataset.bound = '1';
+
+    gallery.querySelectorAll<HTMLElement>('[data-card]').forEach(card => {
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        const rx = clamp(((e.clientY - cy) / r.height) * TILT);
+        const ry = clamp(((e.clientX - cx) / r.width) * -TILT);
+        card.style.setProperty('--rx', `${rx.toFixed(2)}deg`);
+        card.style.setProperty('--ry', `${ry.toFixed(2)}deg`);
+      });
+      card.addEventListener('pointerleave', () => {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+
+  bind();
+  document.addEventListener('astro:page-load', bind);
+</script>

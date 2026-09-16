@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estimate calculator · component demo</title>
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/motion.css">
+  <style>
+    .demo{padding:3rem 0}
+    .demo-bar{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;margin-bottom:2rem}
+    .demo-out{margin-top:2rem;background:var(--surface);border:1px dashed var(--line-strong);border-radius:var(--radius-s);padding:1rem 1.2rem;white-space:pre-wrap;font-size:.88rem;min-height:4rem}
+  </style>
+</head>
+<body>
+  <main class="wrap demo">
+    <div class="demo-bar">
+      <div>
+        <h1 style="font-size:2rem">Estimate calculator</h1>
+        <p style="color:var(--muted)">Standalone component. Pick a service, level and add-ons; the ticket updates live.</p>
+      </div>
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="es" aria-pressed="false">ES</button>
+      </div>
+    </div>
+
+    <div id="calc-demo"></div>
+
+    <h2 style="font-size:1.4rem;margin-top:2.5rem">onAttach output</h2>
+    <pre class="demo-out" id="out" aria-live="polite">Press “Add this estimate to my enquiry” to see the summary your page receives.</pre>
+  </main>
+
+  <script src="../../js/data.js"></script>
+  <script src="../../js/utils.js"></script>
+  <script src="../../js/components/estimate-calculator.js"></script>
+  <script>
+    const calc = new ME.EstimateCalculator(document.getElementById('calc-demo'), {
+      onAttach: (summary, state) => {
+        document.getElementById('out').textContent = summary + '\n\nstate: ' + JSON.stringify(state);
+      }
+    });
+    document.querySelectorAll('[data-lang]').forEach(btn => btn.addEventListener('click', () => {
+      ME.state.lang = btn.dataset.lang;
+      document.documentElement.lang = ME.state.lang;
+      document.querySelectorAll('[data-lang]').forEach(b => b.setAttribute('aria-pressed', b === btn));
+      calc.render();
+    }));
+  </script>
+</body>
+</html>

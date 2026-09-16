@@ -1,0 +1,81 @@
+---
+/* The floating navigation island: MAISON ENIOLA lockup, two explorer links with liquid coral underlines,
+   the language switch, the consultation pill, and the menu button that opens the full-screen menu.
+   The island persists across page changes (transition:persist), so scripts/chrome.js refreshes the
+   aria-current marks and the language-switch targets after every navigation. */
+import { NAV, COPY } from '../data/site.js';
+import { t, href } from '../lib/i18n.js';
+import { ICON } from '../lib/icons.js';
+
+interface Props { lang: string; slug?: string }
+const { lang, slug = '' } = Astro.props;
+const current = slug.split('/')[0];
+const C = COPY.common;
+---
+<header class="site-header" data-header data-lang={lang} transition:persist={`nav-${lang}`} transition:name={`nav-${lang}`}>
+  <div class="island">
+    <a class="wordmark" href={href(lang)} aria-label={`${COPY.meta.brand}. ${COPY.meta.tagline}`}>
+      <span class="brand-title">{COPY.meta.brand}</span>
+      <span class="brand-sub">{COPY.meta.tagline}</span>
+    </a>
+
+    <nav class="explore" aria-label={lang === 'es' ? 'Explorar' : 'Explore'} data-magnetic>
+      {NAV.map(n => <a class="nav-item" href={href(lang, n.slug)} data-slug={n.slug} aria-current={current === n.slug ? 'page' : undefined}><span>{t(n.label, lang)}</span></a>)}
+    </nav>
+
+    <div class="lang" role="group" aria-label="Language / Idioma">
+      <a href={href('en', slug)} lang="en" hreflang="en" data-lang-link="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+      <a href={href('es', slug)} lang="es" hreflang="es" data-lang-link="es" aria-current={lang === 'es' ? 'true' : undefined}>ES</a>
+    </div>
+
+    <a class="pill" href={href(lang, 'enquire')} data-magnetic-item>{t(C.consult, lang)}</a>
+
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>
+      <Fragment set:html={ICON.menu} /><span class="sr-only">{t(C.open, lang)}</span>
+    </button>
+  </div>
+</header>
+
+<style>
+  /* Frosted cream glass, so Deep Ocean text and the coral accents read over any film. */
+  .site-header{position:fixed;top:clamp(12px,2vw,24px);left:50%;z-index:60;width:min(1200px,100% - 2 * var(--gutter));transform:translateX(-50%);
+    transition:transform .6s var(--luxury-ease),opacity .6s var(--luxury-ease)}
+  .site-header.is-hidden{transform:translate(-50%,-140%)}
+  .island{display:flex;align-items:center;gap:clamp(.8rem,1.8vw,1.6rem);min-height:70px;padding:.55rem clamp(.9rem,2.2vw,2rem);border-radius:40px;
+    background:rgba(255,253,244,.66);border:1px solid rgba(6,58,92,.08);
+    -webkit-backdrop-filter:blur(24px) saturate(130%);backdrop-filter:blur(24px) saturate(130%);
+    box-shadow:0 10px 40px -20px rgba(3,19,31,.5);
+    transition:background-color .6s var(--luxury-ease),border-color .6s var(--luxury-ease),box-shadow .6s var(--luxury-ease)}
+  .site-header.is-scrolled .island{background:rgba(255,253,244,.84);border-color:rgba(6,58,92,.12);box-shadow:0 16px 48px -24px rgba(3,19,31,.55)}
+
+  .wordmark{color:var(--ocean-fixed)}
+  .brand-sub{color:var(--coral-ink-fixed)}
+
+  .explore{display:flex;gap:clamp(1.2rem,2.4vw,2rem);margin-left:auto}
+  .nav-item{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 .1rem;text-decoration:none;
+    font-family:var(--sans);font-weight:500;text-transform:uppercase;letter-spacing:.1em;font-size:13px;color:var(--ocean-fixed);
+    will-change:transform;transition:transform .6s var(--luxury-ease),color .4s var(--luxury-ease)}
+  /* Liquid underline: 1px of coral that grows from the centre. */
+  .nav-item::after{content:"";position:absolute;left:0;right:0;bottom:8px;height:1px;background:#E75B24;transform:scaleX(0);transform-origin:center;
+    transition:transform .6s var(--luxury-ease)}
+  .nav-item:hover::after,.nav-item:focus-visible::after,.nav-item[aria-current="page"]::after{transform:scaleX(1)}
+  .nav-item[aria-current="page"]{color:var(--coral-ink-fixed)}
+
+  .lang{display:inline-flex;border:1px solid rgba(6,58,92,.18);border-radius:999px;padding:3px}
+  .lang a{display:inline-flex;align-items:center;justify-content:center;min-width:40px;min-height:36px;border-radius:999px;font-size:.76rem;font-weight:500;color:var(--ocean-fixed);text-decoration:none;opacity:.75}
+  .lang a[aria-current="true"]{background:var(--ocean-fixed);color:#FFFDF4;opacity:1}
+
+  .pill{display:inline-flex;align-items:center;min-height:44px;padding:0 1.4rem;border-radius:30px;background:var(--coral-ink-fixed);color:#FFFDF4;text-decoration:none;
+    font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.03em;white-space:nowrap;will-change:transform;
+    transition:transform .5s var(--luxury-ease),box-shadow .5s var(--luxury-ease),background-color .5s var(--luxury-ease)}
+  .pill:hover{background:#AE3F12;box-shadow:0 12px 30px rgba(231,91,36,.28)}
+
+  .menu-btn{display:none;min-height:46px;min-width:46px;border:1px solid rgba(6,58,92,.18);background:transparent;border-radius:999px;cursor:pointer;color:var(--ocean-fixed);align-items:center;justify-content:center;flex:none}
+
+  @media (max-width:1079px){
+    .explore,.pill{display:none}
+    .menu-btn{display:inline-flex}
+    .lang{margin-left:auto}
+  }
+  @media (max-width:479px){.lang{display:none}.menu-btn{margin-left:auto}}
+</style>

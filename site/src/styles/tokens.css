@@ -1,0 +1,67 @@
+/* Design tokens.
+   Two grounds: "night" for the immersive scenes (always dark, photos and film behind),
+   and "paper" for reading and deciding (prices, terms, calculator, form), which follows light/dark preference.
+   White text is only used on --btn-bg (#C84A16, 4.7:1) and teal (4.9:1). Gold text on cream uses --gold-ink (5.6:1). */
+@font-face{font-family:"DM Serif Display";src:url("/fonts/DMSerifDisplay-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"DM Serif Display";src:url("/fonts/DMSerifDisplay-Italic.ttf") format("truetype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Poppins";src:url("/fonts/Poppins-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Poppins";src:url("/fonts/Poppins-Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Poppins";src:url("/fonts/Poppins-Bold.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
+
+/* Brand wordmark: Cormorant Garamond (variable weight, Latin subset, wordmark and footer only). */
+@font-face{font-family:"Cormorant Garamond";src:url("/fonts/CormorantGaramond-Brand.woff2") format("woff2");font-weight:300 700;font-style:normal;font-display:swap}
+
+:root{
+  /* brand */
+  --ocean:#063A5C; --coral:#E75B24; --coral-ink:#C84A16; --teal:#047E84; --teal-ink:#047E84;
+  --gold:#E6A123; --gold-ink:#8A5E0A;
+  /* Coral for small type on night grounds: the brand coral #E75B24 reads at only 4.2:1 on #03131F, this lifts it to 5.6:1. */
+  --coral-soft:#F08A5D;
+  /* Fixed brand inks for the cream navigation island, which never follows the dark theme. */
+  --ocean-fixed:#063A5C; --coral-ink-fixed:#C84A16;
+  --brand:"Cormorant Garamond","Cormorant",Garamond,"Times New Roman",serif;
+
+  /* night: the immersive ground */
+  --night:#03131F; --night-2:#062437; --night-3:#0B3350;
+  --moon:#F6F1E4; --moon-soft:rgba(246,241,228,.78); --moon-faint:rgba(246,241,228,.5); --moon-line:rgba(246,241,228,.16);
+  --dusk:linear-gradient(90deg,#E75B24,#E6A123);
+  --glow:#F2B27A;
+
+  /* paper: the reading ground */
+  --bg:#FFFDF4; --surface:#FFFFFF; --surface-2:#FBF5E6; --text:#2B2B2B; --muted:#5E5A52; --opt-muted:#4A4A4A; --heading:#063A5C;
+  --line:#E9DFCC; --line-strong:#D6C8AE;
+  --btn-bg:#C84A16; --btn-text:#FFFFFF; --btn-hover:#AE3F12; --wa-text:#FFFFFF;
+  --ticket-head:#063A5C; --ticket-head-text:#FFFDF4;
+  --shadow:0 1px 0 rgba(6,58,92,.06),0 12px 28px -18px rgba(6,58,92,.35);
+  --focus:#047E84;
+
+  --serif:"DM Serif Display",Georgia,"Times New Roman",serif;
+  --sans:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --radius-s:6px; --radius-m:10px;
+  --gutter:clamp(16px,4vw,40px);
+
+  /* Luxury motion: one weighted curve for every hover, lift and reveal. */
+  --luxury-ease:cubic-bezier(0.16,1,0.3,1);
+  --luxury-duration:.7s;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ocean:#9CCBE6; --coral-ink:#F08A5D; --teal-ink:#3BB8BE; --gold-ink:#F2B84B;
+    --bg:#0B2233; --surface:#10304A; --surface-2:#0E2A40; --text:#EEF2F4; --muted:#B9C6CF; --opt-muted:#C9D3DA; --heading:#FFFDF4;
+    --line:#1F4764; --line-strong:#2C5A7B;
+    --btn-bg:#F08A5D; --btn-text:#0B2233; --btn-hover:#F5A27D; --wa-text:#0B2233;
+    --ticket-head:#06243A;
+    --shadow:0 12px 28px -18px rgba(0,0,0,.7);
+    --focus:#3BB8BE; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ocean:#9CCBE6; --coral-ink:#F08A5D; --teal-ink:#3BB8BE; --gold-ink:#F2B84B;
+  --bg:#0B2233; --surface:#10304A; --surface-2:#0E2A40; --text:#EEF2F4; --muted:#B9C6CF; --opt-muted:#C9D3DA; --heading:#FFFDF4;
+  --line:#1F4764; --line-strong:#2C5A7B;
+  --btn-bg:#F08A5D; --btn-text:#0B2233; --btn-hover:#F5A27D; --wa-text:#0B2233;
+  --ticket-head:#06243A;
+  --shadow:0 12px 28px -18px rgba(0,0,0,.7);
+  --focus:#3BB8BE; color-scheme:dark;
+}

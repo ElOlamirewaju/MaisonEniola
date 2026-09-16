@@ -1,0 +1,136 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/immersive.css';
+import '../styles/components.css';
+import { ClientRouter } from 'astro:transitions';
+import LuxuryNav from '../components/LuxuryNav.astro';
+import { MENU, COPY } from '../data/site.js';
+import { CONTACT, UI, LEGAL } from '../data/content.js';
+import { t, href } from '../lib/i18n.js';
+import { ICON } from '../lib/icons.js';
+
+interface Props { lang: string; slug?: string; title: string; description?: string; image?: string }
+const { lang, slug = '', title, description = t(COPY.meta.description, lang), image = '/images/og-image.png' } = Astro.props;
+const other = lang === 'es' ? 'en' : 'es';
+const site = Astro.site;
+const abs = (p: string) => (site ? new URL(p, site).href : p);
+const current = slug.split('/')[0];
+const C = COPY.common;
+const brand = COPY.meta.brand, tagline = COPY.meta.tagline;
+const pageTitle = slug ? `${title} | ${COPY.meta.titleSuffix}` : title;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#03131F" />
+    <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="alternate" hreflang="en" href={abs(href('en', slug))} />
+    <link rel="alternate" hreflang="es" href={abs(href('es', slug))} />
+    <link rel="alternate" hreflang="x-default" href={abs(href('en', slug))} />
+    {site && <link rel="canonical" href={abs(href(lang, slug))} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={brand} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={abs(image)} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preload" href="/fonts/CormorantGaramond-Brand.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/DMSerifDisplay-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/Poppins-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <ClientRouter />
+    <script is:inline>
+      /* Reveal animations only apply when motion is allowed. If the motion script never starts, show everything. */
+      (function () {
+        var d = document.documentElement;
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion');
+        else d.classList.add('no-motion');
+        setTimeout(function () { if (!window.__meMotion) d.classList.remove('motion'); }, 3500);
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">{t(C.skip, lang)}</a>
+
+    <LuxuryNav lang={lang} slug={slug} />
+
+    <div class="menu" id="menu" hidden data-menu>
+      <div class="menu-top">
+        <a class="wordmark" href={href(lang)}><span class="brand-title">{brand}</span><span class="brand-sub">{tagline}</span></a>
+        <button class="menu-btn" style="display:inline-flex" type="button" data-menu-close>
+          <Fragment set:html={ICON.close} /><span class="sr-only">{t(C.close, lang)}</span>
+        </button>
+      </div>
+      <nav aria-label={lang === 'es' ? 'Menú' : 'Menu'}>
+        <ol>
+          {MENU.map(n => <li><a href={href(lang, n.slug)} aria-current={current === n.slug ? 'page' : undefined}>{t(n.label, lang)}</a></li>)}
+          <li><a href={href(lang, 'estimate')}>{t(COPY.estimate.title, lang)}</a></li>
+        </ol>
+      </nav>
+      <div class="menu-foot">
+        <a class="btn btn-light" href={href(lang, 'enquire')}>{t(C.startEnquiry, lang)}</a>
+        <a class="btn btn-glass" href={`https://wa.me/${CONTACT.wa}`} target="_blank" rel="noopener"><Fragment set:html={ICON.wa} />WhatsApp</a>
+        <a class="btn btn-glass" href={href(other, slug)} lang={other} hreflang={other}>{other === 'es' ? 'Español' : 'English'}</a>
+      </div>
+    </div>
+
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="foot-mark" data-reveal>{brand}</p>
+        <p class="foot-sub" data-reveal style="--d:1">{tagline}</p>
+        <p class="foot-tag" data-reveal style="--d:2">{t(C.footerTag, lang)}</p>
+        <div class="foot-grid">
+          <div>
+            <h2>{t(C.pages, lang)}</h2>
+            <ul>
+              {MENU.map(n => <li><a href={href(lang, n.slug)}>{t(n.label, lang)}</a></li>)}
+              <li><a href={href(lang, 'estimate')}>{t(COPY.estimate.title, lang)}</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>{t(C.contact, lang)}</h2>
+            <ul>
+              <li><a href={href(lang, 'enquire')}>{t(C.startEnquiry, lang)}</a></li>
+              <li><a href={`https://wa.me/${CONTACT.wa}`} target="_blank" rel="noopener">WhatsApp {CONTACT.waLabel}</a></li>
+              <li><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
+              <li>{t(UI.footLangs, lang)}</li>
+            </ul>
+          </div>
+          <div>
+            <h2>{t(C.legal, lang)}</h2>
+            <ul>
+              <li><a href={href(lang, 'legal')}>{t(LEGAL.legal.title, lang)}</a></li>
+              <li><a href={href(lang, 'privacy')}>{t(LEGAL.privacy.title, lang)}</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="foot-fine">
+          <p class="price-validity">{t(UI.priceValidity, lang)}</p>
+          <p>{t(UI.fxNote, lang)}</p>
+        </div>
+      </div>
+    </footer>
+
+    <div class="mobile-bar">
+      <a class="btn btn-light" href={href(lang, 'enquire')}>{t(C.enquire, lang)}</a>
+      <a class="btn btn-glass" href={`https://wa.me/${CONTACT.wa}`} target="_blank" rel="noopener"><Fragment set:html={ICON.wa} />WhatsApp</a>
+    </div>
+
+    <div class="grain" aria-hidden="true"></div>
+
+    <script>
+      import { start } from '../scripts/main.js';
+      start();
+    </script>
+  </body>
+</html>

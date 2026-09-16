@@ -1,0 +1,41 @@
+---
+/* The paper half of a service page: the three levels, how it works, and payment and terms. */
+import { SERVICES, UI } from '../data/content.js';
+import { COPY } from '../data/site.js';
+import { t, href } from '../lib/i18n.js';
+import Tier from './Tier.astro';
+
+interface Props { lang: string; svc: number }
+const { lang, svc } = Astro.props;
+const s = SERVICES[svc];
+---
+<div class="horizon"></div>
+<section class="paper section" id="levels">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker" data-reveal>{t(COPY.services.levels, lang)}</span>
+      <h2 class="title-l" data-reveal style="--d:1">{t(UI.servicesTitle, lang)}</h2>
+      <p class="lead" data-reveal style="--d:2">{t(UI.servicesLead, lang)}</p>
+      <p class="price-validity" data-reveal style="--d:3">{t(UI.priceValidity, lang)}</p>
+    </div>
+    <div class="tiers">{s.tiers.map((_, i) => <Tier lang={lang} svc={svc} ti={i} />)}</div>
+
+    <h2 class="subhead" data-reveal>{t(UI.howTitle, lang)}</h2>
+    <ol class="steps">
+      {s.steps.map((st, i) => <li data-reveal style={`--d:${i}`}><div><b>{t(st[0], lang)}</b><span>{t(st[1], lang)}</span></div></li>)}
+    </ol>
+
+    <h2 class="subhead" data-reveal>{t(UI.termsTitle, lang)}</h2>
+    <div class="terms">
+      {s.terms.map(g => <details data-reveal><summary>{t(g[0], lang)}</summary><ul>{g[1].map(i => <li>{t(i, lang)}</li>)}</ul></details>)}
+    </div>
+
+    <div class="cta-band" data-reveal>
+      <h2>{t(UI.enqTitle, lang)}</h2>
+      <div class="acts">
+        <a class="btn btn-ghost" href={`${href(lang, 'estimate')}?s=${svc}`}>{t(COPY.common.estimate, lang)}</a>
+        <a class="btn btn-primary" href={`${href(lang, 'enquire')}?s=${svc}`}>{t(COPY.common.startEnquiry, lang)}</a>
+      </div>
+    </div>
+  </div>
+</section>

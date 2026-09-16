@@ -1,0 +1,6 @@
+---
+import Destination from '../../views/Destination.astro';
+import { PLACES } from '../../data/content.js';
+export function getStaticPaths() { return PLACES.map(p => ({ params: { place: p.id } })); }
+---
+<Destination lang="en" place={Astro.params.place} />

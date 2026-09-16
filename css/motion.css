@@ -1,0 +1,59 @@
+/* Luxury motion.
+   Every interactive change uses the same weighted curve (--luxury-ease, 0.7s): no bounces, no instant colour flips.
+   All motion below is inside prefers-reduced-motion: no-preference, so people who ask for less motion get a still page. */
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+
+  .btn,.tab,.lang button,.main-nav a,.opt label,.terms details,.linkbtn,.dlg-close,.lb-thumbs>button,.switch span,.switch span::after{
+    transition:background-color var(--luxury-duration) var(--luxury-ease),border-color var(--luxury-duration) var(--luxury-ease),color var(--luxury-duration) var(--luxury-ease),box-shadow var(--luxury-duration) var(--luxury-ease),transform var(--luxury-duration) var(--luxury-ease),filter var(--luxury-duration) var(--luxury-ease)}
+  .progress-bar i{transition:width var(--luxury-duration) var(--luxury-ease)}
+
+  /* Hero postcards float like paper on water: 4px up and down over 6 seconds, each on its own phase. */
+  @keyframes pc-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  .stack .pc-float{animation:pc-float 6s ease-in-out infinite}
+  .stack .pc-float:nth-child(2){animation-delay:-2s}
+  .stack .pc-float:nth-child(3){animation-delay:-4s}
+
+  .postcard{transition:transform var(--luxury-duration) var(--luxury-ease),box-shadow var(--luxury-duration) var(--luxury-ease)}
+  @media (hover:hover){
+    .postcard:hover,.postcard:focus-visible{--scale:1.04;box-shadow:0 30px 60px rgba(6,58,92,.08),0 24px 40px -24px rgba(6,58,92,.45);z-index:3}
+    /* Cards with a negative baseline tilt lean a further 2deg left; positive tilts lean 2deg right. */
+    .stack .pc-float:nth-child(1) .postcard:hover,.stack .pc-float:nth-child(3) .postcard:hover{--hover-tilt:-2deg}
+    .stack .pc-float:nth-child(2) .postcard:hover{--hover-tilt:2deg}
+    .stack .pc-float:has(.postcard:hover){z-index:3;animation-play-state:paused}
+  }
+
+  /* Pricing cards: the hovered card lifts 8px with a soft coral edge, the others settle back to 0.55 opacity,
+     and the card's heading details drift up 4px one after another. Only on wide screens with a mouse. */
+  @media (hover:hover) and (min-width:1120px){
+    .tier{transition:transform var(--luxury-duration) var(--luxury-ease),opacity var(--luxury-duration) var(--luxury-ease),box-shadow var(--luxury-duration) var(--luxury-ease),border-color var(--luxury-duration) var(--luxury-ease)}
+    .tiers:has(.tier:hover) .tier:not(:hover){opacity:.55}
+    .tier:hover,.tier:focus-within{transform:translateY(-8px);border-color:color-mix(in srgb,#E75B24 55%,var(--line));box-shadow:0 0 0 1px rgba(231,91,36,.45),0 30px 60px rgba(6,58,92,.12)}
+    .tier .drift{transition:transform var(--luxury-duration) var(--luxury-ease)}
+    .tier:hover .drift,.tier:focus-within .drift{transform:translateY(-4px)}
+    .tier .drift.d2{transition-delay:60ms}
+    .tier .drift.d3{transition-delay:120ms}
+    .tier .drift.d4{transition-delay:180ms}
+    .tier:not(:hover):not(:focus-within) .drift{transition-delay:0ms}
+  }
+
+  /* Lightbox theatre: the glass backdrop fades in, the media rises 15px, the location follows at 150ms,
+     the detail line at 300ms and the thumbnails at 400ms. */
+  @keyframes dlg-fade{from{opacity:0}to{opacity:1}}
+  @keyframes rise{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+  .dlg:not([hidden]){animation:dlg-fade .5s var(--luxury-ease) both}
+  .dlg:not([hidden]) .dlg-box{animation:rise var(--luxury-duration) var(--luxury-ease) both}
+  .dlg .stagger{animation:rise var(--luxury-duration) var(--luxury-ease) both}
+  .dlg .stagger.s1{animation-delay:150ms}
+  .dlg .stagger.s2{animation-delay:300ms}
+  .dlg .stagger.s3{animation-delay:400ms}
+  @keyframes dlg-fade-out{from{opacity:1}to{opacity:0}}
+  @keyframes sink{from{opacity:1;transform:none}to{opacity:0;transform:translateY(15px)}}
+  .dlg.is-closing{animation:dlg-fade-out .35s var(--luxury-ease) both}
+  .dlg.is-closing .dlg-box{animation:sink .35s var(--luxury-ease) both}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}

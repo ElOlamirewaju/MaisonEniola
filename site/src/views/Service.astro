@@ -1,0 +1,68 @@
+---
+/* A service page: film opening with the three levels as glass index cards, then the paper body.
+   The travel page is "The Chronicles": after the levels it adds the journeys (the four destinations)
+   and client stories, so it reads as a travel hub rather than a price list. */
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ServiceBody from '../components/ServiceBody.astro';
+import Media from '../components/Media.astro';
+import Voices from '../components/Voices.astro';
+import FinalCall from '../components/FinalCall.astro';
+import { COPY, SERVICE_PAGES, PLACE_META } from '../data/site.js';
+import { SERVICES, UI, PLACES } from '../data/content.js';
+import { t, money, href } from '../lib/i18n.js';
+
+interface Props { lang: string; slug: string }
+const { lang, slug } = Astro.props;
+const page = SERVICE_PAGES.find(p => p.slug === slug);
+const svc = page.index, s = SERVICES[svc];
+const chronicles = slug === 'travel';
+const nextPlace = { weddings: 'iceland', venues: 'amalfi', travel: 'mallorca' }[slug];
+const S = COPY.services;
+---
+<Base lang={lang} slug={slug} title={t(s.tab, lang)} description={t(s.lead, lang)}>
+  <PageHero lang={lang} place={page.place} kicker={t(s.tab, lang)} title={t(s.title, lang)} lead={t(s.lead, lang)}>
+    <div class="hero-index" data-reveal style="--d:4">
+      {s.tiers.map((tr, i) => <a href="#levels"><small>0{i + 1}</small><b>{tr.name}</b><span>{t(UI.from, lang)} {money(tr.price, lang)}{tr.plus ? '+' : ''}</span></a>)}
+    </div>
+  </PageHero>
+  <ServiceBody lang={lang} svc={svc} />
+  <div class="horizon to-night"></div>
+
+  {chronicles && (
+    <section class="scene">
+      <div class="wrap">
+        <div class="scene-head">
+          <span class="kicker" data-reveal>{t(S.journeysKicker, lang)}</span>
+          <h2 class="title-l" data-reveal style="--d:1">{t(S.journeysTitle, lang)}</h2>
+          <p class="lead" data-reveal style="--d:2">{t(S.journeysLead, lang)}</p>
+        </div>
+        <div class="doors">
+          {PLACES.map((p, i) => (
+            <a class="door" href={href(lang, `destinations/${p.id}`)} data-reveal style={`--d:${i}`}>
+              <Media place={p.id} lang={lang} variant="card" parallax={0.08} decorative />
+              <div class="door-body">
+                <span class="price">{PLACE_META[p.id].coords}</span>
+                <h3>{t(p.name, lang)}</h3>
+                <p>{t(p.detail, lang)}</p>
+                <span class="go">{t(p.step, lang)}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="scene" style={chronicles ? 'padding-top:0' : undefined}>
+    <div class="wrap">
+      <div class="scene-head">
+        <span class="kicker" data-reveal>{t(S.storiesKicker, lang)}</span>
+        <h2 class="title-l" data-reveal style="--d:1">{t(S.storiesTitle, lang)}</h2>
+      </div>
+      <Voices lang={lang} limit={3} link />
+    </div>
+  </section>
+
+  <FinalCall lang={lang} place={nextPlace} />
+</Base>

@@ -1,0 +1,14 @@
+Destination photos and videos: Adobe Stock, standard licence, licensed 16 September 2026 on the site owner's Adobe account.
+Keep this file with the site records. Attribution is not required on the website.
+
+amalfi   photo AdobeStock_293536413  "View of Positano on the italian Amalfi coast after sunset"
+amalfi   video AdobeStock_485658163  "A panoramic view of the Positano on the Amalfi Coast, Italy."
+iceland  photo AdobeStock_607467931  "Rock formations Troll Toes on Black beach Reynisfjara near Vik"
+iceland  video AdobeStock_214588216  "Beautiful beach in VIK, Iceland."
+mallorca photo AdobeStock_1207102316 "Town of Deià, Majorca, Tramuntana Mountains"
+mallorca video AdobeStock_233238335  "Flight over Mountain Village Deia in Mallorca Tramuntana Mountains"
+lisbon   photo AdobeStock_225254446  "tram on line 28 in lisbon, portugal"
+lisbon   video AdobeStock_488004773  "Lisbon Portugal time lapse 4K, city skyline timelapse at Belem Tower"
+
+Processing: centre-weighted crops to 16:11 (card) and 16:9 (wide), WebP; 6-second muted loops
+at 1280x720 with a 1-second crossfade so they repeat seamlessly (MP4/H.264 and WebM/VP9).

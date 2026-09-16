@@ -1,0 +1,51 @@
+---
+/* One pricing level, on paper. Mirrors the layout of the one-page site so the PDFs and the site read the same. */
+import { SERVICES, UI, TIER_COLORS } from '../data/content.js';
+import { t, money, fx, href } from '../lib/i18n.js';
+import { ICON } from '../lib/icons.js';
+
+interface Props { lang: string; svc: number; ti: number }
+const { lang, svc, ti } = Astro.props;
+const s = SERVICES[svc], tr = s.tiers[ti], key = `${svc}-${ti}`;
+const addonPrice = a => {
+  if (a.type === 'pct') return `+${a.pct}%`;
+  if (a.type === 'ref') return t(a.refText, lang);
+  let out = money(a.price, lang);
+  if (a.unit) out += ' ' + t(a.unit, lang);
+  if (a.travel) out += lang === 'es' ? ' + viaje a coste' : ' + travel at cost';
+  return out;
+};
+---
+<article class="tier" data-c={TIER_COLORS[ti]} aria-labelledby={`tn-${key}`} data-reveal style={`--d:${ti}`}>
+  <div class="tier-head">
+    <div>
+      <div class="tier-num drift d1" aria-hidden="true">0{ti + 1}</div>
+      <h3 id={`tn-${key}`} class="drift d2">{tr.name}</h3>
+      <p class="tier-sub drift d3">{t(tr.sub, lang)}</p>
+    </div>
+    <div class="tier-price drift d2"><small>{t(UI.from, lang)}</small><strong>{money(tr.price, lang)}{tr.plus ? '+' : ''}</strong><span>{fx(tr.price, lang)}</span></div>
+  </div>
+  <p class="tier-best drift d4"><b>{t(UI.bestFor, lang)}:</b> {t(tr.best, lang)}</p>
+  <div class="tier-body">
+    <p class="tier-label" id={`inc-${key}`}>{t(UI.included, lang)}</p>
+    <ul class="inc" aria-labelledby={`inc-${key}`}>
+      {tr.rows.map(r => <li><Fragment set:html={ICON.check} /><div><b>{t(r[0], lang)}</b><span>{t(r[1], lang)}</span></div></li>)}
+    </ul>
+    <dl class="facts">
+      <div><dt>{t(UI.scope, lang)}</dt><dd>{t(tr.scope, lang)}</dd></div>
+      <div><dt>{t(UI.turnaround, lang)}</dt><dd>{t(tr.turn, lang)}</dd></div>
+      <div><dt>{t(UI.work, lang)}</dt><dd>{t(tr.work, lang)}</dd></div>
+    </dl>
+    <div class="addons">
+      <p class="tier-label">{t(UI.addons, lang)}</p>
+      <ul>{tr.addons.map(a => <li class={a.type === 'ref' ? 'addon-ref' : ''}><span>{t(a.label, lang)}</span><b>{addonPrice(a)}</b></li>)}</ul>
+    </div>
+  </div>
+  <div class="tier-foot">
+    <p class="tier-foot-text">{tr.note ? t(tr.note, lang) : ''}</p>
+    <div class="tier-actions">
+      <a class="btn btn-ghost" href={`${href(lang, 'estimate')}?s=${svc}&t=${ti}`}>{t(UI.estimateThis, lang)}</a>
+      <a class="btn btn-primary" href={`${href(lang, 'enquire')}?s=${svc}&t=${ti}`}>{t(UI.enquireThis, lang)}</a>
+    </div>
+  </div>
+</article>

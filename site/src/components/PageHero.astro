@@ -1,0 +1,21 @@
+---
+/* Cinematic opening for inner pages: film behind, mist, title rising line by line. */
+import Media from './Media.astro';
+import { COPY } from '../data/site.js';
+import { t, href } from '../lib/i18n.js';
+
+interface Props { lang: string; place: string; kicker: string; title: string; lead?: string; short?: boolean; video?: boolean; crumb?: { label: string; slug: string } }
+const { lang, place, kicker, title, lead, short = false, video = true, crumb } = Astro.props;
+---
+<section class:list={['page-hero', { short }]}>
+  <Media place={place} lang={lang} video={video} eager zoom parallax={0.2} decorative />
+  <div class="mist"></div><div class="mist b"></div>
+  <div class="shade"></div>
+  <div class="wrap page-hero-in">
+    {crumb && <p class="crumbs" data-reveal><a href={href(lang)}>{t(COPY.common.home, lang)}</a><span>/</span><a href={href(lang, crumb.slug)}>{crumb.label}</a></p>}
+    <span class="kicker" data-reveal>{kicker}</span>
+    <h1 class="title-xl split"><span class="ln"><span>{title}</span></span></h1>
+    {lead && <p class="lead" data-reveal style="--d:3">{lead}</p>}
+    <slot />
+  </div>
+</section>

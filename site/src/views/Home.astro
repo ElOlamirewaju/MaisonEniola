@@ -1,0 +1,126 @@
+---
+/* Home: a journey. Film hero with floating postcards → the portal opens into a place → three doors →
+   the atlas travels sideways → how I work → voices → where to next. */
+import Base from '../layouts/Base.astro';
+import Media from '../components/Media.astro';
+import PostcardGallery from '../components/PostcardGallery.astro';
+import Voices from '../components/Voices.astro';
+import FinalCall from '../components/FinalCall.astro';
+import { COPY, PLACE_META, SERVICE_PAGES } from '../data/site.js';
+import { SERVICES, PLACES, UI } from '../data/content.js';
+import { t, href, money } from '../lib/i18n.js';
+import { ICON } from '../lib/icons.js';
+
+interface Props { lang: string }
+const { lang } = Astro.props;
+const H = COPY.home, C = COPY.common;
+const lines = H.heroLines[lang] || H.heroLines.en;
+---
+<Base lang={lang} title={t(H.title, lang)}>
+  <section class="hero">
+    <Media place="amalfi" lang={lang} video eager zoom parallax={0.25} decorative />
+    <div class="mist"></div><div class="mist b"></div>
+    <div class="shade"></div>
+    <div class="wrap hero-in">
+      <div>
+        <span class="kicker" data-reveal>{t(H.eyebrow, lang)}</span>
+        <h1 class="display split" style="margin-top:1.2rem">
+          {lines.map((ln, i) => <span class="ln"><span style={`--i:${i}`}>{i === 1 ? <em class="accent">{ln}</em> : ln}</span></span>)}
+        </h1>
+        <p class="lead" data-reveal style="--d:4;margin-top:1.6rem">{t(UI.heroLead, lang)}</p>
+        <div class="hero-actions" data-reveal style="--d:5">
+          <a class="btn btn-light" href={href(lang, 'weddings')}>{t(UI.heroCta1, lang)}<Fragment set:html={ICON.arrow} /></a>
+          <a class="btn btn-glass" href={href(lang, 'estimate')}>{t(UI.heroCta2, lang)}</a>
+        </div>
+        <p class="hero-meta" data-reveal style="--d:6">
+          <span>{t(PLACE_META.amalfi.town, lang)} · <b data-clock={PLACE_META.amalfi.tz}></b> {t(C.localTime, lang).toLowerCase()}</span>
+          <span>{PLACE_META.amalfi.coords}</span>
+          <span>EN · ES</span>
+        </p>
+      </div>
+      <PostcardGallery lang={lang} label={t(UI.heroPostcardHint, lang)} />
+    </div>
+    <a class="scroll-cue" href="#portal" aria-hidden="true" tabindex="-1">{t(C.scroll, lang)}<i></i></a>
+  </section>
+
+  <section class="portal" id="portal" data-portal>
+    <div class="portal-window">
+      <Media place="iceland" lang={lang} video zoom decorative />
+      <div class="portal-after"></div>
+    </div>
+    <div class="portal-copy">
+      <span class="kicker">{t(H.portalKicker, lang)}</span>
+      <h2 class="title-xl">{t(H.portalTitle, lang)}</h2>
+      <p class="lead">{t(H.portalText, lang)}</p>
+    </div>
+  </section>
+
+  <section class="scene">
+    <div class="wrap">
+      <div class="scene-head">
+        <span class="kicker" data-reveal>{t(H.doorsKicker, lang)}</span>
+        <h2 class="title-l" data-reveal style="--d:1">{t(H.doorsTitle, lang)}</h2>
+      </div>
+      <div class="doors">
+        {H.doors.map((d, i) => {
+          const sp = SERVICE_PAGES.find(x => x.slug === d.slug), s = SERVICES[sp.index];
+          return (
+            <a class="door" href={href(lang, d.slug)} data-reveal style={`--d:${i}`}>
+              <Media place={d.place} lang={lang} variant="card" parallax={0.08} decorative />
+              <div class="door-body">
+                <span class="price">{t(C.from, lang)} {money(s.tiers[0].price, lang)}</span>
+                <h3>{t(s.short, lang)}</h3>
+                <p>{t(d.lead, lang)}</p>
+                <span class="go">{t(C.enter, lang)}<Fragment set:html={ICON.arrow} /></span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="atlas" data-atlas>
+    <div class="wrap atlas-head">
+      <span class="kicker" data-reveal>{t(H.atlasKicker, lang)}</span>
+      <h2 class="title-l" data-reveal style="--d:1">{t(H.atlasTitle, lang)}</h2>
+      <p class="lead" data-reveal style="--d:2">{t(H.atlasLead, lang)}</p>
+    </div>
+    <div class="atlas-track">
+      {PLACES.map((p, i) => (
+        <a class="atlas-panel" href={href(lang, `destinations/${p.id}`)}>
+          <Media place={p.id} lang={lang} video parallax={0.1} decorative />
+          <div class="atlas-body">
+            <span class="atlas-num">0{i + 1} / 0{PLACES.length}</span>
+            <h3>{t(p.name, lang)}</h3>
+            <span class="chip"><i></i>{t(p.step, lang)}</span>
+            <p>{t(p.detail, lang)}</p>
+            <span class="coords">{PLACE_META[p.id].coords}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+    <div class="atlas-progress" aria-hidden="true"><i></i></div>
+  </section>
+
+  <section class="scene">
+    <div class="wrap">
+      <div class="scene-head"><span class="kicker" data-reveal>{t(H.promisesKicker, lang)}</span></div>
+      <div class="promises">
+        {H.promises.map((p, i) => <div class="promise" data-reveal style={`--d:${i}`}><h3>{t(p.title, lang)}</h3><p>{t(p.text, lang)}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" style="padding-top:0">
+    <div class="wrap">
+      <div class="scene-head">
+        <span class="kicker" data-reveal>{t(H.voicesKicker, lang)}</span>
+        <h2 class="title-l" data-reveal style="--d:1">{t(H.voicesTitle, lang)}</h2>
+      </div>
+      <Voices lang={lang} limit={3} link />
+    </div>
+  </section>
+
+  <FinalCall lang={lang} place="lisbon" />
+</Base>

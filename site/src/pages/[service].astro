@@ -1,0 +1,6 @@
+---
+import Service from '../views/Service.astro';
+import { SERVICE_PAGES } from '../data/site.js';
+export function getStaticPaths() { return SERVICE_PAGES.map(p => ({ params: { service: p.slug } })); }
+---
+<Service lang="en" slug={Astro.params.service} />
