@@ -1,0 +1,10 @@
+{
+  // Cloudflare Workers static-assets deploy. No Worker script: the built site in dist/ is served directly.
+  // The Worker name in the Cloudflare dashboard must match "name" below.
+  "name": "maisoneniola",
+  "compatibility_date": "2026-09-16",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
