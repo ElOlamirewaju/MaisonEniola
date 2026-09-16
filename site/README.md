@@ -79,7 +79,7 @@ If a visitor's device asks for reduced motion, none of this runs: the page is fu
 ## Before going live
 
 - Fill in `[NIF]`, `[Business address]` and `[12 months]` in `LEGAL` in `src/data/content.js`.
-- Domain is set to `maisoneniola.com` in `astro.config.mjs` and `robots.txt`. Point `info@maisoneniola.com` at the Gmail inbox (Cloudflare Email Routing) and then swap `CONTACT.email` in `content.js`.
+- Domain is set to `maisoneniola.bid` in `astro.config.mjs` and `robots.txt`. Point `info@maisoneniola.com` at the Gmail inbox (Cloudflare Email Routing) and then swap `CONTACT.email` in `content.js`.
 - Brand: wordmark "MAISON ENIOLA" with the tagline "Independent Sourcing & Travel Design" (`COPY.meta` in `site.js`); the person named in the legal and privacy notices stays Maryann Eniola.
 - Add Maryann's story and portrait.
 - Fill in `PROFILES` (Google Business Profile at least).

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://maisoneniola.com/sitemap-index.xml
+Sitemap: https://maisoneniola.bid/sitemap-index.xml
