@@ -55,12 +55,61 @@ export async function listReviews(env) {
   return json({ ok: true, reviews: out.slice(0, 50) }, 200, { 'cache-control': 'public, max-age=300' });
 }
 
+export const topbar = (links = [['/admin', 'Admin'], ['/reviews/', 'Site']]) => `<header class="top"><div><b>Maison Eniola</b><small>Admin</small></div><nav>${links.map(([h, l]) => `<a href="${h}">${l}</a>`).join('')}</nav></header>`;
+export const TOPBAR = topbar();
 const STARS = n => '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n);
-export function shell(title, inner) {
+export function shell(title, inner, opts = {}) {
   return html(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)} · Maison Eniola</title>
-<style>body{margin:0;background:#03131F;color:#F6F1E4;font:16px/1.55 -apple-system,"Segoe UI",Roboto,sans-serif}main{max-width:720px;margin:0 auto;padding:2.5rem 1.2rem}h1{font-weight:500;font-size:1.5rem;margin:0 0 1rem}h2{font-weight:500;font-size:1.1rem;margin:2rem 0 .6rem;color:#F08A5D;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem}.card{background:#062437;border:1px solid rgba(246,241,228,.16);border-radius:14px;padding:1.2rem;margin:.8rem 0}blockquote{margin:0 0 .8rem;font-size:1.05rem}small{color:rgba(246,241,228,.6)}form{display:inline-block;margin:.4rem .6rem 0 0}form.block{display:block}label{display:block;font-size:.85rem;color:rgba(246,241,228,.75);margin:.6rem 0 .2rem}input,select,textarea{font:inherit;width:100%;box-sizing:border-box;padding:.55rem .7rem;border-radius:8px;border:1px solid rgba(246,241,228,.25);background:#03131F;color:#F6F1E4}button{font:inherit;font-weight:600;padding:.7rem 1.2rem;border-radius:999px;border:0;cursor:pointer;margin-top:.6rem}.ok{background:#E75B24;color:#FFFDF4}.no{background:transparent;color:#F6F1E4;border:1px solid rgba(246,241,228,.35)}.stars{color:#F2B84B;letter-spacing:.1em}a{color:#F08A5D}.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}.muted{color:rgba(246,241,228,.55)}.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem}.top b{letter-spacing:.2em;font-weight:300;font-size:1.1rem}</style></head><body><main>${inner}</main></body></html>`);
+<link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:"DM Serif Display";src:url("/fonts/DMSerifDisplay-Regular.ttf") format("truetype");font-display:swap}
+@font-face{font-family:"Poppins";src:url("/fonts/Poppins-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"Poppins";src:url("/fonts/Poppins-Medium.ttf") format("truetype");font-weight:500;font-display:swap}
+@font-face{font-family:"Cormorant Garamond";src:url("/fonts/CormorantGaramond-Brand.woff2") format("woff2");font-weight:300 700;font-display:swap}
+:root{--night:#03131F;--night-2:#062437;--night-3:#0B3350;--moon:#F6F1E4;--soft:rgba(246,241,228,.78);--faint:rgba(246,241,228,.5);--line:rgba(246,241,228,.14);--coral:#E75B24;--coral-soft:#F08A5D;--gold:#F2B84B;--teal:#3BB8BE;--serif:"DM Serif Display",Georgia,serif;--sans:"Poppins",system-ui,sans-serif}
+*{box-sizing:border-box}html{color-scheme:dark}body{margin:0;background:var(--night);color:var(--moon);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(60% 40% at 80% 0%,rgba(11,51,80,.75),transparent 70%),radial-gradient(40% 30% at 0% 100%,rgba(231,91,36,.12),transparent 70%)}
+.wrap{max-width:1040px;margin:0 auto;padding:clamp(1.2rem,4vw,2.5rem) clamp(1rem,4vw,2rem) 5rem}
+.top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 1.4rem;border-radius:40px;background:rgba(255,253,244,.7);color:#063A5C;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 10px 40px -20px rgba(3,19,31,.6);position:sticky;top:12px;z-index:5}
+.top b{font-family:"Cormorant Garamond",serif;font-weight:400;letter-spacing:.22em;font-size:1.15rem;text-transform:uppercase;white-space:nowrap}@media(max-width:480px){.top b{font-size:.95rem;letter-spacing:.14em}.top{padding:.7rem 1rem}}
+.top small{display:block;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#C84A16;font-weight:500;margin-top:.1rem}
+.top nav{display:flex;gap:1rem;font-size:.82rem;font-weight:500}.top nav a{color:#063A5C;text-decoration:none;opacity:.8}.top nav a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,4.5vw,2.8rem);line-height:1.05;margin:2.4rem 0 .4rem}
+.sub{color:var(--soft);margin:0 0 1.8rem;max-width:56ch}
+.stats{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:0 0 2.4rem}
+.stat{padding:1rem 1.1rem;border-radius:14px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(11,51,80,.45),rgba(6,36,55,.35))}
+.stat b{display:block;font-family:var(--serif);font-size:2rem;line-height:1;color:var(--moon)}.stat span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.stat.hot b{color:var(--coral-soft)}
+.jump{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 2rem}.jump a{font-size:.78rem;letter-spacing:.06em;text-decoration:none;color:var(--soft);padding:.45rem .9rem;border-radius:999px;border:1px solid var(--line)}.jump a:hover{color:var(--moon);border-color:var(--soft)}
+section{margin:0 0 2.6rem;scroll-margin-top:110px}
+h2{font-family:var(--sans);font-weight:500;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--coral-soft);margin:0 0 .9rem;display:flex;align-items:center;gap:.7rem}h2::before{content:"";width:2.2rem;height:1px;background:linear-gradient(90deg,#E75B24,#E6A123)}
+h2 .n{font-family:var(--sans);font-size:.72rem;letter-spacing:.04em;color:var(--moon);padding:.1rem .55rem;border-radius:999px;border:1px solid var(--line);background:rgba(246,241,228,.06)}
+.card{position:relative;border-radius:16px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(11,51,80,.5),rgba(6,36,55,.3));padding:1.2rem 1.3rem;margin:0 0 .9rem}
+.card.form{padding:1.5rem}
+.empty{color:var(--faint);font-style:italic;padding:.6rem 0 0}
+.meta{color:var(--faint);font-size:.82rem;line-height:1.5}.meta b{color:var(--moon);font-weight:500}
+.review .stars{color:var(--gold);letter-spacing:.12em;font-size:.95rem}
+blockquote{margin:.5rem 0 .8rem;font-family:var(--serif);font-size:1.2rem;line-height:1.4;color:var(--moon)}
+.who{font-weight:500;color:var(--moon)}
+a{color:var(--coral-soft)}
+label{display:block;font-size:.8rem;letter-spacing:.02em;color:var(--soft);margin:.9rem 0 .3rem}
+input,select,textarea{font:inherit;width:100%;padding:.65rem .8rem;border-radius:10px;border:1px solid rgba(246,241,228,.18);background:rgba(3,19,31,.7);color:var(--moon);transition:border-color .3s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(59,184,190,.2)}
+input::placeholder{color:rgba(246,241,228,.3)}
+.grid{display:grid;gap:0 1rem;grid-template-columns:1fr}@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:1fr 1fr 1fr}}
+.days{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem}.days label{margin:0;display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .8rem;border-radius:999px;border:1px solid var(--line);cursor:pointer;font-size:.85rem;color:var(--soft)}.days label:has(input:checked){border-color:var(--coral-soft);color:var(--moon);background:rgba(231,91,36,.12)}.days input{width:auto;margin:0;accent-color:var(--coral)}
+.actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;align-items:center}.actions form{margin:0}form{margin:0}
+button{font:inherit;font-weight:500;font-size:.9rem;padding:.7rem 1.3rem;border-radius:999px;border:1px solid transparent;cursor:pointer;transition:transform .4s cubic-bezier(.16,1,.3,1),background .3s}button:hover{transform:translateY(-1px)}
+.ok{background:var(--coral);color:#FFFDF4}.ok:hover{background:#AE3F12}.no{background:transparent;color:var(--moon);border-color:rgba(246,241,228,.3)}.no:hover{border-color:var(--moon)}
+.flash{padding:.9rem 1.2rem;border-radius:12px;background:rgba(59,184,190,.12);border:1px solid rgba(59,184,190,.35);color:var(--moon);margin:0 0 1.6rem}
+.hint{color:var(--faint);font-size:.8rem;margin:.8rem 0 0}
+.foot{color:var(--faint);font-size:.78rem;border-top:1px solid var(--line);padding-top:1.2rem;margin-top:3rem}
+.pill{display:inline-block;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .6rem;border-radius:999px;border:1px solid var(--line);color:var(--faint);margin-left:.5rem;vertical-align:middle}
+.pill.live{color:var(--teal);border-color:rgba(59,184,190,.4)}
+.signin{max-width:520px;margin:12vh auto 0;text-align:center}.signin h1{margin-top:1rem}.signin .card{padding:2rem}
+</style></head><body><div class="wrap">${inner}</div></body></html>`);
 }
-export const reviewCard = r => `<div class="card"><div class="stars" aria-label="${r.rating} out of 5">${STARS(r.rating)}</div><blockquote>${esc(r.text)}</blockquote><small><b>${esc(r.name)}</b>${r.email ? ` · ${esc(r.email)}` : ''}<br>Shown as: ${esc(r.publicName || 'Anonymous')} · ${esc(r.service)} · ${esc(r.trip)} · ${r.lang}<br>Sent ${esc(r.createdAt.slice(0, 16).replace('T', ' '))}</small></div>`;
+export const reviewCard = r => `<div class="card review"><div class="stars" aria-label="${r.rating} out of 5">${STARS(r.rating)}</div><blockquote>${esc(r.text)}</blockquote><p class="meta"><span class="who">${esc(r.name)}</span>${r.email ? ` · <a href="mailto:${esc(r.email)}">${esc(r.email)}</a>` : ''}<br>Shown as <b>${esc(r.publicName || 'Anonymous')}</b> · ${esc(r.service)} · ${esc(r.trip)} · ${r.lang.toUpperCase()} · sent ${esc(r.createdAt.slice(0, 10))}${r.approvedAt ? ` · <span class="pill live">live</span>` : ''}</p></div>`;
 
 /* Approve / decline / remove. Used by the emailed link and by /admin. */
 export async function applyModeration(env, id, action) {
@@ -100,7 +149,7 @@ export async function moderate(request, env, url) {
   const actions = pending
     ? `<form method="post">${hidden}<input type="hidden" name="action" value="approve"><button class="ok">Approve and publish</button></form><form method="post">${hidden}<input type="hidden" name="action" value="decline"><button class="no">Decline</button></form>`
     : `<p>This review is live.</p><form method="post">${hidden}<input type="hidden" name="action" value="remove"><button class="no">Remove from the site</button></form>`;
-  return shell(pending ? 'Review waiting' : 'Published review', `<h1>${pending ? 'Review waiting for your decision' : 'Published review'}</h1>${reviewCard(r)}${actions}`);
+  return shell(pending ? 'Review waiting' : 'Published review', `${TOPBAR}<h1>${pending ? 'A review is waiting for you' : 'Published review'}</h1><p class="sub">${pending ? 'Only you can see this. Nothing is published until you approve it.' : 'This review is live on the site.'}</p>${reviewCard(r)}<div class="actions">${actions}</div>`);
 }
 
 /* ---- review requests (sent from /admin; follow-up by cron after 14 days) ---- */
