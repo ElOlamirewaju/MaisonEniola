@@ -177,7 +177,7 @@ export const COPY = {
     heading: { en: 'Planning that tells you the truth about a place.', es: 'Una planificación que te cuenta la verdad de cada lugar.' },
     lead: { en: 'I’m Maryann Eniola. I plan trips, find wedding venues and organise travel for proposals, weddings and the guests who come to them, in English and Spanish.', es: 'Soy Maryann Eniola. Planifico viajes, busco espacios para bodas y organizo los desplazamientos de pedidas, bodas e invitados, en inglés y en español.' },
     storyPlaceholder: { en: '[Maryann’s story: how she started planning travel and weddings, where she’s based and what she loves about it. Add it in site/src/data/site.js.]', es: '[La historia de Maryann: cómo empezó a planificar viajes y bodas, dónde vive y qué le gusta de su trabajo. Añádela en site/src/data/site.js.]' },
-    portraitPlaceholder: { en: 'Portrait of Maryann to come', es: 'Retrato de Maryann próximamente' },
+    portraitAlt: { en: 'Maryann Eniola seated on a leather bench in a navy suit, looking at the camera', es: 'Maryann Eniola sentada en un banco de cuero con traje azul marino, mirando a la cámara' },
     principlesTitle: { en: 'What you can count on', es: 'Con lo que puedes contar' },
   },
   notFound: {

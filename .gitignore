@@ -2,3 +2,6 @@ node_modules/
 .frames/
 dist/
 .DS_Store
+
+# Original photos (large, and they carry phone location data). Exports live in site/public/images.
+MaisonEniola Pictures/

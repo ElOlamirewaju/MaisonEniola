@@ -14,7 +14,9 @@ const A = COPY.about, H = COPY.home;
   <PageHero lang={lang} place="lisbon" kicker={t(A.kicker, lang)} title={t(A.heading, lang)} lead={t(A.lead, lang)} short />
   <section class="scene">
     <div class="wrap about-grid">
-      <div class="portrait" data-reveal>{t(A.portraitPlaceholder, lang)}</div>
+      <figure class="portrait has-photo" data-reveal>
+        <img src="/images/maryann-portrait-800.webp" srcset="/images/maryann-portrait-800.webp 800w, /images/maryann-portrait-1600.webp 1600w" sizes="(min-width: 960px) 34vw, 100vw" width="800" height="1000" alt={t(A.portraitAlt, lang)} decoding="async" loading="lazy" />
+      </figure>
       <div style="display:grid;gap:2rem">
         <p class="placeholder" data-reveal style="--d:1">{t(A.storyPlaceholder, lang)}</p>
         <div class="bound-night" data-reveal style="--d:2">
