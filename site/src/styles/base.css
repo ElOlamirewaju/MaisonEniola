@@ -116,10 +116,13 @@ em.accent{font-style:italic;color:var(--glow)}
 /* ---- reveals (only when scripts run and motion is allowed) ---- */
 .motion [data-reveal]{opacity:0;transform:translate3d(0,28px,0);filter:blur(10px);transition:opacity 1.1s var(--luxury-ease),transform 1.1s var(--luxury-ease),filter 1.1s var(--luxury-ease);transition-delay:calc(var(--d,0) * 90ms)}
 .motion [data-reveal].is-in{opacity:1;transform:none;filter:none}
-/* Hero copy never waits for scripts: it rises with a CSS keyframe as soon as the page paints.
-   Transform only, no fade: Chrome does not count text that fades in from opacity 0 as the largest paint (LCP). */
-.motion .hero [data-reveal],.motion .page-hero [data-reveal]{animation:enter-hero .9s var(--luxury-ease) both;animation-delay:calc(var(--d,0) * 90ms + 120ms);transition:none;opacity:1;filter:none}
-.motion .hero .split .ln>span,.motion .page-hero .split .ln>span{animation:rise 1.2s var(--luxury-ease) both;animation-delay:calc(var(--i,0) * 100ms + 100ms);transition:none}
+/* Hero copy never waits for scripts: it rises with a CSS keyframe from the first paint, before the motion
+   class arrives with the bundle. Transform only, no fade: Chrome does not count text that fades in from
+   opacity 0 as the largest paint (LCP). */
+@media (prefers-reduced-motion: no-preference){
+  .hero [data-reveal],.page-hero [data-reveal],.motion .hero [data-reveal],.motion .page-hero [data-reveal]{animation:enter-hero .9s var(--luxury-ease) both;animation-delay:calc(var(--d,0) * 90ms + 120ms);transition:none;opacity:1;filter:none}
+  .hero .split .ln>span,.page-hero .split .ln>span,.motion .hero .split .ln>span,.motion .page-hero .split .ln>span{animation:rise 1.2s var(--luxury-ease) both;animation-delay:calc(var(--i,0) * 100ms + 100ms);transition:none}
+}
 @keyframes enter-hero{from{transform:translate3d(0,22px,0)}to{transform:none}}
 @keyframes rise{from{transform:translate3d(0,108%,0) rotate(2deg)}to{transform:none}}
 .split .ln{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
