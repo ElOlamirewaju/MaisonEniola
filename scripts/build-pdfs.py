@@ -18,7 +18,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import (BaseDocTemplate, Frame, KeepTogether, PageTemplate, Paragraph, Spacer, Table, TableStyle)
+from reportlab.platypus import (BaseDocTemplate, Flowable, Frame, KeepTogether, PageTemplate, Paragraph, Spacer, Table, TableStyle)
 
 ROOT = Path(__file__).resolve().parent.parent
 FONTS = ROOT / 'site' / 'public' / 'fonts'
@@ -37,6 +37,14 @@ CREAM, CREAM2, LINE, TEXT, MUTED, MOON = (colors.HexColor(c) for c in ('#FFFDF4'
 for name, file in [('Serif', 'DMSerifDisplay-Regular.ttf'), ('SerifI', 'DMSerifDisplay-Italic.ttf'), ('Sans', 'Poppins-Regular.ttf'), ('SansM', 'Poppins-Medium.ttf'), ('SansB', 'Poppins-Bold.ttf')]:
     pdfmetrics.registerFont(TTFont(name, str(FONTS / file)))
 pdfmetrics.registerFont(TTFont('Brand', str(ROOT / 'scripts' / 'pdf-fonts' / 'CormorantGaramond.ttf')))
+
+class Check(Flowable):
+    """A coral check mark drawn as a stroke, so it never depends on a font having the glyph."""
+    def __init__(self, size=7): super().__init__(); self.width = self.height = size
+    def draw(self):
+        c = self.canv; s = self.width
+        c.setStrokeColor(CORAL); c.setLineWidth(1.3); c.setLineCap(1); c.setLineJoin(1)
+        p = c.beginPath(); p.moveTo(0.05 * s, 0.5 * s); p.lineTo(0.38 * s, 0.15 * s); p.lineTo(0.98 * s, 0.9 * s); c.drawPath(p, stroke=1, fill=0)
 
 def esc(s): return str(s).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 def money(n): return f'€{n:,.0f}'
@@ -115,19 +123,20 @@ def tier_block(svc, tr, i, lang):
                  colWidths=[14 * mm, cw - 14 * mm - 42 * mm, 42 * mm])
     head.setStyle(TableStyle([('BACKGROUND', (0, 0), (1, 0), CREAM2), ('BACKGROUND', (2, 0), (2, 0), CORAL), ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
                               ('TOPPADDING', (0, 0), (-1, -1), 7), ('BOTTOMPADDING', (0, 0), (-1, -1), 7), ('LEFTPADDING', (0, 0), (-1, -1), 8), ('RIGHTPADDING', (0, 0), (-1, -1), 8)]))
-    inc_rows = [[Paragraph(t(PDF['included'], lang).upper(), S['lab']), Paragraph(t(PDF['means'], lang).upper(), S['lab'])]]
+    inc_rows = [['', Paragraph(t(PDF['included'], lang).upper(), S['lab']), Paragraph(t(PDF['means'], lang).upper(), S['lab'])]]
     for r in tr['rows']:
-        # ZapfDingbats "3" is a check mark; Poppins has no ✓ glyph.
-        inc_rows.append([Paragraph('<font name="ZapfDingbats" color="#C84A16" size="7">3</font>  ' + esc(t(r[0], lang)), S['inc']), Paragraph(esc(t(r[1], lang)), S['td'])])
-    inc = rule_table(inc_rows, [cw * 0.36, cw * 0.64])
+        inc_rows.append([Check(), Paragraph(esc(t(r[0], lang)), S['inc']), Paragraph(esc(t(r[1], lang)), S['td'])])
+    inc = rule_table(inc_rows, [5 * mm, cw * 0.36 - 5 * mm, cw * 0.64])
+    inc.setStyle(TableStyle([('TOPPADDING', (0, 1), (0, -1), 6)]))
     facts = Table([[[Paragraph(t(PDF['scope'], lang), S['fact']), Paragraph(esc(t(tr['scope'], lang)), S['factv'])],
                     [Paragraph(t(PDF['turnaround'], lang), S['fact']), Paragraph(esc(t(tr['turn'], lang)), S['factv'])],
                     [Paragraph(t(PDF['work'], lang), S['fact']), Paragraph(esc(t(tr['work'], lang)), S['factv'])]]], colWidths=[cw * 0.42, cw * 0.29, cw * 0.29])
     facts.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, -1), CREAM2), ('VALIGN', (0, 0), (-1, -1), 'TOP'), ('TOPPADDING', (0, 0), (-1, -1), 7), ('BOTTOMPADDING', (0, 0), (-1, -1), 7), ('LEFTPADDING', (0, 0), (-1, -1), 8)]))
     add_rows = [[Paragraph(esc(t(a['label'], lang)), S['addon']), Paragraph(esc(addon_price(a, lang)), S['addonp'])] for a in tr['addons']]
-    addons = [Paragraph(t(PDF['addons'], lang).upper(), S['lab']), rule_table(add_rows, [cw * 0.7, cw * 0.3])] if add_rows else []
+    # The label stays with its table; rows may still flow to the next page, as in the original guides.
+    addons = [KeepTogether([Paragraph(t(PDF['addons'], lang).upper(), S['lab']), rule_table(add_rows, [cw * 0.7, cw * 0.3])])] if add_rows else []
     note = [Spacer(1, 4), Paragraph(esc(t(tr['note'], lang)), S['small'])] if tr.get('note') else []
-    return [KeepTogether([head, Spacer(1, 4), inc]), Spacer(1, 6), KeepTogether([facts, *addons, *note]), Spacer(1, 14)]
+    return [KeepTogether([head, Spacer(1, 4), inc]), Spacer(1, 6), facts, *addons, *note, Spacer(1, 14)]
 
 def build(svc, lang):
     key = svc['key']; P = PDF[key]; cw = W - 2 * M
