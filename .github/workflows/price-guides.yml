@@ -1,0 +1,26 @@
+# When the prices or terms change, regenerate the PDF price guides from the same content the site uses,
+# and commit them, so the PDFs can never disagree with the site.
+name: Price guides
+on:
+  push:
+    branches: [main]
+    paths: ['site/src/data/content.js', 'scripts/build-pdfs.py', 'scripts/pdf-fonts/**']
+jobs:
+  pdfs:
+    runs-on: ubuntu-latest
+    permissions: { contents: write }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install reportlab
+      - run: python3 scripts/build-pdfs.py
+      - name: Commit regenerated PDFs
+        run: |
+          git config user.name "price-guides bot"
+          git config user.email "noreply@maisoneniola.bid"
+          git add "Price guides"
+          git diff --cached --quiet || git commit -m "Regenerate price guides from content.js [skip ci]"
+          git push

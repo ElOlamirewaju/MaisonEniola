@@ -17,6 +17,7 @@ const s = SERVICES[svc];
       <h2 class="title-l" data-reveal style="--d:1">{t(UI.servicesTitle, lang)}</h2>
       <p class="lead" data-reveal style="--d:2">{t(UI.servicesLead, lang)}</p>
       <p class="price-validity" data-reveal style="--d:3">{t(UI.priceValidity, lang)}</p>
+      <p class="next-start" data-next-start={t(UI.nextStart, lang)} hidden></p>
     </div>
     <div class="tiers">{s.tiers.map((_, i) => <Tier lang={lang} svc={svc} ti={i} />)}</div>
 

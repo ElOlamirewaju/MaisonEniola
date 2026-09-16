@@ -150,8 +150,9 @@ export function mountEnquiry(form) {
         } catch (err) { ok = false; }
         if (ok) {
           clearEstimate();
-          form.innerHTML = `<div class="sent" role="status" tabindex="-1"><h2>${t(UI.sentTitle)}</h2><p>${esc(t(UI.sentBody, { email: F.email.trim() }))}</p></div>`;
+          form.innerHTML = `<div class="sent" role="status" tabindex="-1"><h2>${t(UI.sentTitle)}</h2><p>${esc(t(UI.sentBody, { email: F.email.trim() }))}</p></div><div class="book" data-book hidden><h3>${t(UI.bookTitle)}</h3><p>${t(UI.bookLead)}</p><div class="slots" data-slots></div><p class="status" data-book-status role="status" aria-live="polite"></p></div>`;
           $('.sent')?.focus({ preventScroll: true });
+          offerBooking({ name: F.name.trim(), email: F.email.trim(), phone: F.phone.trim(), lang: F.pref || lang, topic: t(c.label) });
         } else {
           form.querySelectorAll('button').forEach(x => { x.disabled = false; });
           st.textContent = t(UI.sentFail, { email: CONTACT.email });
@@ -164,6 +165,25 @@ export function mountEnquiry(form) {
       clearEstimate();
     }
   });
+  async function offerBooking(who) {
+    const box = $('[data-book]'), list = $('[data-slots]'), st = $('[data-book-status]'); if (!box) return;
+    let data; try { const r = await fetch('/api/slots'); data = r.ok ? await r.json() : null; } catch (e) { data = null; }
+    if (!data || !data.ok) return;
+    box.hidden = false;
+    if (!data.slots.length) { list.innerHTML = `<p>${t(UI.bookNone)}</p>`; return; }
+    const loc = lang === 'es' ? 'es-ES' : 'en-GB', tzLocal = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const fmt = (iso, tz) => new Intl.DateTimeFormat(loc, { timeZone: tz, weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(iso));
+    const byDay = {}; data.slots.forEach(s => { const d = s.local.slice(0, 10); (byDay[d] = byDay[d] || []).push(s); });
+    list.innerHTML = Object.entries(byDay).slice(0, 7).map(([d, ss]) => `<div class="slot-day"><b>${esc(new Intl.DateTimeFormat(loc, { timeZone: data.tz, weekday: 'long', day: 'numeric', month: 'long' }).format(new Date(ss[0].start)))}</b><div class="slot-row">${ss.map(s => `<button type="button" class="slot" data-slot="${s.start}">${s.local.slice(11)}${tzLocal !== data.tz ? ` <small>(${esc(new Intl.DateTimeFormat(loc, { timeZone: tzLocal, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(s.start)))})</small>` : ''}</button>`).join('')}</div></div>`).join('') + `<p class="fine">${t(UI.bookSkip)}</p>`;
+    list.addEventListener('click', async e => {
+      const b = e.target.closest('[data-slot]'); if (!b) return;
+      list.querySelectorAll('.slot').forEach(x => { x.disabled = true; }); st.textContent = t(UI.sending);
+      let res = null; try { const r = await fetch('/api/book', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...who, start: b.dataset.slot }) }); res = r.ok ? await r.json() : null; } catch (err) { res = null; }
+      if (res && res.ok) { list.innerHTML = ''; st.textContent = t(UI.bookDone, { when: fmt(res.start, data.tz) + (tzLocal !== data.tz ? ` (${fmt(res.start, tzLocal)} ${tzLocal})` : ''), email: who.email }); }
+      else { st.textContent = t(UI.bookFail); list.querySelectorAll('.slot').forEach(x => { x.disabled = false; }); b.remove(); }
+    });
+  }
+
   form.addEventListener('change', e => {
     const el = e.target;
     if (el.name === 'plan') { if (F.choice !== el.value) F.ans = {}; F.choice = el.value; delete F.errors.choice; return; }

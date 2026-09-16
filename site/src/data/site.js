@@ -92,7 +92,7 @@ export const COPY = {
     cookies: { en: 'Cookies', es: 'Cookies' },
     noCookies: { en: 'No cookies, no trackers. Nothing you type is stored on this site.', es: 'Sin cookies ni rastreadores. Nada de lo que escribes se guarda en esta web.' },
     copyright: { en: '© {year} Maison Eniola. All rights reserved.', es: '© {year} Maison Eniola. Todos los derechos reservados.' },
-    operator: { en: 'Operated by Maryann Eniola, self-employed (autónoma) in Spain.', es: 'Gestionada por Maryann Eniola, autónoma en España.' },
+    operator: { en: 'Operated by Maryann Eniola, Spain.', es: 'Gestionada por Maryann Eniola, España.' },
     switchLang: { en: 'Language', es: 'Idioma' },
   },
   home: {

@@ -168,6 +168,12 @@ legend{font-family:var(--serif);font-size:1.3rem;color:var(--heading);margin-bot
 .alt-send{margin-top:1rem;font-size:.88rem;color:var(--ink-soft,inherit)}
 .linklike{border:0;background:none;padding:0;font:inherit;color:var(--ocean);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
 .enq .sent{padding:1rem 0}.enq .sent h2{font-size:1.6rem;margin-bottom:.6rem}
+.book{border-top:1px solid var(--line);padding-top:1.2rem;margin-top:.6rem}.book h3{font-size:1.25rem;margin:0 0 .3rem}.book>p{color:var(--muted);margin:0 0 1rem}
+.slot-day{margin-bottom:.9rem}.slot-day b{display:block;font-weight:500;margin-bottom:.4rem}.slot-row{display:flex;flex-wrap:wrap;gap:.45rem}
+.slot{font:inherit;font-size:.9rem;padding:.5rem .8rem;border-radius:999px;border:1.5px solid var(--line-strong);background:var(--bg);color:inherit;cursor:pointer}.slot:hover{border-color:var(--heading)}.slot:disabled{opacity:.5;cursor:default}.slot small{color:var(--muted)}
+.book .fine{font-size:.85rem;color:var(--muted)}
+.next-start{margin-top:.6rem;font-weight:500;color:var(--heading)}
+.btn[data-note]::after{content:attr(data-note);font-size:.72em;font-weight:400;opacity:.85;margin-left:.45em;white-space:nowrap}
 /* review form (on the night reviews page, so it sits on its own paper card) */
 .rev{max-width:none;color:var(--text)}
 .rev-title{font-size:1.5rem;margin:0 0 .4rem;color:var(--heading)}.rev-intro{margin:0 0 1.2rem;color:var(--muted)}

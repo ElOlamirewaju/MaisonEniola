@@ -1,0 +1,13 @@
+{
+  // Separate tiny Worker that checks the site every 5 minutes and emails Maryann when something breaks or recovers.
+  // Deployed by hand: cd monitor && npx wrangler deploy. Shares the site's KV namespace for its state.
+  "name": "maisoneniola-monitor",
+  "main": "index.js",
+  "compatibility_date": "2026-09-16",
+  "workers_dev": false,
+  "triggers": { "crons": ["*/5 * * * *"] },
+  "send_email": [{ "name": "EMAIL" }],
+  "kv_namespaces": [{ "binding": "REVIEWS", "id": "1e11c2d197a542749480984f94108422" }],
+  "vars": { "ENQUIRY_TO": "maisoneniola@gmail.com", "ENQUIRY_FROM": "enquiries@maisoneniola.bid", "SITE_URL": "https://maisoneniola.bid" },
+  "observability": { "enabled": true }
+}

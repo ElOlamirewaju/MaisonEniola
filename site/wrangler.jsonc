@@ -11,7 +11,8 @@
     "directory": "./dist",
     "binding": "ASSETS",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/api/*"]
+    // /__scheduled only exists under `wrangler dev --test-scheduled`, to trigger the cron jobs by hand.
+    "run_worker_first": ["/api/*", "/admin", "/admin/*", "/__scheduled"]
   },
   // Email Sending must be enabled for maisoneniola.bid (dashboard: Email Service > Email Sending > Onboard domain).
   "send_email": [{ "name": "EMAIL" }],
@@ -23,5 +24,7 @@
     "ENQUIRY_FROM": "enquiries@maisoneniola.bid",
     "SITE_URL": "https://maisoneniola.bid"
   },
+  // UTC: daily reminders 07:00, Monday digest 07:00, monthly backup on the 1st at 07:00 (worker/cron.js).
+  "triggers": { "crons": ["0 7 * * *", "0 7 * * 1", "0 7 1 * *"] },
   "observability": { "enabled": true }
 }

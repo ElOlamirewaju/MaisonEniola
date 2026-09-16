@@ -3,6 +3,10 @@ import { esc } from '../lib/i18n.js';
 
 export function mountReviewForm(form) {
   const d = form.dataset, status = form.querySelector('.status');
+  // Arriving from a review-request email: ?name=&service=&trip=
+  const q = new URLSearchParams(location.search);
+  for (const k of ['name', 'service', 'trip']) if (q.get(k) && form.elements[k]) form.elements[k].value = q.get(k);
+  if (q.get('trip')) form.scrollIntoView({ block: 'start' });
   const mark = (el, msg) => { el.setAttribute('aria-invalid', 'true'); const f = el.closest('.field, .check, .rating') || el; let e = f.querySelector('.err'); if (!e) { e = document.createElement('span'); e.className = 'err'; f.appendChild(e); } e.textContent = msg; };
   const clear = () => form.querySelectorAll('.err').forEach(e => e.remove()) || form.querySelectorAll('[aria-invalid]').forEach(e => e.removeAttribute('aria-invalid'));
 
