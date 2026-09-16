@@ -48,7 +48,7 @@ CREDITS.txt                        Adobe Stock licence record for the destinatio
 
 Everything a visitor reads lives in `js/data.js`, with `en` and `es` side by side. Prices are numbers (`price: 950`); add-on types are `toggle`, `qty` (with `max` and `unit`), `pct` (rush) and `ref` (text only). The calculator and pricing cards update automatically.
 
-The terms follow the amended Q4 2026 PDF price guides, and `data.js` and the PDFs should always match. Right now `data.js` is newer than the Weddings PDF (see "Before going live"), so update that PDF from the site, not the other way round. After that, if a PDF changes, change `data.js` to match.
+The PDF price guides in `Masion Eniola/` are generated from the site's content (`site/src/data/content.js`), in English and Spanish, by `python3 scripts/build-pdfs.py` (needs `pip3 install reportlab`). Change prices or terms in `content.js`, rebuild the site, and run the script: the site and the PDFs can't drift apart. PDF-only copy (titles, intros, the "at a glance" table) lives in `PDF_COPY` at the bottom of `content.js`.
 
 ## Design and motion rules in this build
 
@@ -78,9 +78,7 @@ To swap one, keep the file names and sizes and the site picks it up with no code
 - Have the cancellation terms checked by someone qualified. All three services now include the 14-day cancellation right and a statutory-rights line, following the visa terms. Add the same wording to the PDFs.
 - Confirm whether 3 booking disruptions per package suits a 40-guest Whole Event.
 - Confirm The Proposal payment wording (now "50% when your plan and proposal-day timeline are delivered", because clients book their own flights and stays in that tier).
-- Update the Weddings PDF to match the site. Two lines under The Proposal are out of date:
-  - "Fares compared and stays chosen for privacy and atmosphere, then booked in your name." Clients now get recommendations with safe direct-booking links and book them themselves.
-  - "50% to begin and 50% before bookings are made." This should be "50% to begin and 50% when your plan and proposal-day timeline are delivered."
+- The PDFs are regenerated from the site, so they already carry the new wording; rerun `python3 scripts/build-pdfs.py` after any content change.
 - Update `og:image` in `index.html` to the full URL once the domain is known.
 
 ## Deploying
