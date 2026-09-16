@@ -16,6 +16,7 @@ const other = lang === 'es' ? 'en' : 'es';
 const site = Astro.site;
 const abs = (p: string) => (site ? new URL(p, site).href : p);
 const current = slug.split('/')[0];
+const altSlug = slug === '404' ? '' : slug; // the language switch on the 404 page goes home: there is no /es/404/
 const C = COPY.common;
 const brand = COPY.meta.brand, tagline = COPY.meta.tagline;
 const pageTitle = slug ? `${title} | ${COPY.meta.titleSuffix}` : title;
@@ -31,9 +32,9 @@ const year = new Date().getFullYear();
     <meta name="theme-color" content="#03131F" />
     <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-    {slug !== '404' && <link rel="alternate" hreflang="en" href={abs(href('en', slug))} />}
-    {slug !== '404' && <link rel="alternate" hreflang="es" href={abs(href('es', slug))} />}
-    {slug !== '404' && <link rel="alternate" hreflang="x-default" href={abs(href('en', slug))} />}
+    {slug !== '404' && <link rel="alternate" hreflang="en" href={abs(href('en', altSlug))} />}
+    {slug !== '404' && <link rel="alternate" hreflang="es" href={abs(href('es', altSlug))} />}
+    {slug !== '404' && <link rel="alternate" hreflang="x-default" href={abs(href('en', altSlug))} />}
     {site && slug !== '404' && <link rel="canonical" href={abs(href(lang, slug))} />}
     {slug === '404' && <meta name="robots" content="noindex" />}
     <meta property="og:type" content="website" />
@@ -60,7 +61,7 @@ const year = new Date().getFullYear();
   <body>
     <a class="skip" href="#main">{t(C.skip, lang)}</a>
 
-    <LuxuryNav lang={lang} slug={slug} />
+    <LuxuryNav lang={lang} slug={altSlug} />
 
     <div class="menu" id="menu" hidden data-menu>
       <div class="menu-top">
@@ -78,7 +79,7 @@ const year = new Date().getFullYear();
       <div class="menu-foot">
         <a class="btn btn-light" href={href(lang, 'enquire')}>{t(C.startEnquiry, lang)}</a>
         <a class="btn btn-glass" href={`https://wa.me/${CONTACT.wa}`} target="_blank" rel="noopener"><Fragment set:html={ICON.wa} />WhatsApp</a>
-        <a class="btn btn-glass" href={href(other, slug)} lang={other} hreflang={other}>{other === 'es' ? 'Español' : 'English'}</a>
+        <a class="btn btn-glass" href={href(other, altSlug)} lang={other} hreflang={other}>{other === 'es' ? 'Español' : 'English'}</a>
       </div>
     </div>
 
@@ -125,9 +126,9 @@ const year = new Date().getFullYear();
         <div class="foot-base">
           <p>{t(C.copyright, lang, { year })} <span class="foot-operator">{t(C.operator, lang)}</span></p>
           <nav class="foot-langs" aria-label={t(C.switchLang, lang)}>
-            <a href={href('en', slug)} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>English</a>
+            <a href={href('en', altSlug)} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>English</a>
             <span aria-hidden="true">·</span>
-            <a href={href('es', slug)} hreflang="es" lang="es" aria-current={lang === 'es' ? 'true' : undefined}>Español</a>
+            <a href={href('es', altSlug)} hreflang="es" lang="es" aria-current={lang === 'es' ? 'true' : undefined}>Español</a>
           </nav>
         </div>
       </div>
