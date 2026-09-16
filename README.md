@@ -48,7 +48,7 @@ CREDITS.txt                        Adobe Stock licence record for the destinatio
 
 Everything a visitor reads lives in `js/data.js`, with `en` and `es` side by side. Prices are numbers (`price: 950`); add-on types are `toggle`, `qty` (with `max` and `unit`), `pct` (rush) and `ref` (text only). The calculator and pricing cards update automatically.
 
-The PDF price guides in `Masion Eniola/` are generated from the site's content (`site/src/data/content.js`), in English and Spanish, by `python3 scripts/build-pdfs.py` (needs `pip3 install reportlab`). Change prices or terms in `content.js`, rebuild the site, and run the script: the site and the PDFs can't drift apart. PDF-only copy (titles, intros, the "at a glance" table) lives in `PDF_COPY` at the bottom of `content.js`.
+The PDF price guides in `Price guides/` are generated from the site's content (`site/src/data/content.js`), in English and Spanish, by `python3 scripts/build-pdfs.py` (needs `pip3 install reportlab`). Change prices or terms in `content.js`, rebuild the site, and run the script: the site and the PDFs can't drift apart. PDF-only copy (titles, intros, the "at a glance" table) lives in `PDF_COPY` at the bottom of `content.js`.
 
 ## Design and motion rules in this build
 

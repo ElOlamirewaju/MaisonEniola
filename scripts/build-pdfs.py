@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Builds the three price-guide PDFs from the website's content file, so the PDFs and the site never drift.
 
-    python3 scripts/build-pdfs.py            # English and Spanish, into "Masion Eniola/"
+    python3 scripts/build-pdfs.py            # English and Spanish, into "Price guides/"
     python3 scripts/build-pdfs.py --lang en  # one language
 
 Reads site/src/data/content.js through Node (the same data the site renders), then lays each service out
@@ -22,7 +22,7 @@ from reportlab.platypus import (BaseDocTemplate, Flowable, Frame, KeepTogether, 
 
 ROOT = Path(__file__).resolve().parent.parent
 FONTS = ROOT / 'site' / 'public' / 'fonts'
-OUT = ROOT / 'Masion Eniola'
+OUT = ROOT / 'Price guides'
 LANGS = [a.split('=')[1] for a in sys.argv if a.startswith('--lang=')] or (['en', 'es'] if '--lang' not in sys.argv else [sys.argv[sys.argv.index('--lang') + 1]])
 
 # ---- content, straight from the site ----
