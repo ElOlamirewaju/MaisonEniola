@@ -6,6 +6,7 @@ import Voices from '../components/Voices.astro';
 import FinalCall from '../components/FinalCall.astro';
 import { COPY, PROFILES } from '../data/site.js';
 import { CONTACT } from '../data/content.js';
+import ReviewForm from '../components/ReviewForm.astro';
 import { t } from '../lib/i18n.js';
 import { ICON } from '../lib/icons.js';
 
@@ -39,6 +40,8 @@ const links = [
         <p class="lead" data-reveal style="--d:2">{t(R.shareText, lang)}</p>
       </div>
       <div style="display:grid;gap:1.2rem;align-content:start" data-reveal style="--d:3">
+        <ReviewForm lang={lang} />
+        <p class="fine-night" style="margin-top:.4rem">{t(R.fOr, lang)}</p>
         <div class="share-actions">
           <a class="btn btn-light" href={`https://wa.me/${CONTACT.wa}?text=${msg}`} target="_blank" rel="noopener"><Fragment set:html={ICON.wa} />{t(R.shareWa, lang)}</a>
           <a class="btn btn-glass" href={`mailto:${CONTACT.email}?subject=${subject}&body=${msg}`}><Fragment set:html={ICON.mail} />{t(R.shareEmail, lang)}</a>

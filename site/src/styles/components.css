@@ -168,6 +168,15 @@ legend{font-family:var(--serif);font-size:1.3rem;color:var(--heading);margin-bot
 .alt-send{margin-top:1rem;font-size:.88rem;color:var(--ink-soft,inherit)}
 .linklike{border:0;background:none;padding:0;font:inherit;color:var(--ocean);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
 .enq .sent{padding:1rem 0}.enq .sent h2{font-size:1.6rem;margin-bottom:.6rem}
+/* review form (on the night reviews page, so it sits on its own paper card) */
+.rev{max-width:none;color:var(--ink,#03131F)}
+.rev-title{font-size:1.5rem;margin:0 0 .4rem}.rev-intro{margin:0 0 1.2rem;color:var(--muted)}
+.rating{border:0;padding:0;margin:0 0 1.1rem}.rating legend{font-weight:500;font-size:.92rem;margin-bottom:.35rem}
+.rating-stars{display:inline-flex;flex-direction:row-reverse;gap:.15rem}
+.rating-stars input{position:absolute;opacity:0;width:1px;height:1px}
+.rating-stars label{font-size:2rem;line-height:1;color:var(--line);cursor:pointer;padding:.1rem}
+.rating-stars label:hover,.rating-stars label:hover~label,.rating-stars input:checked~label{color:var(--coral)}
+.rating-stars input:focus-visible+label{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
 .legal-doc{max-width:720px}
 .legal-doc p{margin-bottom:.9rem}
 .legal-doc dl{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1.2rem;margin:0 0 1.2rem}

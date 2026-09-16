@@ -1,5 +1,7 @@
 ---
-/* Client reviews. With none yet, an honest placeholder scene; never sample text that could read as real. */
+/* Client reviews as a carousel: the curated ones from data/reviews.js are rendered here, and scripts/voices.js
+   adds the reviews approved through the on-site form (GET /api/reviews). With none at all, an honest
+   placeholder scene; never sample text that could read as real. */
 import Media from './Media.astro';
 import { REVIEWS } from '../data/reviews.js';
 import { COPY } from '../data/site.js';
@@ -12,30 +14,38 @@ const R = COPY.reviews;
 const list = limit ? REVIEWS.slice(0, limit) : REVIEWS;
 const fmt = d => { const [y, m] = d.split('-'); return new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', { month: 'long', year: 'numeric' }).format(new Date(+y, +m - 1, 1)); };
 ---
-{list.length === 0 ? (
-  <div class="voices-empty" data-reveal>
+<div class="voices" data-voices data-lang={lang} data-limit={limit || ''} data-anon={t(R.anon, lang)} data-rating={t(R.ratingLabel, lang)} data-goto={t(R.goTo, lang)} data-services={JSON.stringify({ weddings: t(R.serviceOpts.weddings, lang), venues: t(R.serviceOpts.venues, lang), travel: t(R.serviceOpts.travel, lang) })}>
+  <div class="voices-empty" data-reveal data-voices-empty hidden={list.length > 0}>
     <Media place="mallorca" lang={lang} parallax={0.1} decorative />
     <span class="quote-mark" aria-hidden="true">“</span>
     <h3 class="title-l">{t(R.emptyTitle, lang)}</h3>
     <p>{t(R.emptyText, lang)}</p>
     {link && <a class="btn btn-glass" href={href(lang, 'reviews')}>{t(R.shareTitle, lang)}<Fragment set:html={ICON.arrow} /></a>}
   </div>
-) : (
-  <div class:list={['review-grid', { three: list.length >= 3 }]}>
-    {list.map((r, i) => {
-      const text = lang !== r.lang && r.translation?.[lang] ? r.translation[lang] : r.text;
-      return (
-        <article class="review" data-reveal style={`--d:${i % 3}`}>
-          {r.place && <Media place={r.place} lang={lang} decorative />}
-          <span class="quote-mark" aria-hidden="true">“</span>
-          <blockquote lang={lang !== r.lang && r.translation?.[lang] ? lang : r.lang}>{text}</blockquote>
-          <footer>
-            <b>{r.name}</b>
-            <span>{t(r.trip, lang)} · {fmt(r.date)}</span>
-            {r.source && <span class="orig">{r.sourceUrl ? <a href={r.sourceUrl} target="_blank" rel="noopener">{r.source}</a> : r.source}</span>}
-          </footer>
-        </article>
-      );
-    })}
+  <div class="carousel" data-carousel hidden={list.length === 0}>
+    <div class="voices-track" data-track tabindex="0">
+      {list.map((r, i) => {
+        const text = lang !== r.lang && r.translation?.[lang] ? r.translation[lang] : r.text;
+        return (
+          <article class="review" data-reveal style={`--d:${i % 3}`}>
+            {r.place && <Media place={r.place} lang={lang} decorative />}
+            {r.rating && <span class="stars" aria-label={t(R.ratingLabel, lang, { n: r.rating })}>{[1,2,3,4,5].map(n => <i class={n <= r.rating ? 'on' : ''}></i>)}</span>}
+            <span class="quote-mark" aria-hidden="true">“</span>
+            <blockquote lang={lang !== r.lang && r.translation?.[lang] ? lang : r.lang}>{text}</blockquote>
+            <footer>
+              <b>{r.name}</b>
+              <span>{t(r.trip, lang)} · {fmt(r.date)}</span>
+              {r.source && <span class="orig">{r.sourceUrl ? <a href={r.sourceUrl} target="_blank" rel="noopener">{r.source}</a> : r.source}</span>}
+            </footer>
+          </article>
+        );
+      })}
+    </div>
+    <div class="voices-nav" data-nav hidden>
+      <button type="button" class="voices-btn" data-prev aria-label={t(R.prev, lang)}><Fragment set:html={ICON.arrow} /></button>
+      <div class="voices-dots" data-dots role="tablist"></div>
+      <button type="button" class="voices-btn" data-next aria-label={t(R.next, lang)}><Fragment set:html={ICON.arrow} /></button>
+    </div>
   </div>
-)}
+  {link && list.length > 0 && <p style="margin-top:1.4rem"><a class="btn btn-glass" href={href(lang, 'reviews')}>{t(R.shareTitle, lang)}<Fragment set:html={ICON.arrow} /></a></p>}
+</div>

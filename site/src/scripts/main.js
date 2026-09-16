@@ -5,6 +5,8 @@ import { initMotion, teardownMotion } from './motion.js';
 import { initMagnetic } from './nav.js';
 import { mountCalculator } from './calculator.js';
 import { mountEnquiry } from './enquiry.js';
+import { mountVoices } from './voices.js';
+import { mountReviewForm } from './review-form.js';
 
 function setup() {
   initChrome();
@@ -15,6 +17,9 @@ function setup() {
   const enq = document.getElementById('enq');
   if (enq && !enq.dataset.mounted) { enq.dataset.mounted = '1'; mountEnquiry(enq); }
   collapseInclusions();
+  document.querySelectorAll('[data-voices]').forEach(v => { if (!v.dataset.mounted) { v.dataset.mounted = '1'; mountVoices(v); } });
+  const rf = document.getElementById('review-form');
+  if (rf && !rf.dataset.mounted) { rf.dataset.mounted = '1'; mountReviewForm(rf); }
 }
 
 /* Pricing cards on phones: show three inclusions, the rest behind a button. */

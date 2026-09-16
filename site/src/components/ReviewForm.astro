@@ -1,0 +1,29 @@
+---
+/* On-site review form. scripts/review-form.js posts it to /api/reviews; Maryann approves it by email. */
+import { COPY } from '../data/site.js';
+import { t, href } from '../lib/i18n.js';
+
+interface Props { lang: string }
+const { lang } = Astro.props;
+const R = COPY.reviews;
+const opts = (o) => Object.entries(o).map(([k, v]) => ({ k, label: t(v, lang) }));
+---
+<form class="enq rev" id="review-form" novalidate data-lang={lang} data-sent-title={t(R.fSentTitle, lang)} data-sent-body={t(R.fSentBody, lang)} data-fail={t(R.fFail, lang)} data-required={t(R.fRequired, lang)} data-short={t(R.fTooShort, lang)} data-sending={lang === 'es' ? 'Enviando…' : 'Sending…'}>
+  <h3 class="rev-title">{t(R.formTitle, lang)}</h3>
+  <p class="rev-intro">{t(R.formIntro, lang)}</p>
+  <div class="grid-2">
+    <div class="field"><label for="rv-name">{t(R.fName, lang)}</label><input id="rv-name" name="name" autocomplete="name" required></div>
+    <div class="field"><label for="rv-email">{t(R.fEmail, lang)} <small>({t(R.fEmailHint, lang)})</small></label><input id="rv-email" name="email" type="email" autocomplete="email"></div>
+    <div class="field"><label for="rv-display">{t(R.fDisplay, lang)}</label><select id="rv-display" name="display">{opts(R.displayOpts).map(o => <option value={o.k}>{o.label}</option>)}</select></div>
+    <div class="field"><label for="rv-service">{t(R.fService, lang)}</label><select id="rv-service" name="service" required><option value="">{lang === 'es' ? 'Elige una opción' : 'Choose an option'}</option>{opts(R.serviceOpts).map(o => <option value={o.k}>{o.label}</option>)}</select></div>
+  </div>
+  <div class="field"><label for="rv-trip">{t(R.fTrip, lang)}</label><input id="rv-trip" name="trip" placeholder={t(R.fTripPh, lang)} maxlength="90" required></div>
+  <fieldset class="rating" aria-describedby="rv-rating-hint"><legend>{t(R.fRating, lang)}</legend>
+    <div class="rating-stars">{[5,4,3,2,1].map(n => <><input type="radio" name="rating" id={`rv-r${n}`} value={n} required /><label for={`rv-r${n}`} aria-label={t(R.ratingLabel, lang, { n })}>★</label></>)}</div>
+  </fieldset>
+  <div class="field"><label for="rv-text">{t(R.fText, lang)}</label><textarea id="rv-text" name="text" rows="5" maxlength="1500" required></textarea></div>
+  <div class="check"><input type="checkbox" id="rv-consent" name="consent" required><div><label for="rv-consent">{t(R.fConsent, lang)}</label> <a href={href(lang, 'privacy')} target="_blank" rel="noopener">{lang === 'es' ? 'Aviso de privacidad' : 'Privacy notice'}</a>.</div></div>
+  <div class="hp" aria-hidden="true"><label for="rv-website">Website</label><input id="rv-website" name="website" tabindex="-1" autocomplete="off"></div>
+  <p class="status" role="status" aria-live="polite"></p>
+  <div class="form-nav"><div class="right"><button type="submit" class="btn btn-primary">{t(R.fSend, lang)}</button></div></div>
+</form>

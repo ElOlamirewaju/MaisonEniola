@@ -15,9 +15,13 @@
   },
   // Email Sending must be enabled for maisoneniola.bid (dashboard: Email Service > Email Sending > Onboard domain).
   "send_email": [{ "name": "EMAIL" }],
+  // Review submissions (pending and approved). Export with scripts/export-reviews.sh.
+  "kv_namespaces": [{ "binding": "REVIEWS", "id": "1e11c2d197a542749480984f94108422" }],
+  // REVIEW_SECRET (signs the approve/decline links) is a secret: `wrangler secret put REVIEW_SECRET`; locally in .dev.vars.
   "vars": {
     "ENQUIRY_TO": "maisoneniola@gmail.com",
-    "ENQUIRY_FROM": "enquiries@maisoneniola.bid"
+    "ENQUIRY_FROM": "enquiries@maisoneniola.bid",
+    "SITE_URL": "https://maisoneniola.bid"
   },
   "observability": { "enabled": true }
 }
