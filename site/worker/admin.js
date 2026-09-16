@@ -19,7 +19,9 @@ export async function admin(request, env, url) {
   // 1. sign-in link requested
   if (path === '/admin/login' && request.method === 'POST') {
     const ip = request.headers.get('CF-Connecting-IP') || 'local', k = `rl:login:${ip}`;
-    if (parseInt((await env.REVIEWS.get(k)) || '0', 10) >= 3) return shell('Slow down', '<h1>Too many requests. Try again in an hour.</h1>');
+    const tries = parseInt((await env.REVIEWS.get(k)) || '0', 10);
+    console.log('admin login request', k, 'tries so far', tries);
+    if (tries >= 3) return shell('Slow down', '<h1>Too many requests. Try again in an hour.</h1>');
     await env.REVIEWS.put(k, String(parseInt((await env.REVIEWS.get(k)) || '0', 10) + 1), { expirationTtl: 3600 });
     const link = await signedLink(env, '/admin', { login: '1' }, 30 * 60);
     try { await send(env, { to: env.ENQUIRY_TO, subject: '[Admin] Your sign-in link', text: `Sign in to the Maison Eniola admin page (valid 30 minutes):\n${link}\n\nIf you did not ask for this, ignore it.` }); } catch (e) { return shell('Email failed', '<h1>Could not send the link.</h1><p>The email service is not configured yet (RESEND_API_KEY).</p>'); }
