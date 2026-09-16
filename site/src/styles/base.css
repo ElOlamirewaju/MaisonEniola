@@ -74,6 +74,15 @@ em.accent{font-style:italic;color:var(--glow)}
 .foot-grid a:hover{color:var(--moon);text-decoration:underline;text-underline-offset:4px}
 .foot-fine{border-top:1px solid var(--moon-line);margin-top:3rem;padding-top:1.3rem;display:grid;gap:.3rem;font-size:.8rem;color:var(--moon-faint)}
 .foot-fine .price-validity{color:var(--moon-soft);font-weight:500}
+.foot-note{margin-top:1rem;max-width:26ch;font-size:.8rem;line-height:1.5;color:var(--moon-faint)}
+.foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.5rem 2rem;margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--moon-line);font-size:.78rem;color:var(--moon-faint)}
+.foot-base p{margin:0}
+.foot-operator{display:block;margin-top:.15rem}
+@media (min-width:800px){.foot-operator{display:inline;margin:0 0 0 .35rem}}
+.foot-langs{display:flex;gap:.6rem;align-items:baseline;letter-spacing:.04em}
+.foot-langs a{color:var(--moon-soft);text-decoration:none}
+.foot-langs a:hover{color:var(--moon);text-decoration:underline;text-underline-offset:4px}
+.foot-langs a[aria-current]{color:var(--moon);font-weight:500}
 
 .mobile-bar{display:none}
 @media (max-width:767px){
