@@ -10,7 +10,7 @@
 @keyframes slow-zoom{from{transform:scale(1)}to{transform:scale(1.08) translate3d(-1%,-1%,0)}}
 .shade{position:absolute;inset:0;pointer-events:none;background:
   radial-gradient(120% 90% at 50% 40%,transparent 35%,rgba(3,19,31,.55) 100%),
-  linear-gradient(180deg,rgba(3,19,31,.55) 0%,rgba(3,19,31,.08) 30%,rgba(3,19,31,.2) 60%,var(--night) 100%)}
+  linear-gradient(180deg,rgba(3,19,31,.55) 0%,rgba(3,19,31,.15) 30%,rgba(3,19,31,.4) 60%,var(--night) 100%)}
 
 /* ---- mist: slow luminous fog drifting across a scene ---- */
 .mist{position:absolute;inset:-20%;pointer-events:none;mix-blend-mode:screen;opacity:.55;
@@ -44,8 +44,9 @@
 .portal-copy{position:relative;z-index:2;text-align:center;display:grid;justify-items:center;gap:1.1rem;padding-inline:var(--gutter);max-width:900px}
 .portal-copy .lead{margin-inline:auto;text-align:center}
 .portal-copy h2{text-shadow:0 4px 60px rgba(3,19,31,.8)}
+.portal-copy .lead,.hero .lead,.page-hero .lead,.hero .kicker,.page-hero .kicker,.portal-copy .kicker,.atlas-body p,.door p,.final .lead{color:var(--moon);text-shadow:0 1px 2px rgba(3,19,31,.7),0 2px 24px rgba(3,19,31,.9)}
 .no-motion .portal-window,.static .portal-window{clip-path:none}
-.portal-after{position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,19,31,.15) 0%,rgba(3,19,31,.2) 50%,rgba(3,19,31,.6) 100%)}
+.portal-after{position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,19,31,.3) 0%,rgba(3,19,31,.45) 50%,rgba(3,19,31,.8) 100%),radial-gradient(60% 45% at 50% 55%,rgba(3,19,31,.45),transparent 70%)}
 
 /* ---- doors: the three services as tall arched thresholds ---- */
 .doors{display:grid;gap:clamp(1rem,2vw,1.6rem);grid-template-columns:1fr}

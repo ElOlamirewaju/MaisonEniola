@@ -12,7 +12,6 @@ interface Props { lang: string; limit?: number; link?: boolean }
 const { lang, limit, link = false } = Astro.props;
 const R = COPY.reviews;
 const list = limit ? REVIEWS.slice(0, limit) : REVIEWS;
-const fmt = d => { const [y, m] = d.split('-'); return new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', { month: 'long', year: 'numeric' }).format(new Date(+y, +m - 1, 1)); };
 ---
 <div class="voices" data-voices data-lang={lang} data-limit={limit || ''} data-anon={t(R.anon, lang)} data-rating={t(R.ratingLabel, lang)} data-goto={t(R.goTo, lang)} data-services={JSON.stringify({ weddings: t(R.serviceOpts.weddings, lang), venues: t(R.serviceOpts.venues, lang), travel: t(R.serviceOpts.travel, lang) })}>
   <div class="voices-empty" data-reveal data-voices-empty hidden={list.length > 0}>
@@ -34,7 +33,7 @@ const fmt = d => { const [y, m] = d.split('-'); return new Intl.DateTimeFormat(l
             <blockquote lang={lang !== r.lang && r.translation?.[lang] ? lang : r.lang}>{text}</blockquote>
             <footer>
               <b>{r.name}</b>
-              <span>{t(r.trip, lang)} · {fmt(r.date)}</span>
+              <span>{t(r.trip, lang)}</span>
               {r.source && <span class="orig">{r.sourceUrl ? <a href={r.sourceUrl} target="_blank" rel="noopener">{r.source}</a> : r.source}</span>}
             </footer>
           </article>

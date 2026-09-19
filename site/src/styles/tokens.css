@@ -23,7 +23,7 @@
 
   /* night: the immersive ground */
   --night:#03131F; --night-2:#062437; --night-3:#0B3350;
-  --moon:#F6F1E4; --moon-soft:rgba(246,241,228,.78); --moon-faint:rgba(246,241,228,.5); --moon-line:rgba(246,241,228,.16);
+  --moon:#F6F1E4; --moon-soft:rgba(246,241,228,.92); --moon-faint:rgba(246,241,228,.62); --moon-line:rgba(246,241,228,.16);
   --dusk:linear-gradient(90deg,#E75B24,#E6A123);
   --glow:#F2B27A;
 

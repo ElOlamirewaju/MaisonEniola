@@ -2,7 +2,6 @@
    then wires the arrows and dots. Scroll-snap does the sliding; swiping works without any script. */
 import { esc } from '../lib/i18n.js';
 
-const fmt = (ym, lang) => { const [y, m] = ym.split('-'); return new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', { month: 'long', year: 'numeric' }).format(new Date(+y, +m - 1, 1)); };
 
 function slide(r, root) {
   const lang = root.dataset.lang, services = JSON.parse(root.dataset.services || '{}');
@@ -12,7 +11,7 @@ function slide(r, root) {
     <span class="stars" aria-label="${esc(root.dataset.rating.replace('{n}', r.rating))}">${stars}</span>
     <span class="quote-mark" aria-hidden="true">“</span>
     <blockquote lang="${esc(r.lang)}">${esc(r.text)}</blockquote>
-    <footer><b>${esc(name)}</b><span>${esc(r.trip)} · ${esc(fmt(r.date, lang))}</span><span class="orig">${esc(services[r.service] || '')}</span></footer>
+    <footer><b>${esc(name)}</b><span>${esc(r.trip)}</span><span class="orig">${esc(services[r.service] || '')}</span></footer>
   </article>`;
 }
 

@@ -5,19 +5,19 @@ const TIER_COLORS = ['coral', 'teal', 'gold'];
 
 const UI = {
   nav: { services: { en: 'Services', es: 'Servicios' }, places: { en: 'Places', es: 'Destinos' }, estimate: { en: 'Estimate', es: 'Presupuesto' }, enquire: { en: 'Enquire', es: 'Consulta' } },
-  whatsapp: { en: 'Message me on WhatsApp', es: 'Escríbeme por WhatsApp' },
+  whatsapp: { en: 'Message Maryann on WhatsApp', es: 'Escribe a Maryann por WhatsApp' },
   whatsappShort: { en: 'WhatsApp', es: 'WhatsApp' },
   menu: { en: 'Menu', es: 'Menú' },
   heroTitle: { en: 'Where to go, where to say yes, and how everyone gets there.', es: 'Adónde ir, dónde dar el sí y cómo llega todo el mundo.' },
   heroLead: {
-    en: 'I plan trips, find wedding venues and organise travel for proposals, weddings and the guests who come to them. You get real options with the costs compared and the details checked, in English or Spanish.',
-    es: 'Planifico viajes, busco espacios para bodas y organizo los desplazamientos de pedidas, bodas e invitados. Recibes opciones reales, con los costes comparados y los detalles comprobados, en inglés o en español.'
+    en: 'Maison Eniola plans trips, finds wedding venues and organises travel for proposals, weddings and the guests who come to them, for solo travellers, couples, families and groups. You get real options with the costs compared and the details checked, in English or Spanish.',
+    es: 'Maison Eniola planifica viajes, busca espacios para bodas y organiza los desplazamientos de pedidas, bodas e invitados, para quien viaja solo, en pareja, en familia o en grupo. Recibes opciones reales, con los costes comparados y los detalles comprobados, en inglés o en español.'
   },
   heroCta1: { en: 'See services and prices', es: 'Ver servicios y precios' },
   heroCta2: { en: 'Work out an estimate', es: 'Calcular un presupuesto' },
   heroPostcardHint: { en: 'Tap a postcard to look closer', es: 'Toca una postal para verla de cerca' },
   servicesTitle: { en: 'Services and prices', es: 'Servicios y precios' },
-  servicesLead: { en: 'Three services, each with three levels. Prices shown are my planning fees.', es: 'Tres servicios, cada uno con tres niveles. Los precios son mis honorarios de planificación.' },
+  servicesLead: { en: 'Three services, each with three levels, for individuals, couples, families and groups. Prices shown are Maryann’s planning fees.', es: 'Tres servicios, cada uno con tres niveles, para personas, parejas, familias y grupos. Los precios son los honorarios de planificación de Maryann.' },
   // Locked operational string: used word-for-word in the services intro and the footer.
   priceValidity: { en: 'Prices valid from 1 October 2026. Flights, hotels, and venues are paid by you directly to each supplier.', es: 'Precios válidos desde el 1 de octubre de 2026. Vuelos, hoteles y espacios los pagas tú directamente a cada proveedor.' },
   fxNote: { en: 'GBP and USD figures are guides converted from EUR and rounded; invoices are issued in EUR unless agreed otherwise.', es: 'Las cifras en GBP y USD son orientativas, convertidas desde el euro y redondeadas; las facturas se emiten en euros salvo acuerdo.' },
@@ -34,8 +34,8 @@ const UI = {
   enquireThis: { en: 'Enquire about this', es: 'Consultar este' },
   howTitle: { en: 'How it works', es: 'Cómo funciona' },
   termsTitle: { en: 'Payment and terms', es: 'Pagos y condiciones' },
-  placesTitle: { en: 'Places I might suggest', es: 'Lugares que podría proponerte' },
-  placesLead: { en: 'Examples of the kind of places I research. Every suggestion is checked against your brief, your dates and where your guests are travelling from.', es: 'Ejemplos del tipo de lugares que investigo. Cada propuesta se comprueba según tu idea, tus fechas y desde dónde viajan tus invitados.' },
+  placesTitle: { en: 'Places Maryann might suggest', es: 'Lugares que Maryann podría proponerte' },
+  placesLead: { en: 'Examples of the kind of places Maryann researches. Every suggestion is checked against your brief, your dates and where your guests are travelling from.', es: 'Ejemplos del tipo de lugares que investiga Maryann. Cada propuesta se comprueba según tu idea, tus fechas y desde dónde viajan tus invitados.' },
   planThis: { en: 'Plan something like this', es: 'Planificar algo así' },
   close: { en: 'Close', es: 'Cerrar' },
   prev: { en: 'Previous place', es: 'Lugar anterior' },
@@ -53,14 +53,14 @@ const UI = {
   estTotal: { en: 'Estimated planning fee', es: 'Honorarios estimados' },
   estApprox: { en: 'About {gbp} or {usd}. Invoiced in EUR.', es: 'Unos {gbp} o {usd}. Se factura en euros.' },
   estPlusTravel: { en: 'Plus travel for in-person days, billed at receipted cost.', es: 'Más los desplazamientos de los días presenciales, a coste justificado.' },
-  estSmall: { en: 'This is a guide, not a quote. It covers my fee only. Flights, stays, venues and visa application fees are paid by you directly to each supplier.', es: 'Es una orientación, no un presupuesto cerrado. Solo cubre mis honorarios. Vuelos, alojamientos, espacios y tasas de visado los pagas tú directamente a cada proveedor.' },
+  estSmall: { en: 'This is a guide, not a quote. It covers Maryann’s fee only. Flights, stays, venues and visa application fees are paid by you directly to each supplier.', es: 'Es una orientación, no un presupuesto cerrado. Solo cubre los honorarios de Maryann. Vuelos, alojamientos, espacios y tasas de visado los pagas tú directamente a cada proveedor.' },
   estSend: { en: 'Add this estimate to my enquiry', es: 'Añadir este presupuesto a mi consulta' },
   estAdded: { en: 'Added to your enquiry below.', es: 'Añadido a tu consulta, más abajo.' },
   rushNote: { en: '+30% of the base fee', es: '+30 % sobre la tarifa base' },
   decrease: { en: 'Remove one', es: 'Quitar uno' },
   increase: { en: 'Add one', es: 'Añadir uno' },
-  enqTitle: { en: 'Tell me what you are planning', es: 'Cuéntame qué estás planeando' },
-  enqLead: { en: 'Three short steps. When you send it, your enquiry comes straight to me and you get a copy by email. Nothing is stored on this website.', es: 'Tres pasos cortos. Al enviarla, tu consulta me llega directamente y recibes una copia por correo. Nada se guarda en esta web.' },
+  enqTitle: { en: 'Tell Maryann what you are planning', es: 'Cuenta a Maryann qué estás planeando' },
+  enqLead: { en: 'Three short steps. When you send it, your enquiry goes straight to Maryann and you get a copy by email. Nothing is stored on this website.', es: 'Tres pasos cortos. Al enviarla, tu consulta llega directamente a Maryann y recibes una copia por correo. Nada se guarda en esta web.' },
   step: { en: 'Step {n} of 3', es: 'Paso {n} de 3' },
   back: { en: 'Back', es: 'Atrás' },
   continue: { en: 'Continue', es: 'Continuar' },
@@ -68,19 +68,19 @@ const UI = {
   sendSite: { en: 'Send enquiry', es: 'Enviar consulta' },
   sending: { en: 'Sending…', es: 'Enviando…' },
   sentTitle: { en: 'Thank you. Your enquiry is on its way.', es: 'Gracias. Tu consulta está en camino.' },
-  sentBody: { en: 'I reply personally to {email}, as soon as I can. A copy of your message is on its way to you.', es: 'Te respondo personalmente a {email} lo antes posible. Te llega una copia de tu mensaje.' },
+  sentBody: { en: 'Maryann replies personally to {email}, as soon as she can. A copy of your message is on its way to you.', es: 'Maryann te responde personalmente a {email} lo antes posible. Te llega una copia de tu mensaje.' },
   sentFail: { en: 'That didn’t send. Try WhatsApp, or copy the message and email it to {email}.', es: 'No se ha podido enviar. Prueba por WhatsApp, o copia el mensaje y envíalo a {email}.' },
   altSend: { en: 'Prefer to send it yourself?', es: '¿Prefieres enviarlo tú?' },
   // Consultation-call booking offered after an enquiry is sent (worker/booking.js).
   bookTitle: { en: 'Book your consultation call now', es: 'Reserva ya tu llamada de consulta' },
-  bookLead: { en: 'Pick a time and I call you. Times are Madrid time, with your local time in brackets.', es: 'Elige una hora y te llamo yo. Horas de Madrid, con tu hora local entre paréntesis.' },
+  bookLead: { en: 'Pick a time and Maryann calls you. Times are Madrid time, with your local time in brackets.', es: 'Elige una hora y Maryann te llama. Horas de Madrid, con tu hora local entre paréntesis.' },
   bookBtn: { en: 'Book this time', es: 'Reservar esta hora' },
   bookDone: { en: 'Booked: {when}. The calendar invite is on its way to {email}.', es: 'Reservada: {when}. La invitación de calendario va de camino a {email}.' },
   bookFail: { en: 'That time has just gone. Pick another.', es: 'Esa hora se acaba de ocupar. Elige otra.' },
-  bookNone: { en: 'No free times in the next two weeks. I will suggest one when I reply.', es: 'No hay horas libres en las próximas dos semanas. Te propondré una al responder.' },
-  bookSkip: { en: 'Or wait for my reply and we will find a time.', es: 'O espera mi respuesta y buscamos una hora.' },
+  bookNone: { en: 'No free times in the next two weeks. Maryann will suggest one when she replies.', es: 'No hay horas libres en las próximas dos semanas. Maryann te propondrá una al responder.' },
+  bookSkip: { en: 'Or wait for Maryann’s reply and find a time together.', es: 'O espera la respuesta de Maryann y buscáis una hora.' },
   nextStart: { en: 'Next available start: {d}', es: 'Próximo inicio disponible: {d}' },
-  waClosed: { en: 'replies from {t} CET', es: 'respondo desde las {t} CET' },
+  waClosed: { en: 'replies from {t} CET', es: 'responde desde las {t} CET' },
   sendEmail: { en: 'Send by email', es: 'Enviar por correo' },
   copyMsg: { en: 'Copy message', es: 'Copiar mensaje' },
   copied: { en: 'Message copied.', es: 'Mensaje copiado.' },
@@ -96,13 +96,13 @@ const UI = {
   email: { en: 'Email', es: 'Correo electrónico' },
   phone: { en: 'WhatsApp number', es: 'Número de WhatsApp' },
   lang: { en: 'Preferred language', es: 'Idioma preferido' },
-  notes: { en: 'Anything else I should know', es: 'Algo más que deba saber' },
+  notes: { en: 'Anything else Maryann should know', es: 'Algo más que Maryann deba saber' },
   estimateAttached: { en: 'Estimate attached', es: 'Presupuesto adjunto' },
   removeEstimate: { en: 'Remove', es: 'Quitar' },
-  boundTitle: { en: 'What I do and don’t do', es: 'Qué hago y qué no' },
+  boundTitle: { en: 'What Maryann does and doesn’t do', es: 'Qué hace Maryann y qué no' },
   boundText: {
-    en: 'I plan and book travel, and I research and compare venues. I’m not a wedding planner, décor designer or on-site coordinator, unless you add on-site presence to The Whole Event. When I make bookings for you, they’re in your name and paid by you directly to each supplier. Venue contracts are always between you and the venue.',
-    es: 'Planifico y reservo viajes, e investigo y comparo espacios. No soy wedding planner, decoradora ni coordinadora in situ, salvo que añadas la presencia en el evento a The Whole Event. Cuando hago reservas por ti, van a tu nombre y las pagas tú directamente a cada proveedor. Los contratos con los espacios son siempre entre tú y el espacio.'
+    en: 'Maryann plans and books travel, and researches and compares venues. She is not a wedding planner, décor designer or on-site coordinator, unless you add on-site presence to The Whole Event. When she makes bookings for you, they’re in your name and paid by you directly to each supplier. Venue contracts are always between you and the venue.',
+    es: 'Maryann planifica y reserva viajes, e investiga y compara espacios. No es wedding planner, decoradora ni coordinadora in situ, salvo que añadas la presencia en el evento a The Whole Event. Cuando hace reservas por ti, van a tu nombre y las pagas tú directamente a cada proveedor. Los contratos con los espacios son siempre entre tú y el espacio.'
   },
   tickBound: { en: 'I have read what Maryann does and doesn’t do.', es: 'He leído qué hace y qué no hace Maryann.' },
   tickPrivacy: { en: 'I agree to my details being used to reply to this enquiry, as described in the', es: 'Acepto que mis datos se usen para responder a esta consulta, según el' },
@@ -125,7 +125,7 @@ const QUESTIONS = {
     { id: 'dest', type: 'text', req: true, label: { en: 'Where are you thinking of?', es: '¿En qué lugar estás pensando?' }, ph: { en: 'A city, a country, or “not sure yet”', es: 'Una ciudad, un país o “aún no lo sé”' } },
     { id: 'dates', type: 'text', req: true, label: { en: 'Rough dates', es: 'Fechas aproximadas' }, ph: { en: 'For example, late May 2027', es: 'Por ejemplo, finales de mayo de 2027' } },
     { id: 'from', type: 'text', req: true, label: { en: 'Travelling from', es: 'Desde dónde viajáis' }, ph: { en: 'City', es: 'Ciudad' } },
-    { id: 'budget', type: 'select', req: true, label: { en: 'Trip budget, not including my fee', es: 'Presupuesto del viaje, sin mis honorarios' }, opts: [{ en: 'Up to €2,000', es: 'Hasta 2.000 €' }, { en: '€2,000 to €5,000', es: 'De 2.000 € a 5.000 €' }, { en: 'More than €5,000', es: 'Más de 5.000 €' }, { en: 'Not sure yet', es: 'Aún no lo sé' }] },
+    { id: 'budget', type: 'select', req: true, label: { en: 'Trip budget, not including the planning fee', es: 'Presupuesto del viaje, sin los honorarios de planificación' }, opts: [{ en: 'Up to €2,000', es: 'Hasta 2.000 €' }, { en: '€2,000 to €5,000', es: 'De 2.000 € a 5.000 €' }, { en: 'More than €5,000', es: 'Más de 5.000 €' }, { en: 'Not sure yet', es: 'Aún no lo sé' }] },
   ],
   event: [
     { id: 'occasion', type: 'select', req: true, label: { en: 'The occasion', es: 'La ocasión' }, opts: [{ en: 'Destination wedding', es: 'Boda en destino' }, { en: 'Anniversary or milestone celebration', es: 'Aniversario o celebración especial' }, { en: 'Something else', es: 'Otra cosa' }] },
@@ -150,26 +150,26 @@ const QUESTIONS = {
     { id: 'dates', type: 'text', req: true, label: { en: 'Dates and length', es: 'Fechas y duración' }, ph: { en: 'For example, 7 days in April', es: 'Por ejemplo, 7 días en abril' } },
     { id: 'people', type: 'number', req: true, min: 1, max: 60, label: { en: 'Number of travellers', es: 'Número de viajeros' } },
     { id: 'from', type: 'text', req: true, label: { en: 'Travelling from', es: 'Desde dónde viajas' }, ph: { en: 'City', es: 'Ciudad' } },
-    { id: 'budget', type: 'select', req: true, label: { en: 'Budget per person, not including my fee', es: 'Presupuesto por persona, sin mis honorarios' }, opts: [{ en: 'Up to €800', es: 'Hasta 800 €' }, { en: '€800 to €2,000', es: 'De 800 € a 2.000 €' }, { en: 'More than €2,000', es: 'Más de 2.000 €' }, { en: 'Not sure yet', es: 'Aún no lo sé' }] },
+    { id: 'budget', type: 'select', req: true, label: { en: 'Budget per person, not including the planning fee', es: 'Presupuesto por persona, sin los honorarios de planificación' }, opts: [{ en: 'Up to €800', es: 'Hasta 800 €' }, { en: '€800 to €2,000', es: 'De 800 € a 2.000 €' }, { en: 'More than €2,000', es: 'Más de 2.000 €' }, { en: 'Not sure yet', es: 'Aún no lo sé' }] },
   ],
 };
 
 const VISA = {
   title: { en: 'Visa guidance', es: 'Visados' },
   items: [
-    { en: 'UK and Schengen visitor visas only, offered as a separate document-checking and administrative support service with its own fee. This service is not immigration advice, and I do not represent you to any government or consulate.', es: 'Solo visados de visita para Reino Unido y Schengen, como un servicio aparte de revisión de documentos y apoyo administrativo, con su propia tarifa. No es asesoramiento de inmigración y no te represento ante ningún gobierno ni consulado.' },
+    { en: 'UK and Schengen visitor visas only, offered as a separate document-checking and administrative support service with its own fee. This service is not immigration advice, and Maison Eniola does not represent you to any government or consulate.', es: 'Solo visados de visita para Reino Unido y Schengen, como un servicio aparte de revisión de documentos y apoyo administrativo, con su propia tarifa. No es asesoramiento de inmigración y no te represento ante ningún gobierno ni consulado.' },
     { en: 'The service fee is paid in full upfront and is separate from the government application fee. Visa decisions rest entirely with consular officers, so the fee is not refunded because of a refusal, a policy change or processing delays.', es: 'La tarifa se paga por adelantado y es independiente de la tasa oficial de solicitud. La decisión corresponde únicamente a los funcionarios consulares, por lo que la tarifa no se reembolsa por una denegación, un cambio normativo o retrasos en la tramitación.' },
-    { en: 'If you cancel before I begin reviewing your documents, the fee is refunded in full. If you ask me to begin within your 14-day cancellation period and then cancel, you pay only for the work already done.', es: 'Si cancelas antes de que empiece a revisar tus documentos, se reembolsa íntegramente. Si me pides empezar dentro de tu plazo de desistimiento de 14 días y luego cancelas, solo pagas el trabajo ya realizado.' },
+    { en: 'If you cancel before Maryann begins reviewing your documents, the fee is refunded in full. If you ask her to begin within your 14-day cancellation period and then cancel, you pay only for the work already done.', es: 'Si cancelas antes de que Maryann empiece a revisar tus documentos, se reembolsa íntegramente. Si le pides empezar dentro de tu plazo de desistimiento de 14 días y luego cancelas, solo pagas el trabajo ya realizado.' },
     { en: 'Nothing in these terms affects your statutory consumer rights.', es: 'Nada de estas condiciones afecta a tus derechos legales como consumidor.' },
   ],
 };
 const MASS = { en: 'Mass disruption: widespread airline cancellations, strikes or supplier insolvency affecting the wider itinerary are managed at an emergency rate of €75 per hour. The work is confirmed with you, or the lead contact, before it begins and billed in 30-minute increments.', es: 'Incidencias masivas: las cancelaciones generalizadas de vuelos, huelgas o la insolvencia de un proveedor que afecten al itinerario general se gestionan a una tarifa de urgencia de 75 € por hora. El trabajo se confirma contigo, o con la persona de contacto, antes de empezar y se factura en fracciones de 30 minutos.' };
 /* 14-day cancellation right for distance contracts; the visa terms above follow the same pattern. */
-const CANCEL_14 = { en: 'You have a 14-day right to cancel. If you ask me to begin work during this period and your consultation has already taken place, the 50% upfront payment may be non-refundable, to the extent permitted by applicable law.', es: 'Tienes un derecho de desistimiento de 14 días. Si me pides empezar el trabajo dentro de ese plazo y la llamada de consulta ya se ha realizado, el 50 % pagado por adelantado puede no ser reembolsable, en la medida en que lo permita la ley aplicable.' };
+const CANCEL_14 = { en: 'You have a 14-day right to cancel. If you ask Maryann to begin work during this period and your consultation has already taken place, the 50% upfront payment may be non-refundable, to the extent permitted by applicable law.', es: 'Tienes un derecho de desistimiento de 14 días. Si pides a Maryann empezar el trabajo dentro de ese plazo y la llamada de consulta ya se ha realizado, el 50 % pagado por adelantado puede no ser reembolsable, en la medida en que lo permita la ley aplicable.' };
 const RUSH = { en: 'Rush add-ons are 30% of the base fee only. Other add-ons stay at their normal price and are not increased.', es: 'Los extras urgentes son el 30 % de la tarifa base únicamente. Los demás extras mantienen su precio normal y no se incrementan.' };
 const STATUTORY = { en: 'Nothing in these terms affects your statutory consumer rights.', es: 'Nada de estas condiciones afecta a tus derechos legales como consumidor.' };
-const PLAN_FEES = { en: 'Planning fees cover my time and expertise only. Flights, hotels, venues, transfers, activities and government visa fees are paid by you directly to each supplier.', es: 'Mis honorarios cubren solo mi tiempo y experiencia. Vuelos, hoteles, espacios, traslados, actividades y tasas de visado los pagas tú directamente a cada proveedor.' };
-const NO_COMM = { en: 'No hidden commission is added to anything you pay a supplier. If a supplier offers me a commission, I will tell you.', es: 'No se añade ninguna comisión oculta a lo que pagas a un proveedor. Si un proveedor me ofrece una comisión, te lo diré.' };
+const PLAN_FEES = { en: 'Planning fees cover Maryann’s time and expertise only. Flights, hotels, venues, transfers, activities and government visa fees are paid by you directly to each supplier.', es: 'Los honorarios cubren solo el tiempo y la experiencia de Maryann. Vuelos, hoteles, espacios, traslados, actividades y tasas de visado los pagas tú directamente a cada proveedor.' };
+const NO_COMM = { en: 'No hidden commission is added to anything you pay a supplier. If a supplier offers Maryann a commission, she will tell you.', es: 'No se añade ninguna comisión oculta a lo que pagas a un proveedor. Si un proveedor ofrece una comisión a Maryann, te lo dirá.' };
 const SUPPLIER = { en: 'Supplier cancellation terms, change fees and fare differences are set by each supplier and paid by the traveller.', es: 'Las condiciones de cancelación, gastos de cambio y diferencias de tarifa los fija cada proveedor y los paga el viajero.' };
 
 const SERVICES = [
@@ -177,8 +177,8 @@ const SERVICES = [
     key: 'events',
     tab: { en: 'Weddings, events and proposals', es: 'Bodas, eventos y pedidas' },
     short: { en: 'Weddings and proposals', es: 'Bodas y pedidas' },
-    title: { en: 'The moment is yours. The rest is mine.', es: 'El momento es vuestro. Lo demás, cosa mía.' },
-    lead: { en: 'Destination weddings, milestone trips and the proposal you have been imagining. I handle the flights, the stays, the timing and everyone arriving where they should be.', es: 'Bodas en destino, viajes para celebrar y la pedida que llevas tiempo imaginando. Me ocupo de los vuelos, el alojamiento, los horarios y de que todo el mundo llegue donde debe.' },
+    title: { en: 'The moment is yours. The rest is handled.', es: 'El momento es vuestro. Del resto se ocupa Maryann.' },
+    lead: { en: 'Destination weddings, milestone trips and the proposal you have been imagining. Maryann handles the flights, the stays, the timing and everyone arriving where they should be.', es: 'Bodas en destino, viajes para celebrar y la pedida que llevas tiempo imaginando. Maryann se ocupa de los vuelos, el alojamiento, los horarios y de que todo el mundo llegue donde debe.' },
     tiers: [
       {
         name: 'The Proposal', sub: { en: 'Just the two of you', es: 'Solo vosotros dos' }, price: 450, plus: false,
@@ -231,7 +231,7 @@ const SERVICES = [
           [{ en: 'Multi-day schedule built', es: 'Programa de varios días' }, { en: 'A day-by-day plan from welcome dinner to farewell brunch, including run-sheets for each travel day.', es: 'Un plan día a día, de la cena de bienvenida al brunch de despedida, con hojas de ruta para cada día de viaje.' }],
           [{ en: 'Transfers between venues', es: 'Traslados entre espacios' }, { en: 'Coaches and cars booked, pick-up lists and timings set, and drivers briefed with named contacts.', es: 'Autocares y coches reservados, listas y horarios de recogida, y conductores informados con contactos.' }],
           [{ en: 'Honeymoon planned', es: 'Luna de miel planificada' }, { en: 'A separate itinerary for the two of you, with stays and experiences booked around your rest.', es: 'Un itinerario aparte para los dos, con alojamiento y experiencias pensados para descansar.' }],
-          [{ en: 'Cancellations covered', es: 'Cancelaciones cubiertas' }, { en: 'If a flight or stay falls through during the event window, I handle the rebooking as part of the package, with no extra fee for the work. Widespread disruption such as strikes is covered in the terms below.', es: 'Si un vuelo o alojamiento falla durante las fechas del evento, me ocupo de volver a reservar como parte del paquete, sin coste adicional por el trabajo. Las incidencias masivas, como huelgas, se tratan en las condiciones.' }],
+          [{ en: 'Cancellations covered', es: 'Cancelaciones cubiertas' }, { en: 'If a flight or stay falls through during the event window, Maryann handles the rebooking as part of the package, with no extra fee for the work. Widespread disruption such as strikes is covered in the terms below.', es: 'Si un vuelo o alojamiento falla durante las fechas del evento, Maryann se ocupa de volver a reservar como parte del paquete, sin coste adicional por el trabajo. Las incidencias masivas, como huelgas, se tratan en las condiciones.' }],
           [{ en: 'Final pre-travel briefing', es: 'Repaso final antes del viaje' }, { en: 'A call one week before, so every confirmation, time and contact is checked and in one place.', es: 'Una llamada una semana antes para revisar cada confirmación, horario y contacto, todo en un mismo sitio.' }],
         ],
         scope: { en: 'Couple plus up to 40 guests, up to 4 event days, and a honeymoon of up to 10 nights', es: 'Pareja y hasta 40 invitados, hasta 4 días de evento y una luna de miel de hasta 10 noches' },
@@ -247,11 +247,11 @@ const SERVICES = [
       },
     ],
     steps: [
-      [{ en: 'Message me', es: 'Escríbeme' }, { en: 'Tell me the occasion, the rough dates, where guests are coming from and a budget range.', es: 'Cuéntame la ocasión, las fechas aproximadas, de dónde vienen los invitados y un rango de presupuesto.' }],
-      [{ en: 'Consultation call', es: 'Llamada de consulta' }, { en: 'We agree the scope, and I confirm the package, any add-ons and your final fee in writing.', es: 'Acordamos el alcance y te confirmo por escrito el paquete, los extras y la tarifa final.' }],
-      [{ en: 'Deposit and planning', es: 'Anticipo y planificación' }, { en: 'Once the deposit is paid, I research, compare and send you options to approve.', es: 'Con el anticipo pagado, investigo, comparo y te envío opciones para aprobar.' }],
+      [{ en: 'Message Maryann', es: 'Escribe a Maryann' }, { en: 'Tell Maryann the occasion, the rough dates, where guests are coming from and a budget range.', es: 'Cuenta a Maryann la ocasión, las fechas aproximadas, de dónde vienen los invitados y un rango de presupuesto.' }],
+      [{ en: 'Consultation call', es: 'Llamada de consulta' }, { en: 'You agree the scope together, and Maryann confirms the package, any add-ons and your final fee in writing.', es: 'Acordáis el alcance y Maryann te confirma por escrito el paquete, los extras y la tarifa final.' }],
+      [{ en: 'Deposit and planning', es: 'Anticipo y planificación' }, { en: 'Once the deposit is paid, Maryann researches, compares and sends you options to approve.', es: 'Con el anticipo pagado, Maryann investiga, compara y te envía opciones para aprobar.' }],
       [{ en: 'Bookings and confirmations', es: 'Reservas y confirmaciones' }, { en: 'Approved bookings are made and confirmations reach you and each guest.', es: 'Se hacen las reservas aprobadas y las confirmaciones te llegan a ti y a cada invitado.' }],
-      [{ en: 'You just show up', es: 'Tú solo tienes que llegar' }, { en: 'I stay reachable across the dates in your package.', es: 'Sigo disponible durante las fechas de tu paquete.' }],
+      [{ en: 'You just show up', es: 'Tú solo tienes que llegar' }, { en: 'Maryann stays reachable across the dates in your package.', es: 'Sigo disponible durante las fechas de tu paquete.' }],
     ],
     terms: [
       [{ en: 'Payment', es: 'Pagos' }, [
@@ -264,7 +264,7 @@ const SERVICES = [
         CANCEL_14,
         { en: 'After those 14 days, fees already paid cover the work completed and are not refundable.', es: 'Pasado ese plazo, lo ya pagado cubre el trabajo realizado y no se reembolsa.' },
         SUPPLIER,
-        { en: 'Cancellations covered (The Whole Event) means I handle the rebooking whenever an individual booking falls through, as part of the package and with no extra fee for the work. Any new fares or penalties are paid by the traveller.', es: 'Cancelaciones cubiertas (The Whole Event) significa que me ocupo de volver a reservar cada vez que falla una reserva individual, como parte del paquete y sin coste adicional por el trabajo. Las nuevas tarifas o penalizaciones las paga el viajero.' },
+        { en: 'Cancellations covered (The Whole Event) means Maryann handles the rebooking whenever an individual booking falls through, as part of the package and with no extra fee for the work. Any new fares or penalties are paid by the traveller.', es: 'Cancelaciones cubiertas (The Whole Event) significa que Maryann se ocupa de volver a reservar cada vez que falla una reserva individual, como parte del paquete y sin coste adicional por el trabajo. Las nuevas tarifas o penalizaciones las paga el viajero.' },
         MASS, STATUTORY]],
       [VISA.title, VISA.items],
     ],
@@ -273,8 +273,8 @@ const SERVICES = [
     key: 'venues',
     tab: { en: 'Venue sourcing', es: 'Búsqueda de espacios' },
     short: { en: 'Venue sourcing', es: 'Búsqueda de espacios' },
-    title: { en: 'You know the wedding you want. I know where.', es: 'Sabes la boda que quieres. Yo sé dónde.' },
-    lead: { en: 'Say fairytale and most people say Spain. I might say Iceland, and show you why. I research destinations and venues against the wedding you described, then tell you the truth about each one.', es: 'Dices boda de cuento y casi todos piensan en España. Yo quizá diga Islandia, y te explique por qué. Investigo destinos y espacios según la boda que me describes y te cuento la verdad de cada uno.' },
+    title: { en: 'You know the wedding you want. Maryann knows where.', es: 'Sabes la boda que quieres. Maryann sabe dónde.' },
+    lead: { en: 'Say fairytale and most people say Spain. Maryann might say Iceland, and show you why. She researches destinations and venues against the wedding you described, then tells you the truth about each one.', es: 'Dices boda de cuento y casi todos piensan en España. Maryann quizá diga Islandia, y te explique por qué. Investiga destinos y espacios según la boda que le describes y te cuenta la verdad de cada uno.' },
     tiers: [
       {
         name: 'Destination Match', sub: { en: 'Where, and why there', es: 'Dónde, y por qué allí' }, price: 350, plus: false,
@@ -305,7 +305,7 @@ const SERVICES = [
           [{ en: 'Restrictions flagged early', es: 'Restricciones señaladas pronto' }, { en: 'Curfews, noise limits, outside-vendor rules, religious ceremony allowances and legal ceremony requirements.', es: 'Horarios de cierre, límites de ruido, normas sobre proveedores externos, ceremonias religiosas y requisitos de ceremonia legal.' }],
           [{ en: 'Availability for your dates', es: 'Disponibilidad en vuestras fechas' }, { en: 'Checked against published calendars or through enquiries for your preferred dates and back-up dates.', es: 'Comprobada en calendarios publicados o mediante consultas para vuestras fechas preferidas y alternativas.' }],
           [{ en: 'Airport and stay distances', es: 'Distancias a aeropuerto y alojamiento' }, { en: 'Travel times from the airport and to guest accommodation at different price levels.', es: 'Tiempos desde el aeropuerto y hasta alojamientos de invitados de distintos precios.' }],
-          [{ en: 'Photos, links and my ranking', es: 'Fotos, enlaces y mi clasificación' }, { en: 'Every venue presented visually with its links and my honest ranking and reasoning.', es: 'Cada espacio presentado con imágenes, enlaces y mi clasificación sincera y razonada.' }],
+          [{ en: 'Photos, links and a ranking', es: 'Fotos, enlaces y una clasificación' }, { en: 'Every venue presented visually with its links and Maryann’s honest ranking and reasoning.', es: 'Cada espacio presentado con imágenes, enlaces y la clasificación sincera y razonada de Maryann.' }],
         ],
         scope: { en: 'One destination with six to eight venues researched and compared side by side', es: 'Un destino con seis a ocho espacios investigados y comparados' },
         turn: { en: '10 to 14 working days', es: 'De 10 a 14 días laborables' },
@@ -317,15 +317,15 @@ const SERVICES = [
         ],
       },
       {
-        name: 'Verified Sourcing', sub: { en: 'I speak to them directly', es: 'Hablo con ellos directamente' }, price: 1950, plus: true,
+        name: 'Verified Sourcing', sub: { en: 'Maryann speaks to them directly', es: 'Maryann habla con ellos directamente' }, price: 1950, plus: true,
         best: { en: 'Couples who want certainty before paying a venue deposit', es: 'Parejas que quieren certeza antes de pagar la reserva de un espacio' },
         rows: [
           [{ en: 'Everything in Venue Shortlist', es: 'Todo lo de Venue Shortlist' }, { en: 'The full shortlist with comparison, restrictions, availability and ranking.', es: 'La selección completa con comparación, restricciones, disponibilidad y clasificación.' }],
-          [{ en: 'Venues contacted on your behalf', es: 'Contacto con los espacios' }, { en: 'Your questions asked, written quotes requested and dates held provisionally where venues allow it.', es: 'Hago vuestras preguntas, pido presupuestos por escrito y bloqueo fechas provisionalmente cuando el espacio lo permite.' }],
-          [{ en: 'Live video walkthroughs', es: 'Visitas en vídeo en directo' }, { en: 'The top three venues walked through with you on a live video call led by me, showing the spaces as they really are.', es: 'Los tres mejores espacios recorridos con vosotros en una videollamada en directo guiada por mí, tal y como son.' }],
+          [{ en: 'Venues contacted on your behalf', es: 'Contacto con los espacios' }, { en: 'Your questions asked, written quotes requested and dates held provisionally where venues allow it.', es: 'Maryann hace vuestras preguntas, pide presupuestos por escrito y bloquea fechas provisionalmente cuando el espacio lo permite.' }],
+          [{ en: 'Live video walkthroughs', es: 'Visitas en vídeo en directo' }, { en: 'The top three venues walked through with you on a live video call led by Maryann, showing the spaces as they really are.', es: 'Los tres mejores espacios recorridos con vosotros en una videollamada en directo guiada por mí, tal y como son.' }],
           [{ en: 'What the website never shows', es: 'Lo que la web nunca enseña' }, { en: 'Rain plans, access and parking, sound, toilets, hidden fees and the true all-in cost, confirmed with the venue and shown on camera where possible.', es: 'Plan para lluvia, accesos y aparcamiento, sonido, aseos, costes ocultos y el precio total real, confirmados con el espacio y mostrados en cámara cuando es posible.' }],
           [{ en: 'Terms reviewed and negotiated', es: 'Condiciones revisadas y negociadas' }, { en: 'Inclusions and rates requested on your behalf, with the key contract terms summarised in plain English.', es: 'Pido inclusiones y tarifas en vuestro nombre y resumo las condiciones clave del contrato en lenguaje claro.' }],
-          [{ en: 'Site verification', es: 'Verificación del espacio' }, { en: 'The base fee includes up to 3 live video walkthroughs led by me. If you would prefer in-person inspections instead, each travel day is billed at a flat professional rate of €280 plus receipted travel expenses, agreed with you in writing beforehand.', es: 'La tarifa base incluye hasta 3 visitas en vídeo en directo guiadas por mí. Si preferís visitas presenciales, cada día de desplazamiento se factura a una tarifa profesional fija de 280 € más los gastos de viaje justificados, acordados por escrito de antemano.' }],
+          [{ en: 'Site verification', es: 'Verificación del espacio' }, { en: 'The base fee includes up to 3 live video walkthroughs led by Maryann. If you would prefer in-person inspections instead, each travel day is billed at a flat professional rate of €280 plus receipted travel expenses, agreed with you in writing beforehand.', es: 'La tarifa base incluye hasta 3 visitas en vídeo en directo guiadas por mí. Si preferís visitas presenciales, cada día de desplazamiento se factura a una tarifa profesional fija de 280 € más los gastos de viaje justificados, acordados por escrito de antemano.' }],
           [{ en: 'Final recommendation call', es: 'Llamada de recomendación final' }, { en: 'A one-hour call to decide, with a written summary of the recommended venue’s terms.', es: 'Una llamada de una hora para decidir, con un resumen escrito de las condiciones del espacio recomendado.' }],
         ],
         scope: { en: 'Up to eight venues contacted directly, with the top three walked through live on video', es: 'Hasta ocho espacios contactados directamente y los tres mejores recorridos en vídeo en directo' },
@@ -338,9 +338,9 @@ const SERVICES = [
       },
     ],
     steps: [
-      [{ en: 'Message me', es: 'Escríbeme' }, { en: 'Describe the wedding you want: the feel, guest numbers, season and budget.', es: 'Descríbeme la boda que queréis: el ambiente, los invitados, la temporada y el presupuesto.' }],
+      [{ en: 'Message Maryann', es: 'Escribe a Maryann' }, { en: 'Describe the wedding you want: the feel, guest numbers, season and budget.', es: 'Descríbeme la boda que queréis: el ambiente, los invitados, la temporada y el presupuesto.' }],
       [{ en: 'Choose your starting stage', es: 'Elige por dónde empezar' }, { en: 'Start with Destination Match, or go straight to Venue Shortlist if your destination is settled.', es: 'Empieza con Destination Match o pasa directamente a Venue Shortlist si ya tenéis destino.' }],
-      [{ en: 'Deposit and research', es: 'Anticipo e investigación' }, { en: 'I research against your brief and flag deal-breakers early.', es: 'Investigo según vuestro briefing y señalo pronto lo que descarta un lugar.' }],
+      [{ en: 'Deposit and research', es: 'Anticipo e investigación' }, { en: 'Maryann researches against your brief and flags deal-breakers early.', es: 'Maryann investiga según vuestro briefing y señala pronto lo que descarta un lugar.' }],
       [{ en: 'Report and review call', es: 'Informe y llamada de revisión' }, { en: 'You receive the written findings and we go through them together.', es: 'Recibís las conclusiones por escrito y las repasamos juntos.' }],
       [{ en: 'Move on if you want to', es: 'Seguid si queréis' }, { en: 'Each stage builds on the last. Nothing is repeated, and Destination Match fees are credited.', es: 'Cada etapa parte de la anterior. No se repite nada y el Destination Match se descuenta.' }],
     ],
@@ -350,13 +350,13 @@ const SERVICES = [
         { en: 'Venue Shortlist: 50% to begin and 50% on delivery of the shortlist.', es: 'Venue Shortlist: 50 % para empezar y 50 % al entregar la selección.' },
         { en: 'Verified Sourcing: 50% to begin and 50% when the work is complete and the final recommendation is delivered.', es: 'Verified Sourcing: 50 % para empezar y 50 % cuando el trabajo esté completo y se entregue la recomendación final.' },
         { en: 'Venue sourcing fees cover research and advice only. Venue deposits and hire fees are paid by you directly to the venue.', es: 'Estos honorarios cubren solo investigación y asesoramiento. Las reservas y el alquiler los pagáis directamente al espacio.' },
-        { en: 'No commission is taken from venues without your knowledge. If a venue offers one, I will tell you.', es: 'No acepto comisiones de espacios sin que lo sepáis. Si un espacio me ofrece una, os lo diré.' },
+        { en: 'No commission is taken from venues without your knowledge. If a venue offers one, Maryann will tell you.', es: 'No se aceptan comisiones de espacios sin que lo sepáis. Si un espacio ofrece una, Maryann os lo dirá.' },
         RUSH]],
       [{ en: 'Good to know', es: 'Conviene saber' }, [
         { en: 'Availability and prices are confirmed at the time of checking. Venues can change them until you sign and pay a deposit.', es: 'La disponibilidad y los precios se confirman en el momento de consultarlos. Los espacios pueden cambiarlos hasta que firméis y paguéis la reserva.' },
         { en: 'Final decisions and contracts are between you and the venue.', es: 'Las decisiones finales y los contratos son entre vosotros y el espacio.' },
         { en: 'You can cancel before the consultation call for a full refund.', es: 'Podéis cancelar antes de la llamada de consulta con reembolso íntegro.' },
-        { en: 'You have 14 days from booking to cancel. If you asked me to start work within those 14 days and then cancel, you pay only for the work already done. After that, fees cover the work completed.', es: 'Tenéis 14 días desde la contratación para desistir. Si me pedisteis empezar dentro de ese plazo y luego canceláis, solo pagáis el trabajo ya realizado. Pasado ese plazo, los honorarios cubren el trabajo realizado.' },
+        { en: 'You have 14 days from booking to cancel. If you asked Maryann to start work within those 14 days and then cancel, you pay only for the work already done. After that, fees cover the work completed.', es: 'Tenéis 14 días desde la contratación para desistir. Si pedisteis a Maryann empezar dentro de ese plazo y luego canceláis, solo pagáis el trabajo ya realizado. Pasado ese plazo, los honorarios cubren el trabajo realizado.' },
         { en: 'Nothing in these terms affects your statutory consumer rights.', es: 'Nada de estas condiciones afecta a vuestros derechos legales como consumidores.' },
         { en: 'This is venue sourcing only. Travel planning and guest travel are quoted separately.', es: 'Es solo búsqueda de espacios. La planificación de viajes y los viajes de invitados se presupuestan aparte.' }]],
     ],
@@ -366,15 +366,15 @@ const SERVICES = [
     tab: { en: 'Travel planning', es: 'Planificación de viajes' },
     short: { en: 'Travel planning', es: 'Viajes' },
     title: { en: 'Someone else can do the planning.', es: 'Deja que otra persona lo planifique.' },
-    lead: { en: 'Tell me your dream holiday and your budget. I come back with real options, with costs compared, distances checked and everything considered.', es: 'Cuéntame tu viaje soñado y tu presupuesto. Vuelvo con opciones reales, costes comparados, distancias comprobadas y todo pensado.' },
+    lead: { en: 'Travelling solo, as a couple, with family or as a group: tell Maryann your dream holiday and your budget. She comes back with real options, with costs compared, distances checked and everything considered.', es: 'Solo, en pareja, en familia o en grupo: cuenta a Maryann tu viaje soñado y tu presupuesto. Vuelve con opciones reales, costes comparados, distancias comprobadas y todo pensado.' },
     tiers: [
       {
         name: 'Itinerary Only', sub: { en: 'You book it', es: 'Reservas tú' }, price: 120, plus: false,
-        best: { en: 'Confident travellers who want a researched plan and book it themselves', es: 'Viajeros con experiencia que quieren un plan bien investigado y reservar por su cuenta' },
+        best: { en: 'Solo travellers, couples and families who want a researched plan and book it themselves', es: 'Viajeros solos, parejas y familias que quieren un plan bien investigado y reservar por su cuenta' },
         rows: [
           [{ en: 'Consultation call', es: 'Llamada de consulta' }, { en: 'A 30-minute call on your travel style, budget ceiling, dates and must-sees.', es: 'Una llamada de 30 minutos sobre tu forma de viajar, presupuesto máximo, fechas e imprescindibles.' }],
           [{ en: 'Options built to your budget', es: 'Opciones según tu presupuesto' }, { en: 'Two or three places to stay per base, with prices and reviews checked on more than one platform.', es: 'Dos o tres alojamientos por base, con precios y opiniones comprobados en más de una plataforma.' }],
-          [{ en: 'Flight options to choose from', es: 'Opciones de vuelo para elegir' }, { en: 'Two or three flight options compared by airline, times, stops, baggage and fare range, with links so you can book the one you choose. I do not book them for you.', es: 'Dos o tres opciones de vuelo comparadas por aerolínea, horarios, escalas, equipaje y tarifa, con enlaces para que reserves la que elijas. No las reservo yo.' }],
+          [{ en: 'Flight options to choose from', es: 'Opciones de vuelo para elegir' }, { en: 'Two or three flight options compared by airline, times, stops, baggage and fare range, with links so you can book the one you choose. Maryann does not book them for you.', es: 'Dos o tres opciones de vuelo comparadas por aerolínea, horarios, escalas, equipaje y tarifa, con enlaces para que reserves la que elijas. Maryann no las reserva por ti.' }],
           [{ en: 'Day-by-day itinerary', es: 'Itinerario día a día' }, { en: 'A clear PDF with daily plans, timings and map links.', es: 'Un PDF claro con planes diarios, horarios y enlaces a mapas.' }],
           [{ en: 'Distances and travel times', es: 'Distancias y tiempos de viaje' }, { en: 'Airport transfers, train and bus times, and late-arrival cut-offs checked in advance.', es: 'Traslados al aeropuerto, horarios de tren y autobús y horas límite de llegada comprobados de antemano.' }],
           [{ en: 'Visa requirement checked', es: 'Requisitos de entrada comprobados' }, { en: 'Entry requirements confirmed for your passport, with links to official sources.', es: 'Requisitos de entrada confirmados para tu pasaporte, con enlaces a fuentes oficiales.' }],
@@ -391,8 +391,8 @@ const SERVICES = [
         ],
       },
       {
-        name: 'Planned & Booked', sub: { en: 'I book it', es: 'Reservo yo' }, price: 280, plus: false,
-        best: { en: 'Travellers who want the whole trip handled', es: 'Viajeros que quieren olvidarse de todo el viaje' },
+        name: 'Planned & Booked', sub: { en: 'Booked for you', es: 'Reservado por Maryann' }, price: 280, plus: false,
+        best: { en: 'Individuals, couples and families who want the whole trip handled', es: 'Personas, parejas y familias que quieren olvidarse de todo el viaje' },
         rows: [
           [{ en: 'Everything in Itinerary Only', es: 'Todo lo de Itinerary Only' }, { en: 'Consultation, budget-matched options, flight options, day-by-day itinerary and entry checks.', es: 'Consulta, opciones según presupuesto, opciones de vuelo, itinerario día a día y requisitos de entrada.' }],
           [{ en: 'Flights checked and fares compared', es: 'Vuelos revisados y tarifas comparadas' }, { en: 'Your flight options re-checked across airlines, routes and flexible dates right before booking, so you get the best fare available.', es: 'Tus opciones de vuelo revisadas de nuevo entre aerolíneas, rutas y fechas flexibles justo antes de reservar, para conseguir la mejor tarifa disponible.' }],
@@ -400,7 +400,7 @@ const SERVICES = [
           [{ en: 'Stays and activities secured', es: 'Alojamiento y actividades asegurados' }, { en: 'Accommodation, tours and tickets reserved, with free-cancellation options chosen where available.', es: 'Alojamiento, visitas y entradas reservados, eligiendo cancelación gratuita cuando existe.' }],
           [{ en: 'Confirmations sent to you', es: 'Confirmaciones para ti' }, { en: 'One organised travel pack with every confirmation, address and contact.', es: 'Un dossier de viaje ordenado con cada confirmación, dirección y contacto.' }],
           [{ en: 'Reachable during your trip', es: 'Disponible durante el viaje' }, { en: 'WhatsApp support from 8:00 to 22:00 CET, with replies within 3 hours.', es: 'Asistencia por WhatsApp de 8:00 a 22:00 CET, con respuesta en menos de 3 horas.' }],
-          [{ en: 'Cancellations covered', es: 'Cancelaciones cubiertas' }, { en: 'If a flight or stay falls through during your trip, I handle the rebooking as part of the package, with no extra fee for the work. Widespread disruption such as strikes is covered in the terms below.', es: 'Si un vuelo o alojamiento falla durante el viaje, me ocupo de volver a reservar como parte del paquete, sin coste adicional por el trabajo. Las incidencias masivas, como huelgas, se tratan en las condiciones.' }],
+          [{ en: 'Cancellations covered', es: 'Cancelaciones cubiertas' }, { en: 'If a flight or stay falls through during your trip, Maryann handles the rebooking as part of the package, with no extra fee for the work. Widespread disruption such as strikes is covered in the terms below.', es: 'Si un vuelo o alojamiento falla durante el viaje, Maryann se ocupa de volver a reservar como parte del paquete, sin coste adicional por el trabajo. Las incidencias masivas, como huelgas, se tratan en las condiciones.' }],
         ],
         scope: { en: 'Up to 2 travellers, up to 10 days, up to 2 countries', es: 'Hasta 2 viajeros, hasta 10 días, hasta 2 países' },
         turn: { en: '7 working days from the consultation call', es: '7 días laborables desde la llamada de consulta' },
@@ -413,14 +413,14 @@ const SERVICES = [
         ],
       },
       {
-        name: 'Group & Occasion', sub: { en: 'I book it for everyone', es: 'Reservo para todos' }, price: 550, plus: true,
+        name: 'Group & Occasion', sub: { en: 'Booked for everyone', es: 'Reservado para todos' }, price: 550, plus: true,
         best: { en: 'Birthdays, anniversaries, family and friends trips', es: 'Cumpleaños, aniversarios y viajes en familia o con amigos' },
         rows: [
           [{ en: 'Everything in Planned & Booked', es: 'Todo lo de Planned & Booked' }, { en: 'Every booking made for you, a travel pack, on-trip support and cancellation cover.', es: 'Todas las reservas hechas, dossier de viaje, asistencia durante el viaje y cancelaciones cubiertas.' }],
           [{ en: 'Multi-arrival coordination', es: 'Coordinación de llegadas' }, { en: 'Flights from different cities timed around each other, with meeting points and transfers lined up.', es: 'Vuelos desde distintas ciudades coordinados entre sí, con puntos de encuentro y traslados organizados.' }],
           [{ en: 'Budget split per traveller', es: 'Presupuesto por viajero' }, { en: 'A cost sheet for each person, so everyone sees and pays their own share.', es: 'Una hoja de costes por persona, para que cada uno vea y pague su parte.' }],
           [{ en: 'One itinerary everyone can follow', es: 'Un itinerario para todos' }, { en: 'A shared group plan with timings, meeting points and one group contact sheet.', es: 'Un plan de grupo compartido con horarios, puntos de encuentro y una hoja de contactos.' }],
-          [{ en: 'One lead contact', es: 'Una persona de contacto' }, { en: 'I work through one organiser, so decisions stay quick and clear.', es: 'Trabajo con una sola persona organizadora, para decidir rápido y con claridad.' }],
+          [{ en: 'One lead contact', es: 'Una persona de contacto' }, { en: 'Maryann works through one organiser, so decisions stay quick and clear.', es: 'Trabajo con una sola persona organizadora, para decidir rápido y con claridad.' }],
         ],
         scope: { en: 'Up to 8 travellers, 1 destination, up to 10 days', es: 'Hasta 8 viajeros, 1 destino, hasta 10 días' },
         turn: { en: '10 working days from the consultation call', es: '10 días laborables desde la llamada de consulta' },
@@ -433,11 +433,11 @@ const SERVICES = [
       },
     ],
     steps: [
-      [{ en: 'Message me', es: 'Escríbeme' }, { en: 'Share where you would like to go, your dates, how many travellers and your budget.', es: 'Cuéntame adónde quieres ir, tus fechas, cuántos viajáis y tu presupuesto.' }],
-      [{ en: 'Consultation call', es: 'Llamada de consulta' }, { en: 'We agree the level of service and I confirm your fee in writing.', es: 'Acordamos el nivel de servicio y te confirmo la tarifa por escrito.' }],
-      [{ en: 'Payment and planning', es: 'Pago y planificación' }, { en: 'I build your options and itinerary.', es: 'Preparo tus opciones y tu itinerario.' }],
-      [{ en: 'Review and book', es: 'Revisar y reservar' }, { en: 'You approve the plan, then either book it yourself or I book it for you.', es: 'Apruebas el plan y lo reservas tú o lo reservo yo.' }],
-      [{ en: 'Enjoy the trip', es: 'Disfruta del viaje' }, { en: 'On Planned & Booked and Group & Occasion, I stay reachable while you travel.', es: 'Con Planned & Booked y Group & Occasion sigo disponible mientras viajas.' }],
+      [{ en: 'Message Maryann', es: 'Escribe a Maryann' }, { en: 'Share where you would like to go, your dates, how many travellers and your budget.', es: 'Cuenta a Maryann adónde quieres ir, tus fechas, cuántos viajáis y tu presupuesto.' }],
+      [{ en: 'Consultation call', es: 'Llamada de consulta' }, { en: 'You agree the level of service together and Maryann confirms your fee in writing.', es: 'Acordáis el nivel de servicio y Maryann te confirma la tarifa por escrito.' }],
+      [{ en: 'Payment and planning', es: 'Pago y planificación' }, { en: 'Maryann builds your options and itinerary.', es: 'Maryann prepara tus opciones y tu itinerario.' }],
+      [{ en: 'Review and book', es: 'Revisar y reservar' }, { en: 'You approve the plan, then either book it yourself or Maryann books it for you.', es: 'Apruebas el plan y lo reservas tú o lo reserva Maryann.' }],
+      [{ en: 'Enjoy the trip', es: 'Disfruta del viaje' }, { en: 'On Planned & Booked and Group & Occasion, Maryann stays reachable while you travel.', es: 'Con Planned & Booked y Group & Occasion sigo disponible mientras viajas.' }],
     ],
     terms: [
       [{ en: 'Payment', es: 'Pagos' }, [
@@ -449,7 +449,7 @@ const SERVICES = [
         CANCEL_14,
         { en: 'After those 14 days, fees already paid cover the work completed.', es: 'Pasado ese plazo, lo ya pagado cubre el trabajo realizado.' },
         SUPPLIER,
-        { en: 'Cancellations covered (Planned & Booked and Group & Occasion) means I handle the rebooking whenever an individual booking falls through, as part of the package and with no extra fee for the work. Any new fares or penalties are paid by the traveller.', es: 'Cancelaciones cubiertas (Planned & Booked y Group & Occasion) significa que me ocupo de volver a reservar cada vez que falla una reserva individual, como parte del paquete y sin coste adicional por el trabajo. Las nuevas tarifas o penalizaciones las paga el viajero.' },
+        { en: 'Cancellations covered (Planned & Booked and Group & Occasion) means Maryann handles the rebooking whenever an individual booking falls through, as part of the package and with no extra fee for the work. Any new fares or penalties are paid by the traveller.', es: 'Cancelaciones cubiertas (Planned & Booked y Group & Occasion) significa que Maryann se ocupa de volver a reservar cada vez que falla una reserva individual, como parte del paquete y sin coste adicional por el trabajo. Las nuevas tarifas o penalizaciones las paga el viajero.' },
         MASS,
         { en: 'Travel insurance is strongly recommended for every trip.', es: 'Recomiendo encarecidamente contratar un seguro de viaje.' },
         STATUTORY]],
@@ -484,8 +484,8 @@ const LEGAL = {
   privacy: {
     title: { en: 'Privacy notice', es: 'Aviso de privacidad' },
     body: {
-      en: '<p><strong>Who is responsible:</strong> Maryann Eniola, maisoneniola@gmail.com.</p><p><strong>What this website collects:</strong> when you send the enquiry form, your message is emailed to me and a copy is emailed to you; the site keeps only your name, email, phone if given and the subject line for up to 60 days, so it can remind me if I have not replied. If you book a consultation call, the booking (name, email, phone if given, time) is kept for 180 days. If you use the WhatsApp or email buttons instead, the message only travels through those apps. If you add an estimate to your enquiry, it is kept in your own browser only until you close the tab. The site also counts page views by page and country, with no cookie, no IP address and nothing that identifies you; browsers that send Do Not Track are not counted.</p><p><strong>Why I use your details:</strong> to reply to your enquiry and prepare a proposal, at your request before any contract (GDPR Article 6(1)(b)).</p><p><strong>Who else sees them:</strong> Cloudflare, which hosts this site and delivers the form email, and WhatsApp (Meta) or your email provider if you send that way. If you become a client, bookings share only what each supplier needs.</p><p><strong>How long I keep them:</strong> enquiry records are deleted after 60 days and bookings after 180 days; messages that don’t lead to work are deleted from my inbox after 12 months. Client records are kept as long as tax law requires.</p><p><strong>Your rights:</strong> you can ask to see, correct, delete or restrict your data, or object to its use, by emailing me. You can also complain to the Spanish data protection authority (AEPD, aepd.es).</p><h2 class="subhead" id="reviews">Reviews</h2><p>If you send a review through the form, it is stored (your name, the name you chose to be shown, your email if you gave it, and the review) until I approve or decline it, for at most 90 days. Approved reviews are published on this site under the name you chose and kept until you ask for them to be removed, by emailing me. Nothing else on this site is stored.</p><h2 class="subhead" id="cookies">Cookies</h2><p>This website sets no cookies and runs no analytics or tracking scripts. If you add an estimate to your enquiry, the figures are kept in your browser’s session storage only until you close the tab, and nothing reaches me until you choose to send your message.</p>',
-      es: '<p><strong>Responsable:</strong> Maryann Eniola, maisoneniola@gmail.com.</p><p><strong>Qué recoge esta web:</strong> al enviar el formulario, tu mensaje me llega por correo y tú recibes una copia; la web conserva solo tu nombre, correo, teléfono si lo indicas y el asunto durante un máximo de 60 días, para recordarme si no he respondido. Si reservas una llamada de consulta, la reserva (nombre, correo, teléfono si lo indicas y hora) se conserva 180 días. Si usas los botones de WhatsApp o correo, el mensaje solo viaja por esas aplicaciones. Si añades un presupuesto a tu consulta, se guarda solo en tu navegador hasta que cierras la pestaña. La web también cuenta las visitas por página y país, sin cookies, sin dirección IP y sin nada que te identifique; los navegadores que envían “No rastrear” no se cuentan.</p><p><strong>Para qué uso tus datos:</strong> para responder a tu consulta y preparar una propuesta, a petición tuya y antes de cualquier contrato (artículo 6.1.b del RGPD).</p><p><strong>Quién más los ve:</strong> Cloudflare, que aloja esta web y entrega el correo del formulario, y WhatsApp (Meta) o tu proveedor de correo si envías por esa vía. Si te conviertes en cliente, en las reservas solo se comparte lo que cada proveedor necesita.</p><p><strong>Cuánto tiempo los guardo:</strong> los registros de consultas se borran a los 60 días y las reservas a los 180; los mensajes que no dan lugar a un encargo se borran de mi correo pasados 12 meses. Los datos de clientes se conservan el tiempo que exige la normativa fiscal.</p><p><strong>Tus derechos:</strong> puedes pedir acceso, rectificación, supresión, limitación u oponerte al uso de tus datos escribiéndome. También puedes reclamar ante la Agencia Española de Protección de Datos (AEPD, aepd.es).</p><h2 class="subhead" id="reviews">Opiniones</h2><p>Si envías una opinión con el formulario, se guarda (tu nombre, el nombre con el que quieres aparecer, tu correo si lo indicas y la opinión) hasta que la apruebo o rechazo, como máximo 90 días. Las opiniones aprobadas se publican en esta web con el nombre elegido y se conservan hasta que pidas que se retiren, escribiéndome por correo. Nada más se guarda en esta web.</p><h2 class="subhead" id="cookies">Cookies</h2><p>Esta web no instala cookies ni utiliza analítica ni scripts de seguimiento. Si añades un presupuesto a tu consulta, las cifras se guardan en el almacenamiento de sesión de tu navegador solo hasta que cierras la pestaña, y no me llega nada hasta que decides enviar tu mensaje.</p>'
+      en: '<p><strong>Who is responsible:</strong> Maryann Eniola, maisoneniola@gmail.com.</p><p><strong>What this website collects:</strong> when you send the enquiry form, your message is emailed to Maryann and a copy is emailed to you; the site keeps only your name, email, phone if given and the subject line for up to 60 days, so it can remind her if she has not replied. If you book a consultation call, the booking (name, email, phone if given, time) is kept for 180 days. If you use the WhatsApp or email buttons instead, the message only travels through those apps. If you add an estimate to your enquiry, it is kept in your own browser only until you close the tab. The site also counts page views by page and country, with no cookie, no IP address and nothing that identifies you; browsers that send Do Not Track are not counted.</p><p><strong>Why your details are used:</strong> to reply to your enquiry and prepare a proposal, at your request before any contract (GDPR Article 6(1)(b)).</p><p><strong>Who else sees them:</strong> Cloudflare, which hosts this site and delivers the form email, and WhatsApp (Meta) or your email provider if you send that way. If you become a client, bookings share only what each supplier needs.</p><p><strong>How long they are kept:</strong> enquiry records are deleted after 60 days and bookings after 180 days; messages that don’t lead to work are deleted from Maryann’s inbox after 12 months. Client records are kept as long as tax law requires.</p><p><strong>Your rights:</strong> you can ask to see, correct, delete or restrict your data, or object to its use, by emailing Maryann. You can also complain to the Spanish data protection authority (AEPD, aepd.es).</p><h2 class="subhead" id="reviews">Reviews</h2><p>If you send a review through the form, it is stored (your name, the name you chose to be shown, your email if you gave it, and the review) until Maryann approves or declines it, for at most 90 days. Approved reviews are published on this site under the name you chose and kept until you ask for them to be removed, by emailing Maryann. Nothing else on this site is stored.</p><h2 class="subhead" id="cookies">Cookies</h2><p>This website sets no cookies and runs no analytics or tracking scripts. If you add an estimate to your enquiry, the figures are kept in your browser’s session storage only until you close the tab, and nothing reaches Maryann until you choose to send your message.</p>',
+      es: '<p><strong>Responsable:</strong> Maryann Eniola, maisoneniola@gmail.com.</p><p><strong>Qué recoge esta web:</strong> al enviar el formulario, tu mensaje llega por correo a Maryann y tú recibes una copia; la web conserva solo tu nombre, correo, teléfono si lo indicas y el asunto durante un máximo de 60 días, para recordarle si no ha respondido. Si reservas una llamada de consulta, la reserva (nombre, correo, teléfono si lo indicas y hora) se conserva 180 días. Si usas los botones de WhatsApp o correo, el mensaje solo viaja por esas aplicaciones. Si añades un presupuesto a tu consulta, se guarda solo en tu navegador hasta que cierras la pestaña. La web también cuenta las visitas por página y país, sin cookies, sin dirección IP y sin nada que te identifique; los navegadores que envían “No rastrear” no se cuentan.</p><p><strong>Para qué se usan tus datos:</strong> para responder a tu consulta y preparar una propuesta, a petición tuya y antes de cualquier contrato (artículo 6.1.b del RGPD).</p><p><strong>Quién más los ve:</strong> Cloudflare, que aloja esta web y entrega el correo del formulario, y WhatsApp (Meta) o tu proveedor de correo si envías por esa vía. Si te conviertes en cliente, en las reservas solo se comparte lo que cada proveedor necesita.</p><p><strong>Cuánto tiempo se conservan:</strong> los registros de consultas se borran a los 60 días y las reservas a los 180; los mensajes que no dan lugar a un encargo se borran del correo de Maryann pasados 12 meses. Los datos de clientes se conservan el tiempo que exige la normativa fiscal.</p><p><strong>Tus derechos:</strong> puedes pedir acceso, rectificación, supresión, limitación u oponerte al uso de tus datos escribiendo a Maryann. También puedes reclamar ante la Agencia Española de Protección de Datos (AEPD, aepd.es).</p><h2 class="subhead" id="reviews">Opiniones</h2><p>Si envías una opinión con el formulario, se guarda (tu nombre, el nombre con el que quieres aparecer, tu correo si lo indicas y la opinión) hasta que la apruebo o rechazo, como máximo 90 días. Las opiniones aprobadas se publican en esta web con el nombre elegido y se conservan hasta que pidas que se retiren, escribiendo a Maryann por correo. Nada más se guarda en esta web.</p><h2 class="subhead" id="cookies">Cookies</h2><p>Esta web no instala cookies ni utiliza analítica ni scripts de seguimiento. Si añades un presupuesto a tu consulta, las cifras se guardan en el almacenamiento de sesión de tu navegador solo hasta que cierras la pestaña, y no llega nada a Maryann hasta que decides enviar tu mensaje.</p>'
     }
   }
 };
@@ -508,22 +508,22 @@ const PDF_COPY = {
   seeVenues: { en: 'see the Venue Sourcing breakdown', es: 'ver la guía de Búsqueda de espacios' },
   events: {
     kicker: { en: 'Weddings • Events • Proposals', es: 'Bodas • Eventos • Pedidas' },
-    title: { en: ['The moment is yours.', 'The rest is mine.'], es: ['El momento es vuestro.', 'Lo demás, cosa mía.'] },
-    intro: { en: 'Destination weddings, milestone trips and the proposal you have been imagining. I handle the flights, the stays, the timing and everyone arriving where they should be. This document sets out exactly what each package includes, how far the base fee goes, and what changes the price, so you can choose with confidence.', es: 'Bodas en destino, viajes para celebrar y la pedida que llevas tiempo imaginando. Me ocupo de los vuelos, el alojamiento, los horarios y de que todo el mundo llegue donde debe. Este documento explica qué incluye cada paquete, hasta dónde llega la tarifa base y qué cambia el precio, para que elijas con confianza.' },
+    title: { en: ['The moment is yours.', 'The rest is handled.'], es: ['El momento es vuestro.', 'Del resto se ocupa Maryann.'] },
+    intro: { en: 'Destination weddings, milestone trips and the proposal you have been imagining. Maryann handles the flights, the stays, the timing and everyone arriving where they should be. This document sets out exactly what each package includes, how far the base fee goes, and what changes the price, so you can choose with confidence.', es: 'Bodas en destino, viajes para celebrar y la pedida que llevas tiempo imaginando. Maryann se ocupa de los vuelos, el alojamiento, los horarios y de que todo el mundo llegue donde debe. Este documento explica qué incluye cada paquete, hasta dónde llega la tarifa base y qué cambia el precio, para que elijas con confianza.' },
     glanceScope: { en: ['2 travellers · 1 destination · up to 5 nights', 'Couple + up to 20 guests (10 households)', 'Couple + up to 40 guests · up to 4 event days'], es: ['2 viajeros · 1 destino · hasta 5 noches', 'Pareja + hasta 20 invitados (10 hogares)', 'Pareja + hasta 40 invitados · hasta 4 días'] },
     glanceNote: { en: 'Each fee reflects the real hours behind it: research, supplier contact, cross-checking reviews and prices, building documents and staying reachable. Every package starts with a consultation call, and the base fee covers the scope shown. Larger groups or longer trips are quoted using the add-on rates below.', es: 'Cada tarifa refleja las horas reales que hay detrás: investigación, contacto con proveedores, comprobación de opiniones y precios, preparación de documentos y disponibilidad. Todos los paquetes empiezan con una llamada de consulta y la tarifa base cubre el alcance indicado. Grupos más grandes o viajes más largos se presupuestan con los extras.' },
   },
   venues: {
     kicker: { en: 'Venue Sourcing • Weddings & Events', es: 'Búsqueda de espacios • Bodas y eventos' },
-    title: { en: ['You know the wedding you want.', 'I know where.'], es: ['Sabes la boda que quieres.', 'Yo sé dónde.'] },
-    intro: { en: 'Say fairytale and most people say Spain. I might say Iceland, and show you why. I research destinations and venues against the wedding you described, then tell you the truth about each one. This breakdown sets out what each stage delivers, what it costs and how the stages build on one another.', es: 'Dices boda de cuento y casi todos piensan en España. Yo quizá diga Islandia, y te explique por qué. Investigo destinos y espacios según la boda que me describes y te cuento la verdad de cada uno. Esta guía explica qué aporta cada etapa, cuánto cuesta y cómo se apoyan unas en otras.' },
+    title: { en: ['You know the wedding you want.', 'Maryann knows where.'], es: ['Sabes la boda que quieres.', 'Maryann sabe dónde.'] },
+    intro: { en: 'Say fairytale and most people say Spain. Maryann might say Iceland, and show you why. She researches destinations and venues against the wedding you described, then tells you the truth about each one. This breakdown sets out what each stage delivers, what it costs and how the stages build on one another.', es: 'Dices boda de cuento y casi todos piensan en España. Maryann quizá diga Islandia, y te explique por qué. Investiga destinos y espacios según la boda que le describes y te cuenta la verdad de cada uno. Esta guía explica qué aporta cada etapa, cuánto cuesta y cómo se apoyan unas en otras.' },
     glanceScope: { en: ['1 wedding brief · 3 destinations ranked', '1 destination · 6 to 8 venues', 'Up to 8 venues contacted · top 3 walked through live'], es: ['1 briefing · 3 destinos clasificados', '1 destino · de 6 a 8 espacios', 'Hasta 8 espacios contactados · los 3 mejores en vídeo'] },
     glanceNote: { en: 'Fees reflect the research hours involved: season and access data, venue terms, availability checks and, at the Verified stage, direct conversations with venues. The Destination Match fee is credited in full against a Venue Shortlist booked within 30 days.', es: 'Las tarifas reflejan las horas de investigación: datos de temporada y acceso, condiciones de los espacios, disponibilidad y, en la etapa Verified, conversaciones directas con los espacios. El Destination Match se descuenta íntegro de un Venue Shortlist contratado en 30 días.' },
   },
   travel: {
     kicker: { en: 'Independent Travel Planning', es: 'Planificación de viajes' },
     title: { en: ['Someone else can do the planning.', 'Better plans. Bigger adventures.'], es: ['Deja que otra persona lo planifique.', 'Mejores planes. Más aventura.'] },
-    intro: { en: 'Tell me your dream holiday and your budget. I come back with real options, with costs compared, distances checked and everything considered. Here is exactly what each level includes, how far the base fee goes and what changes the price.', es: 'Cuéntame tu viaje soñado y tu presupuesto. Vuelvo con opciones reales, costes comparados, distancias comprobadas y todo pensado. Aquí tienes qué incluye cada nivel, hasta dónde llega la tarifa base y qué cambia el precio.' },
+    intro: { en: 'Travelling solo, as a couple, with family or as a group: tell Maryann your dream holiday and your budget. She comes back with real options, with costs compared, distances checked and everything considered. Here is exactly what each level includes, how far the base fee goes and what changes the price.', es: 'Solo, en pareja, en familia o en grupo: cuenta a Maryann tu viaje soñado y tu presupuesto. Vuelve con opciones reales, costes comparados, distancias comprobadas y todo pensado. Aquí tienes qué incluye cada nivel, hasta dónde llega la tarifa base y qué cambia el precio.' },
     glanceScope: { en: ['Up to 2 travellers · up to 7 days', 'Up to 2 travellers · up to 10 days', 'Up to 8 travellers · up to 10 days'], es: ['Hasta 2 viajeros · hasta 7 días', 'Hasta 2 viajeros · hasta 10 días', 'Hasta 8 viajeros · hasta 10 días'] },
     glanceNote: { en: 'Fees are set by the hours of real work involved: comparing options, cross-checking reviews across platforms, checking transfer times and late-arrival cut-offs, and building a plan you can follow. Longer trips and larger groups use the add-on rates shown.', es: 'Las tarifas se basan en las horas de trabajo real: comparar opciones, contrastar opiniones en varias plataformas, comprobar traslados y horas límite de llegada, y preparar un plan fácil de seguir. Viajes más largos y grupos más grandes usan los extras indicados.' },
   },
