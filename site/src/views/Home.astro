@@ -1,11 +1,12 @@
 ---
 /* Home: film hero → how it works (idea → tell Maison Eniola → the right service → start planning) → choose a service →
-   the portal opens into a place → the atlas travels sideways → how Maryann works → voices → where to next. */
+   the portal opens into a place → the atlas, an interactive map → how Maryann works → voices → where to next. */
 import Base from '../layouts/Base.astro';
 import Media from '../components/Media.astro';
 import PostcardGallery from '../components/PostcardGallery.astro';
 import Voices from '../components/Voices.astro';
 import FinalCall from '../components/FinalCall.astro';
+import TravelMap from '../components/TravelMap.astro';
 import { COPY, PLACE_META, SERVICE_PAGES } from '../data/site.js';
 import { SERVICES, PLACES, UI } from '../data/content.js';
 import { t, href, money } from '../lib/i18n.js';
@@ -97,27 +98,15 @@ const lines = H.heroLines[lang] || H.heroLines.en;
   </section>
 
 
-  <section class="atlas" data-atlas>
-    <div class="wrap atlas-head">
-      <span class="kicker" data-reveal>{t(H.atlasKicker, lang)}</span>
-      <h2 class="title-l" data-reveal style="--d:1">{t(H.atlasTitle, lang)}</h2>
-      <p class="lead" data-reveal style="--d:2">{t(H.atlasLead, lang)}</p>
+  <section class="scene mapsec" id="atlas">
+    <div class="wrap">
+      <div class="scene-head">
+        <span class="kicker" data-reveal>{t(H.atlasKicker, lang)}</span>
+        <h2 class="title-l" data-reveal style="--d:1">{t(H.atlasTitle, lang)}</h2>
+        <p class="lead" data-reveal style="--d:2">{t(H.atlasLead, lang)}</p>
+      </div>
+      <TravelMap lang={lang} />
     </div>
-    <div class="atlas-track">
-      {PLACES.map((p, i) => (
-        <a class="atlas-panel" href={href(lang, `destinations/${p.id}`)}>
-          <Media place={p.id} lang={lang} video parallax={0.1} decorative />
-          <div class="atlas-body">
-            <span class="atlas-num">0{i + 1} / 0{PLACES.length}</span>
-            <h3>{t(p.name, lang)}</h3>
-            <span class="chip"><i></i>{t(p.step, lang)}</span>
-            <p>{t(p.detail, lang)}</p>
-            <span class="coords">{PLACE_META[p.id].coords}</span>
-          </div>
-        </a>
-      ))}
-    </div>
-    <div class="atlas-progress" aria-hidden="true"><i></i></div>
   </section>
 
   <section class="scene">

@@ -6,6 +6,7 @@ import { COPY, PLACE_META, SERVICE_PAGES } from '../data/site.js';
 import { PLACES, SERVICES } from '../data/content.js';
 import { t, href } from '../lib/i18n.js';
 import { ICON } from '../lib/icons.js';
+import MAP from '../data/map.json';
 
 interface Props { lang: string; place: string }
 const { lang, place } = Astro.props;
@@ -35,6 +36,10 @@ const sp = SERVICE_PAGES.find(x => x.slug === m.service), svc = SERVICES[sp.inde
       <div>
         <span class="chip" data-reveal><i></i>{t(p.step, lang)}</span>
         <p class="big" data-reveal style="--d:1;margin-top:1.4rem">{t(p.caption, lang)}</p>
+        <figure class="locator" data-reveal style="--d:2">
+          <div class="locator-stage"><img src="/maps/europe-desk.svg" width="1000" height="620" alt="" loading="lazy" decoding="async" /><span class="locator-pin" style={`left:${MAP.places[place].desk[0]}%;top:${MAP.places[place].desk[1]}%`}><i></i></span></div>
+          <figcaption><span>{t(COPY.map.where, lang)}</span>{m.coords}</figcaption>
+        </figure>
       </div>
       <div class="dest-frame" data-reveal style="--d:2">
         <Media place={place} lang={lang} variant="card" parallax={0.12} />

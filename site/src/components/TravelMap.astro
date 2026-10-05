@@ -1,0 +1,65 @@
+---
+/* The interactive travel map. Pins for the destinations, a card per place, a small plane that flies between
+   the places you pick, and pale dots for trips clients have taken (matched from published reviews by
+   scripts/travel-map.js). The map images and every position come from scripts/build-map.mjs.
+   Without scripts, the map still shows its pins and every card is listed underneath. */
+import MAP from '../data/map.json';
+import { PLACES, UI } from '../data/content.js';
+import { COPY, PLACE_META } from '../data/site.js';
+import { t, href } from '../lib/i18n.js';
+import { ICON } from '../lib/icons.js';
+
+interface Props { lang: string; trips?: boolean; first?: string }
+const { lang, trips = true, first = PLACES[0].id } = Astro.props;
+const M = COPY.map, C = COPY.common;
+const D = MAP.frames.desk, P = MAP.frames.phone;
+const pos = (p: { desk: number[] | null; phone: number[] | null }) => {
+  const d = p.desk || p.phone, m = p.phone || p.desk;
+  return `--x:${d[0]}%;--y:${d[1]}%;--mx:${m[0]}%;--my:${m[1]}%`;
+};
+const plane = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M21.5 12c0-.7-.6-1.2-1.3-1.2h-5.6L9.2 3H7.3l2.8 7.8H5.2L3.6 8.6H2l1 3.4-1 3.4h1.6l1.6-2.2h4.9L7.3 21h1.9l5.4-7.8h5.6c.7 0 1.3-.5 1.3-1.2Z"/></svg>';
+---
+<div class="tmap" data-tmap data-lang={lang} data-first={first}
+  data-gaz={trips ? JSON.stringify(MAP.gazetteer) : undefined}
+  data-trip-label={t(M.tripLabel, lang)} data-trips-title={t(M.tripsTitle, lang)} data-trips-link={t(M.tripsLink, lang)}
+  data-reviews-href={href(lang, 'reviews')} data-anon={t(COPY.reviews.anon, lang)}>
+  <div class="tmap-stage" style={`--ar:${D.w}/${D.h};--mar:${P.w}/${P.h}`}>
+    <picture>
+      <source media="(max-width: 767px)" srcset="/maps/europe-phone.svg" width={P.w} height={P.h} />
+      <img src="/maps/europe-desk.svg" width={D.w} height={D.h} alt={t(M.alt, lang)} loading="lazy" decoding="async" />
+    </picture>
+    <svg class="tmap-routes" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><g data-base></g><path class="tmap-trail" data-trail d="" /></svg>
+    {PLACES.map(p => (
+      <button type="button" class="tmap-pin" data-pin={p.id} style={pos(MAP.places[p.id])} aria-label={t(p.name, lang)} aria-pressed={p.id === first ? 'true' : 'false'}>
+        <i></i><span>{t(M.labels[p.id], lang)}</span>
+      </button>
+    ))}
+    <span class="tmap-plane" data-plane aria-hidden="true"><Fragment set:html={plane} /></span>
+  </div>
+
+  <div class="tmap-chips" role="group" aria-label={t(M.chips, lang)}>
+    {PLACES.map(p => <button type="button" class="tmap-chip" data-chip={p.id} aria-pressed={p.id === first ? 'true' : 'false'}>{t(M.labels[p.id], lang)}</button>)}
+  </div>
+
+  <div class="tmap-cards" aria-live="polite">
+    {PLACES.map(p => {
+      const m = PLACE_META[p.id];
+      return (
+        <article class:list={['tmap-card', { 'is-on': p.id === first }]} data-card={p.id}>
+          <img src={`/images/places/${p.id}-card-640.webp`} width="640" height="440" alt={t(m.alt, lang)} loading="lazy" decoding="async" />
+          <p class="tmap-meta"><span>{t(m.town, lang)} · <b data-clock={m.tz}></b> {t(C.localTime, lang).toLowerCase()}</span><span>{m.coords}</span></p>
+          <h3>{t(p.name, lang)}</h3>
+          <span class="chip"><i></i>{t(p.step, lang)}</span>
+          <p>{t(p.detail, lang)}</p>
+          <div class="tmap-actions">
+            <a class="btn btn-light" href={href(lang, `destinations/${p.id}`)}>{t(M.explore, lang)}<Fragment set:html={ICON.arrow} /></a>
+            <a class="btn btn-glass" href={`${href(lang, 'enquire')}?plan=${p.choice}&dest=${encodeURIComponent(t(p.name, lang))}`}>{t(UI.planThis, lang)}</a>
+          </div>
+        </article>
+      );
+    })}
+    {trips && <article class="tmap-card tmap-trips" data-card="trips"></article>}
+  </div>
+
+  <p class="tmap-legend"><span class="lg-item"><i class="lg lg-dest"></i>{t(M.legendDest, lang)}</span>{trips && <span class="lg-item lg-trips"><i class="lg lg-trip"></i>{t(M.legendTrips, lang)}</span>}<span class="lg-hint">{t(M.hint, lang)}</span></p>
+</div>

@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Media from '../components/Media.astro';
 import FinalCall from '../components/FinalCall.astro';
+import TravelMap from '../components/TravelMap.astro';
 import { COPY, PLACE_META } from '../data/site.js';
 import { PLACES } from '../data/content.js';
 import { t, href } from '../lib/i18n.js';
@@ -13,6 +14,9 @@ const D = COPY.destinations;
 ---
 <Base lang={lang} slug="destinations" title={t(D.title, lang)} description={t(D.lead, lang)}>
   <PageHero lang={lang} place="iceland" kicker={t(D.kicker, lang)} title={t(D.title, lang)} lead={t(D.lead, lang)} short />
+  <section class="scene mapsec" style="padding-bottom:0">
+    <div class="wrap"><TravelMap lang={lang} /></div>
+  </section>
   <section class="scene">
     <div class="wrap atlas-track" style="padding-inline:0">
       {PLACES.map((p, i) => (

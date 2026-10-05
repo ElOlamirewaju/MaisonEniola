@@ -7,6 +7,7 @@ import { mountCalculator } from './calculator.js';
 import { mountEnquiry } from './enquiry.js';
 import { mountVoices } from './voices.js';
 import { mountReviewForm } from './review-form.js';
+import { mountTravelMaps, teardownTravelMaps } from './travel-map.js';
 
 function setup() {
   initChrome();
@@ -20,6 +21,7 @@ function setup() {
   document.querySelectorAll('[data-voices]').forEach(v => { if (!v.dataset.mounted) { v.dataset.mounted = '1'; mountVoices(v); } });
   const rf = document.getElementById('review-form');
   if (rf && !rf.dataset.mounted) { rf.dataset.mounted = '1'; mountReviewForm(rf); }
+  mountTravelMaps();
   countView();
   bindPicks();
   applySettings();
@@ -96,6 +98,7 @@ function collapseInclusions() {
 
 function teardown() {
   teardownMotion();
+  teardownTravelMaps();
   teardownChrome();
 }
 

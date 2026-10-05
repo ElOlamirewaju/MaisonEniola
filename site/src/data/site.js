@@ -138,6 +138,20 @@ export const COPY = {
     finalTitle: { en: 'Where to next?', es: '¿Adónde vamos?' },
     finalText: { en: 'Tell Maryann the occasion, rough dates and a budget range. She replies in English or Spanish.', es: 'Cuenta a Maryann la ocasión, las fechas aproximadas y un rango de presupuesto. Responde en inglés o en español.' },
   },
+  // The travel map (components/TravelMap.astro).
+  map: {
+    alt: { en: 'Map of Europe marking the destinations Maryann researches', es: 'Mapa de Europa con los destinos que investiga Maryann' },
+    chips: { en: 'Places on the map', es: 'Lugares en el mapa' },
+    labels: { amalfi: { en: 'Amalfi', es: 'Amalfi' }, iceland: { en: 'Iceland', es: 'Islandia' }, mallorca: { en: 'Mallorca', es: 'Mallorca' }, lisbon: { en: 'Lisbon', es: 'Lisboa' } },
+    explore: { en: 'Explore', es: 'Explorar' },
+    legendDest: { en: 'Destinations Maryann researches', es: 'Destinos que investiga Maryann' },
+    legendTrips: { en: 'Where clients have travelled', es: 'Donde ya han viajado sus clientes' },
+    hint: { en: 'Tap a place to fly there', es: 'Toca un lugar para volar hasta allí' },
+    tripsTitle: { en: 'Client trips · {place}', es: 'Viajes de clientes · {place}' },
+    tripsLink: { en: 'Read their reviews', es: 'Leer sus opiniones' },
+    tripLabel: { en: 'Client trips: {place}', es: 'Viajes de clientes: {place}' },
+    where: { en: 'Where it is', es: 'Dónde está' },
+  },
   destinations: {
     title: { en: 'Destinations', es: 'Destinos' },
     kicker: { en: 'The atlas', es: 'El atlas' },
