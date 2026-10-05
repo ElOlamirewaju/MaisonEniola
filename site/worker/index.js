@@ -11,12 +11,15 @@ import { daily, weekly, monthly } from './cron.js';
 import { settings } from './lib.js';
 
 const ALLOWED_ORIGINS = ['https://maisoneniola.bid', 'https://www.maisoneniola.bid'];
+// Preview links for branches (see wrangler.jsonc) may post the forms too. They share the live data and email.
+const PREVIEW_ORIGIN = /^https:\/\/[a-z0-9-]+-maisoneniola\.akinola-oluwaseyi22\.workers\.dev$/;
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url), p = url.pathname, m = request.method;
     const localDev = url.hostname === 'localhost' || url.hostname === '127.0.0.1';
-    const originOk = () => localDev || ALLOWED_ORIGINS.includes(request.headers.get('Origin') || '');
+    const origin = request.headers.get('Origin') || '';
+    const originOk = () => localDev || ALLOWED_ORIGINS.includes(origin) || PREVIEW_ORIGIN.test(origin);
     const post = handler => (m !== 'POST' ? json({ ok: false, error: 'method' }, 405) : !originOk() ? json({ ok: false, error: 'origin' }, 403) : handler());
 
     if (p === '/api/enquiry') return post(() => postEnquiry(request, env));

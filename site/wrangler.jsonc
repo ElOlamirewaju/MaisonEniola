@@ -4,9 +4,11 @@
   "name": "maisoneniola",
   "main": "worker/index.js",
   "compatibility_date": "2026-09-16",
-  // The workers.dev and preview URLs stay off: the site is reached at maisoneniola.bid only.
+  // The plain workers.dev address stays off: the live site is reached at maisoneniola.bid only.
+  // Preview URLs are on: every push to a branch other than main (e.g. `preview`) gets its own test link,
+  // <branch>-maisoneniola.akinola-oluwaseyi22.workers.dev, before anything is merged into main and goes live.
   "workers_dev": false,
-  "preview_urls": false,
+  "preview_urls": true,
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
