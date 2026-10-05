@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # local secrets for wrangler dev
 .dev.vars
+
+# wrangler dev local state (simulated KV, logs): never commit
+.wrangler/
