@@ -78,6 +78,7 @@ S = {
     'addonp': ParagraphStyle('ap', fontName='SansB', fontSize=7.9, leading=10.8, textColor=TEXT, alignment=TA_RIGHT),
     'stepn': ParagraphStyle('sn', fontName='Serif', fontSize=15, leading=16, textColor=CORAL),
     'bullet': ParagraphStyle('bu', fontName='Sans', fontSize=8.2, leading=11.6, textColor=TEXT, leftIndent=9, bulletIndent=0, spaceAfter=2.5),
+    'subbullet': ParagraphStyle('sbu', fontName='Sans', fontSize=7.9, leading=11.2, textColor=TEXT, leftIndent=20, bulletIndent=11, spaceAfter=2),
 }
 
 def t(o, lang):
@@ -161,8 +162,16 @@ def build(svc, lang):
     steps = [[Paragraph(str(i + 1), S['stepn']), [Paragraph(esc(t(st[0], lang)), S['inc']), Paragraph(esc(t(st[1], lang)), S['td'])]] for i, st in enumerate(svc['steps'])]
     stp = Table(steps, colWidths=[10 * mm, cw - 10 * mm]); stp.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP'), ('BOTTOMPADDING', (0, 0), (-1, -1), 6), ('LEFTPADDING', (0, 0), (-1, -1), 0)]))
     story.append(stp)
+    def term_par(item, style, mark):
+        txt = t(item, lang); i = txt.find(': ')
+        body = f'<font name="SansM">{esc(txt[:i])}:</font> {esc(txt[i + 2:])}' if 2 < i < 52 else esc(txt)
+        return Paragraph(body, style, bulletText=mark)
     for group in svc['terms']:
-        block = [Paragraph(esc(t(group[0], lang)), S['h2'])] + [Paragraph(esc(t(item, lang)), S['bullet'], bulletText='•') for item in group[1]]
+        block = [Paragraph(esc(t(group[0], lang)), S['h2'])]
+        for item in group[1]:
+            block.append(term_par(item, S['bullet'], '•'))
+            for sub in (item.get('sub') or []) if isinstance(item, dict) else []:
+                block.append(term_par(sub, S['subbullet'], '–'))
         story.append(KeepTogether(block))
     story += [Spacer(1, 8), Paragraph(esc(t(data['UI']['priceValidity'], lang) + ' ' + t(data['UI']['fxNote'], lang)), S['small'])]
     doc.build(story)

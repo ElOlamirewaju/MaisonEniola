@@ -123,6 +123,11 @@ const UI = {
   tickBound: { en: 'I have read what Maryann does and doesn’t do.', es: 'He leído qué hace y qué no hace Maryann.' },
   tickPrivacy: { en: 'I agree to my details being used to reply to this enquiry, as described in the', es: 'Acepto que mis datos se usen para responder a esta consulta, según el' },
   privacyLink: { en: 'privacy notice', es: 'aviso de privacidad' },
+  // The checkout statement (client's wording, 5 Oct 2026), required before an enquiry can be sent.
+  tickTermsA: { en: 'I agree to the', es: 'Acepto las' },
+  tickTermsLink: { en: 'Terms of Service', es: 'Condiciones del servicio' },
+  tickTermsB: { en: ', including the 14-day pro-rata cancellation policy, and confirm that all third-party bookings will be made using my personal details and payment card.', es: ', incluida la política de cancelación proporcional de 14 días, y confirmo que todas las reservas con terceros se harán con mis datos personales y mi tarjeta de pago.' },
+  termsAccepted: { en: 'Terms of Service and 14-day pro-rata cancellation policy: accepted', es: 'Condiciones del servicio y política de cancelación proporcional de 14 días: aceptadas' },
   legalLink: { en: 'Legal notice', es: 'Aviso legal' },
   footLangs: { en: 'English and Spanish', es: 'Inglés y español' },
   langNames: { en: 'English', es: 'Español' },
@@ -179,15 +184,22 @@ const VISA = {
     { en: 'Nothing in these terms affects your statutory consumer rights.', es: 'Nada de estas condiciones afecta a tus derechos legales como consumidor.' },
   ],
 };
-const MASS = { en: 'Mass disruption: widespread airline cancellations, strikes or supplier insolvency affecting the wider itinerary are managed at an emergency rate of €75 per hour. The work is confirmed with you, or the lead contact, before it begins and billed in 30-minute increments.', es: 'Incidencias masivas: las cancelaciones generalizadas de vuelos, huelgas o la insolvencia de un proveedor que afecten al itinerario general se gestionan a una tarifa de urgencia de 75 € por hora. El trabajo se confirma contigo, o con la persona de contacto, antes de empezar y se factura en fracciones de 30 minutos.' };
+const MASS = { en: 'Mass disruption support: widespread emergencies (strikes, airline shutdowns, insolvency) are managed at an emergency rate of €75 per hour, pre-approved by you before work begins.', es: 'Incidencias masivas: las emergencias generalizadas (huelgas, cierres de aerolíneas, insolvencias) se gestionan a una tarifa de urgencia de 75 € por hora, que apruebas antes de que empiece el trabajo.' };
 /* 14-day cancellation right for distance contracts; the visa terms above follow the same pattern. */
-const CANCEL_14 = { en: 'You have a 14-day right to cancel. If you ask Maryann to begin work during this period and your consultation has already taken place, the 50% upfront payment may be non-refundable, to the extent permitted by applicable law.', es: 'Tienes un derecho de desistimiento de 14 días. Si pides a Maryann empezar el trabajo dentro de ese plazo y la llamada de consulta ya se ha realizado, el 50 % pagado por adelantado puede no ser reembolsable, en la medida en que lo permita la ley aplicable.' };
-const RUSH = { en: 'Rush add-ons are 30% of the base fee only. Other add-ons stay at their normal price and are not increased.', es: 'Los extras urgentes son el 30 % de la tarifa base únicamente. Los demás extras mantienen su precio normal y no se incrementan.' };
-const DISCOUNT = { en: 'Discount codes, when offered, take a percentage off the planning fee only. Flights, stays, venues, transfers and other supplier costs are never discounted. One code per booking.', es: 'Los códigos de descuento, cuando se ofrecen, descuentan un porcentaje solo de los honorarios de planificación. Vuelos, alojamientos, espacios, traslados y otros costes de proveedores nunca tienen descuento. Un código por reserva.' };
+const CANCEL_14 = { en: '14-day right to cancel: you have a 14-day right to cancel after booking. If you ask Maryann to start working immediately during this time, any refund is strictly calculated based on the work left to be done:', es: 'Derecho de desistimiento de 14 días: tienes 14 días desde la contratación para cancelar. Si pides a Maryann que empiece a trabajar de inmediato durante ese plazo, el reembolso se calcula estrictamente según el trabajo que quede por hacer:',
+  sub: [
+    { en: 'Partial work: you are only refunded for the uncompleted portion of the project. For example, if 40% of the planning work is already done, only 60% of your deposit is refundable.', es: 'Trabajo parcial: solo se reembolsa la parte del proyecto que no se ha realizado. Por ejemplo, si ya está hecho el 40 % de la planificación, solo es reembolsable el 60 % de tu depósito.' },
+    { en: 'Full work: if all planning work has been completed and delivered before the 14 days are up, the service is fully executed and no refund is issued.', es: 'Trabajo completo: si toda la planificación se ha completado y entregado antes de que terminen los 14 días, el servicio se ha prestado por completo y no hay reembolso.' },
+  ] };
+const PRE_CONSULT = { en: 'Pre-consultation: cancel before your initial consultation call for a full refund.', es: 'Antes de la consulta: si cancelas antes de la primera llamada de consulta, se te reembolsa todo.' };
+const AFTER_14 = { en: 'After 14 days: all fees paid are non-refundable, as they directly cover the planning work completed up to that date.', es: 'Pasados 14 días: lo pagado no es reembolsable, porque cubre directamente el trabajo de planificación realizado hasta esa fecha.' };
+const DIRECT = { en: 'Direct booking details: while Maryann handles the research, coordination and setup, actual reservations with airlines, hotels and operators are made directly using the client’s own details and payment cards, so you retain full ownership and control over your travel bookings.', es: 'Reservas a tu nombre: Maryann se ocupa de la investigación, la coordinación y la preparación, pero las reservas con aerolíneas, hoteles y operadores se hacen directamente con tus propios datos y tarjetas de pago, para que conserves la titularidad y el control total de tus reservas.' };
+const RUSH = { en: 'Rush bookings: a 30% add-on fee applies to the base price for last-minute requests.', es: 'Reservas urgentes: para las solicitudes de última hora se aplica un extra del 30 % sobre el precio base.' };
+const DISCOUNT = { en: 'Discounts: promo codes apply strictly to planning fees, not supplier costs. Limit one code per booking.', es: 'Descuentos: los códigos promocionales se aplican solo a los honorarios de planificación, nunca a los costes de proveedores. Un código por reserva.' };
 const STATUTORY = { en: 'Nothing in these terms affects your statutory consumer rights.', es: 'Nada de estas condiciones afecta a tus derechos legales como consumidor.' };
-const PLAN_FEES = { en: 'Planning fees cover Maryann’s time and expertise only. Flights, hotels, venues, transfers, activities and government visa fees are paid by you directly to each supplier.', es: 'Los honorarios cubren solo el tiempo y la experiencia de Maryann. Vuelos, hoteles, espacios, traslados, actividades y tasas de visado los pagas tú directamente a cada proveedor.' };
-const NO_COMM = { en: 'No hidden commission is added to anything you pay a supplier. If a supplier offers Maryann a commission, she will tell you.', es: 'No se añade ninguna comisión oculta a lo que pagas a un proveedor. Si un proveedor ofrece una comisión a Maryann, te lo dirá.' };
-const SUPPLIER = { en: 'Supplier cancellation terms, change fees and fare differences are set by each supplier and paid by the traveller.', es: 'Las condiciones de cancelación, gastos de cambio y diferencias de tarifa los fija cada proveedor y los paga el viajero.' };
+const PLAN_FEES = { en: 'What fees cover: planning fees cover expertise and time only. You pay suppliers (flights, hotels, visas and so on) directly.', es: 'Qué cubren los honorarios: los honorarios de planificación cubren solo experiencia y tiempo. A los proveedores (vuelos, hoteles, visados, etc.) les pagas tú directamente.' };
+const NO_COMM = { en: 'Zero hidden commissions: no markups are added to supplier costs. Any supplier commissions are fully disclosed to you.', es: 'Sin comisiones ocultas: no se añade ningún margen a los costes de los proveedores. Cualquier comisión de un proveedor se te comunica con total transparencia.' };
+const SUPPLIER = { en: 'Supplier fees: any third-party cancellation or change fees are set by the airline, hotel or operator and are paid by the traveller.', es: 'Gastos de proveedores: los gastos de cancelación o cambio de terceros los fija la aerolínea, el hotel o el operador y los paga el viajero.' };
 
 const SERVICES = [
   {
@@ -271,17 +283,14 @@ const SERVICES = [
       [{ en: 'You just show up', es: 'Tú solo tienes que llegar' }, { en: 'Maryann stays reachable across the dates in your package.', es: 'Sigo disponible durante las fechas de tu paquete.' }],
     ],
     terms: [
-      [{ en: 'Payment', es: 'Pagos' }, [
+      [{ en: 'Payment terms', es: 'Pagos' }, [
         { en: 'The Proposal: 50% to begin and 50% when your plan and proposal-day timeline are delivered.', es: 'The Proposal: 50 % para empezar y 50 % al entregar tu plan y el horario del día de la pedida.' },
         { en: 'Guest Travel: 50% to begin and 50% when the guest itinerary is issued.', es: 'Guest Travel: 50 % para empezar y 50 % al entregar el itinerario de invitados.' },
         { en: 'The Whole Event: 50% to begin and 50% when the work is complete and your final plan is delivered.', es: 'The Whole Event: 50 % para empezar y 50 % cuando el trabajo esté completo y se entregue el plan final.' },
-        PLAN_FEES, NO_COMM, RUSH, DISCOUNT]],
-      [{ en: 'Changes and cancellations', es: 'Cambios y cancelaciones' }, [
-        { en: 'You can cancel before the consultation call for a full refund.', es: 'Puedes cancelar antes de la llamada de consulta con reembolso íntegro.' },
-        CANCEL_14,
-        { en: 'After those 14 days, fees already paid cover the work completed and are not refundable.', es: 'Pasado ese plazo, lo ya pagado cubre el trabajo realizado y no se reembolsa.' },
-        SUPPLIER,
-        { en: 'Cancellations covered (The Whole Event) means Maryann handles the rebooking whenever an individual booking falls through, as part of the package and with no extra fee for the work. Any new fares or penalties are paid by the traveller.', es: 'Cancelaciones cubiertas (The Whole Event) significa que Maryann se ocupa de volver a reservar cada vez que falla una reserva individual, como parte del paquete y sin coste adicional por el trabajo. Las nuevas tarifas o penalizaciones las paga el viajero.' },
+        DIRECT, PLAN_FEES, NO_COMM, RUSH, DISCOUNT]],
+      [{ en: 'Changes & cancellations', es: 'Cambios y cancelaciones' }, [
+        PRE_CONSULT, CANCEL_14, AFTER_14, SUPPLIER,
+        { en: 'Included rebooking support: for The Whole Event, Maryann handles all rebooking work for free if an individual booking falls through. The traveller covers any new fares or supplier penalties.', es: 'Cambios de reserva incluidos: en The Whole Event, Maryann se ocupa sin coste de todo el trabajo de volver a reservar si falla una reserva individual. El viajero paga las nuevas tarifas o penalizaciones del proveedor.' },
         MASS, STATUTORY]],
       [VISA.title, VISA.items],
     ],
@@ -362,19 +371,18 @@ const SERVICES = [
       [{ en: 'Move on if you want to', es: 'Seguid si queréis' }, { en: 'Each stage builds on the last. Nothing is repeated, and Destination Match fees are credited.', es: 'Cada etapa parte de la anterior. No se repite nada y el Destination Match se descuenta.' }],
     ],
     terms: [
-      [{ en: 'Payment', es: 'Pagos' }, [
+      [{ en: 'Payment terms', es: 'Pagos' }, [
         { en: 'Destination Match: paid in full to begin.', es: 'Destination Match: pago completo para empezar.' },
         { en: 'Venue Shortlist: 50% to begin and 50% on delivery of the shortlist.', es: 'Venue Shortlist: 50 % para empezar y 50 % al entregar la selección.' },
         { en: 'Verified Sourcing: 50% to begin and 50% when the work is complete and the final recommendation is delivered.', es: 'Verified Sourcing: 50 % para empezar y 50 % cuando el trabajo esté completo y se entregue la recomendación final.' },
-        { en: 'Venue sourcing fees cover research and advice only. Venue deposits and hire fees are paid by you directly to the venue.', es: 'Estos honorarios cubren solo investigación y asesoramiento. Las reservas y el alquiler los pagáis directamente al espacio.' },
-        { en: 'No commission is taken from venues without your knowledge. If a venue offers one, Maryann will tell you.', es: 'No se aceptan comisiones de espacios sin que lo sepáis. Si un espacio ofrece una, Maryann os lo dirá.' },
+        { en: 'What fees cover: venue sourcing fees cover research and advice only. Venue deposits and hire fees are paid by you directly to the venue.', es: 'Qué cubren los honorarios: estos honorarios cubren solo investigación y asesoramiento. Las reservas y el alquiler los pagáis directamente al espacio.' },
+        { en: 'Zero hidden commissions: no commission is taken from venues without your knowledge. If a venue offers one, Maryann will tell you.', es: 'Sin comisiones ocultas: no se aceptan comisiones de espacios sin que lo sepáis. Si un espacio ofrece una, Maryann os lo dirá.' },
         RUSH, DISCOUNT]],
+      [{ en: 'Changes & cancellations', es: 'Cambios y cancelaciones' }, [
+        PRE_CONSULT, CANCEL_14, AFTER_14, STATUTORY]],
       [{ en: 'Good to know', es: 'Conviene saber' }, [
-        { en: 'Availability and prices are confirmed at the time of checking. Venues can change them until you sign and pay a deposit.', es: 'La disponibilidad y los precios se confirman en el momento de consultarlos. Los espacios pueden cambiarlos hasta que firméis y paguéis la reserva.' },
+        { en: 'Availability and prices are confirmed at the time of checking. Venues can change them until you sign and pay a deposit.', es: 'La disponibilidad y los precios se confirman en el momento de consultarlos. Los espacios pueden cambiarlos hasta que firméis y paguéis una reserva.' },
         { en: 'Final decisions and contracts are between you and the venue.', es: 'Las decisiones finales y los contratos son entre vosotros y el espacio.' },
-        { en: 'You can cancel before the consultation call for a full refund.', es: 'Podéis cancelar antes de la llamada de consulta con reembolso íntegro.' },
-        { en: 'You have 14 days from booking to cancel. If you asked Maryann to start work within those 14 days and then cancel, you pay only for the work already done. After that, fees cover the work completed.', es: 'Tenéis 14 días desde la contratación para desistir. Si pedisteis a Maryann empezar dentro de ese plazo y luego canceláis, solo pagáis el trabajo ya realizado. Pasado ese plazo, los honorarios cubren el trabajo realizado.' },
-        { en: 'Nothing in these terms affects your statutory consumer rights.', es: 'Nada de estas condiciones afecta a vuestros derechos legales como consumidores.' },
         { en: 'This is venue sourcing only. Travel planning and guest travel are quoted separately.', es: 'Es solo búsqueda de espacios. La planificación de viajes y los viajes de invitados se presupuestan aparte.' }]],
     ],
   },
@@ -457,18 +465,15 @@ const SERVICES = [
       [{ en: 'Enjoy the trip', es: 'Disfruta del viaje' }, { en: 'On Planned & Booked and Group & Occasion, Maryann stays reachable while you travel.', es: 'Con Planned & Booked y Group & Occasion sigo disponible mientras viajas.' }],
     ],
     terms: [
-      [{ en: 'Payment', es: 'Pagos' }, [
-        { en: 'Itinerary Only: paid in full to begin.', es: 'Itinerary Only: pago completo para empezar.' },
-        { en: 'Planned & Booked and Group & Occasion: 50% to begin and 50% when the work is complete and your plan and bookings are delivered.', es: 'Planned & Booked y Group & Occasion: 50 % para empezar y 50 % cuando el trabajo esté completo y se entreguen el plan y las reservas.' },
-        PLAN_FEES, NO_COMM, RUSH, DISCOUNT]],
-      [{ en: 'Changes and cancellations', es: 'Cambios y cancelaciones' }, [
-        { en: 'You can cancel before the consultation call for a full refund.', es: 'Puedes cancelar antes de la llamada de consulta con reembolso íntegro.' },
-        CANCEL_14,
-        { en: 'After those 14 days, fees already paid cover the work completed.', es: 'Pasado ese plazo, lo ya pagado cubre el trabajo realizado.' },
-        SUPPLIER,
-        { en: 'Cancellations covered (Planned & Booked and Group & Occasion) means Maryann handles the rebooking whenever an individual booking falls through, as part of the package and with no extra fee for the work. Any new fares or penalties are paid by the traveller.', es: 'Cancelaciones cubiertas (Planned & Booked y Group & Occasion) significa que Maryann se ocupa de volver a reservar cada vez que falla una reserva individual, como parte del paquete y sin coste adicional por el trabajo. Las nuevas tarifas o penalizaciones las paga el viajero.' },
+      [{ en: 'Payment terms', es: 'Pagos' }, [
+        { en: 'Itinerary Only: paid in full upfront to start planning.', es: 'Itinerary Only: pago completo por adelantado para empezar a planificar.' },
+        { en: 'Planned & Booked / Group & Occasion: 50% deposit to begin, 50% upon delivery of your complete plan.', es: 'Planned & Booked / Group & Occasion: 50 % de depósito para empezar y 50 % al entregar tu plan completo.' },
+        DIRECT, PLAN_FEES, NO_COMM, RUSH, DISCOUNT]],
+      [{ en: 'Changes & cancellations', es: 'Cambios y cancelaciones' }, [
+        PRE_CONSULT, CANCEL_14, AFTER_14, SUPPLIER,
+        { en: 'Included rebooking support: for Planned & Booked and Group & Occasion packages, Maryann handles all rebooking work for free if an individual booking falls through. The traveller covers any new ticket fares or supplier penalties.', es: 'Cambios de reserva incluidos: en Planned & Booked y Group & Occasion, Maryann se ocupa sin coste de todo el trabajo de volver a reservar si falla una reserva individual. El viajero paga las nuevas tarifas o penalizaciones del proveedor.' },
         MASS,
-        { en: 'Travel insurance is strongly recommended for every trip.', es: 'Recomiendo encarecidamente contratar un seguro de viaje.' },
+        { en: 'Travel insurance is strongly recommended for every trip.', es: 'Se recomienda encarecidamente contratar un seguro de viaje para cada viaje.' },
         STATUTORY]],
       [VISA.title, VISA.items],
     ],

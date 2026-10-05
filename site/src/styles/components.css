@@ -60,6 +60,36 @@
 .steps li::before{content:counter(s);font-family:var(--serif);font-size:1.8rem;line-height:1;color:var(--coral-ink)}
 .steps b{display:block;color:var(--text)}
 .steps span{color:var(--muted)}
+/* payment and cancellation tabs (components/TermsTabs.astro): phone first, the tab strip scrolls if it must */
+.ttabs{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);box-shadow:var(--shadow);overflow:hidden;scroll-margin-top:100px}
+.ttabs-list{display:none}
+.ttabs.is-live .ttabs-list{display:flex;gap:.25rem;overflow-x:auto;scrollbar-width:none;padding:.45rem;background:var(--surface-2);border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch}
+.ttabs-list::-webkit-scrollbar{display:none}
+.ttabs-tab{flex:1 1 0;min-width:0;min-height:50px;padding:.45rem .6rem;line-height:1.2;white-space:normal;text-align:center;border:0;border-radius:calc(var(--radius-m) - 3px);background:transparent;font:inherit;font-size:.92rem;font-weight:600;color:var(--muted);cursor:pointer}
+.ttabs-tab[aria-selected="true"]{background:var(--surface);color:var(--heading);box-shadow:0 1px 0 var(--line-strong),0 6px 16px -10px rgba(6,58,92,.4)}
+.ttabs-tab:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}
+.ttabs-panel{padding:1.1rem 1.2rem 1.3rem;scroll-margin-top:110px}
+.ttabs-panel:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}
+.ttabs-panel+.ttabs-panel{border-top:1px solid var(--line)}
+.ttabs.is-live .ttabs-panel+.ttabs-panel{border-top:0}
+.ttabs-h{font-size:1.15rem;margin:0 0 .7rem}
+.ttabs.is-live .ttabs-h{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.ttabs-panel>ul{margin:0;padding:0 0 0 1.15rem;display:grid;gap:.7rem;font-size:.94rem;line-height:1.55}
+.ttabs-panel li::marker{color:var(--coral-ink)}
+.ttabs-panel b{color:var(--heading);font-weight:600}
+.ttabs-panel ul ul{margin:.5rem 0 .1rem;padding-left:1.1rem;display:grid;gap:.45rem;list-style:circle}
+@media (min-width:768px){.ttabs-panel{padding:1.5rem 1.8rem 1.7rem}.ttabs-tab{flex:0 0 auto;padding:.5rem 1.1rem;white-space:nowrap}}
+.check .err{display:block;margin-top:.35rem}
+.tab-short{display:none}
+@media (max-width:399px){.ttabs-tab:has(.tab-short) .tab-long{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.tab-short{display:inline}
+  .ttabs.is-live .ttabs-list{gap:.15rem;padding:.35rem}.ttabs-tab{flex:1 1 auto;padding:.45rem .45rem;font-size:.82rem}}
+/* Terms of Service page */
+.terms-jump{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}
+.terms-jump a{padding:.5rem 1rem;border-radius:999px;border:1px solid var(--line-strong);text-decoration:none;color:var(--heading);font-weight:500;font-size:.9rem}
+.terms-svc{margin-top:2.6rem;scroll-margin-top:100px}
+.terms-svc h2{margin-bottom:.2rem}
+.terms-svc-link{margin:0 0 1rem;font-size:.92rem}
+.check-terms label{font-weight:500}
 .terms{display:grid;gap:.75rem}
 .terms details{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-s)}
 .terms summary{cursor:pointer;min-height:56px;display:flex;align-items:center;justify-content:space-between;padding:.6rem 1.2rem;font-family:var(--serif);font-size:1.25rem;color:var(--heading);list-style:none}

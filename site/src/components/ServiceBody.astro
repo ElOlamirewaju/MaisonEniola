@@ -4,6 +4,7 @@ import { SERVICES, UI } from '../data/content.js';
 import { COPY } from '../data/site.js';
 import { t, href } from '../lib/i18n.js';
 import Tier from './Tier.astro';
+import TermsTabs from './TermsTabs.astro';
 
 interface Props { lang: string; svc: number }
 const { lang, svc } = Astro.props;
@@ -27,9 +28,7 @@ const s = SERVICES[svc];
     </ol>
 
     <h2 class="subhead" data-reveal>{t(UI.termsTitle, lang)}</h2>
-    <div class="terms">
-      {s.terms.map(g => <details data-reveal><summary>{t(g[0], lang)}</summary><ul>{g[1].map(i => <li>{t(i, lang)}</li>)}</ul></details>)}
-    </div>
+    <TermsTabs lang={lang} groups={s.terms} id={s.key} />
 
     <div class="cta-band" data-reveal>
       <h2>{t(UI.enqTitle, lang)}</h2>

@@ -9,6 +9,7 @@ import { mountVoices } from './voices.js';
 import { mountReviewForm } from './review-form.js';
 import { mountTravelMaps, teardownTravelMaps } from './travel-map.js';
 import { mountMapHero, teardownMapHero } from './map-hero.js';
+import { mountTermsTabs } from './terms-tabs.js';
 
 function setup() {
   initChrome();
@@ -24,6 +25,7 @@ function setup() {
   if (rf && !rf.dataset.mounted) { rf.dataset.mounted = '1'; mountReviewForm(rf); }
   mountTravelMaps();
   mountMapHero();
+  mountTermsTabs();
   countView();
   bindPicks();
   applySettings();

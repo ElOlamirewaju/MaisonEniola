@@ -10,7 +10,7 @@ export function mountEnquiry(form) {
   const lang = pageLang();
   const t = (o, v) => tr(o, lang, v);
   const $ = (s, r = form) => r.querySelector(s);
-  const F = { step: 1, choice: null, ans: {}, name: '', email: '', phone: '', pref: '', notes: '', bound: false, privacy: false, estimate: null, errors: {}, website: '', code: '', codeOk: 0, codeMsg: '' };
+  const F = { step: 1, choice: null, ans: {}, name: '', email: '', phone: '', pref: '', notes: '', bound: false, privacy: false, terms: false, estimate: null, errors: {}, website: '', code: '', codeOk: 0, codeMsg: '' };
 
   function preselect(svc, tier) {
     const key = SERVICES[svc]?.key; if (!key) return;
@@ -66,6 +66,7 @@ export function mountEnquiry(form) {
         <div class="bound"><h3>${t(UI.boundTitle)}</h3><p>${esc(t(UI.boundText))}</p></div>
         <div class="check"><input type="checkbox" id="f-bound" data-c="bound" ${F.bound ? 'checked' : ''}${inv('bound')}><div><label for="f-bound">${t(UI.tickBound)}</label>${errHTML('bound')}</div></div>
         <div class="check"><input type="checkbox" id="f-privacy" data-c="privacy" ${F.privacy ? 'checked' : ''}${inv('privacy')}><div><label for="f-privacy">${t(UI.tickPrivacy)}</label> <a href="${href(lang, 'privacy')}" target="_blank" rel="noopener">${t(UI.privacyLink)}</a>.${errHTML('privacy')}</div></div>
+        <div class="check check-terms"><input type="checkbox" id="f-terms" data-c="terms" ${F.terms ? 'checked' : ''}${inv('terms')}><div><label for="f-terms">${t(UI.tickTermsA)} <a href="${href(lang, 'terms')}" target="_blank" rel="noopener">${t(UI.tickTermsLink)}</a>${t(UI.tickTermsB)}</label>${errHTML('terms')}</div></div>
         <div class="hp" aria-hidden="true"><label for="f-website">Website</label><input id="f-website" data-f="website" tabindex="-1" autocomplete="off" value=""></div>
       </fieldset><p class="status" id="send-status" role="status" aria-live="polite"></p>`;
     }
@@ -87,13 +88,14 @@ export function mountEnquiry(form) {
       else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(F.email.trim())) F.errors.email = t(UI.emailInvalid);
       if (!F.bound) F.errors.bound = t(UI.mustTick);
       if (!F.privacy) F.errors.privacy = t(UI.mustTick);
+      if (!F.terms) F.errors.terms = t(UI.mustTick);
     }
     return Object.keys(F.errors).length === 0;
   }
 
   function focusFirstError() {
     const k = Object.keys(F.errors)[0]; if (!k) return;
-    const map = { choice: 'input[name="plan"]', name: '#f-name', email: '#f-email', bound: '#f-bound', privacy: '#f-privacy' };
+    const map = { choice: 'input[name="plan"]', name: '#f-name', email: '#f-email', bound: '#f-bound', privacy: '#f-privacy', terms: '#f-terms' };
     const el = $(map[k] || '#q-' + k); if (el) el.focus();
   }
 
@@ -113,6 +115,7 @@ export function mountEnquiry(form) {
     L.push(`${t(UI.lang)}: ${(F.pref || lang) === 'es' ? 'Español' : 'English'}`);
     if (F.code.trim()) L.push(`${t(UI.promoLabel)}: ${F.code.trim().toUpperCase()}${F.codeOk ? ` (${t(UI.promoOk, { p: F.codeOk })})` : ''}`);
     if (F.notes.trim()) L.push('', F.notes.trim());
+    if (F.terms) L.push('', `✓ ${t(UI.termsAccepted)}`);
     return L.join('\n');
   }
 

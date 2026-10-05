@@ -1,0 +1,37 @@
+---
+/* A service's payment and cancellation terms as tabs (scripts/terms-tabs.js). Each tab has an anchor, so
+   /travel/#travel-cancellations opens straight on cancellations. Without scripts every group is shown in turn,
+   each under its own heading. Items may carry `sub` (a nested list); a short lead before ": " is set in bold. */
+import { t } from '../lib/i18n.js';
+
+interface Props { lang: string; groups: any[]; id: string }
+const { lang, groups, id } = Astro.props;
+const SLUGS: Record<string, string> = { 'Payment terms': 'payment', 'Changes & cancellations': 'cancellations', 'Visa guidance': 'visas', 'Good to know': 'good-to-know' };
+const split = (txt: string) => { const i = txt.indexOf(': '); return i > 2 && i < 52 ? [txt.slice(0, i), txt.slice(i + 2)] : [null, txt]; };
+const label = (lang === 'es') ? 'Condiciones' : 'Terms';
+// Short names for the tab strip on very narrow phones.
+const SHORT: Record<string, { en: string; es: string }> = { payment: { en: 'Payment', es: 'Pagos' }, cancellations: { en: 'Cancellations', es: 'Cancelaciones' }, visas: { en: 'Visas', es: 'Visados' }, 'good-to-know': { en: 'Good to know', es: 'Conviene saber' } };
+---
+<div class="ttabs" data-ttabs id={id}>
+  <div class="ttabs-list" role="tablist" aria-label={label}>
+    {groups.map((g, i) => (
+      <button type="button" role="tab" class="ttabs-tab" id={`${id}-tab-${SLUGS[g[0].en] || i}`} aria-controls={`${id}-${SLUGS[g[0].en] || i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}><span class="tab-long">{t(g[0], lang)}</span>{SHORT[SLUGS[g[0].en]] && <span class="tab-short" aria-hidden="true">{t(SHORT[SLUGS[g[0].en]], lang)}</span>}</button>
+    ))}
+  </div>
+  {groups.map((g, i) => (
+    <section class="ttabs-panel" role="tabpanel" id={`${id}-${SLUGS[g[0].en] || i}`} aria-labelledby={`${id}-tab-${SLUGS[g[0].en] || i}`} tabindex="0">
+      <h3 class="ttabs-h">{t(g[0], lang)}</h3>
+      <ul>
+        {g[1].map(item => {
+          const [lead, rest] = split(t(item, lang));
+          return (
+            <li>
+              {lead && <b>{lead}:</b>} {rest}
+              {item.sub && <ul>{item.sub.map(sb => { const [l2, r2] = split(t(sb, lang)); return <li>{l2 && <b>{l2}:</b>} {r2}</li>; })}</ul>}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  ))}
+</div>

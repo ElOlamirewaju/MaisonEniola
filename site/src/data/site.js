@@ -138,6 +138,13 @@ export const COPY = {
     finalTitle: { en: 'Where to next?', es: '¿Adónde vamos?' },
     finalText: { en: 'Tell Maryann the occasion, rough dates and a budget range. She replies in English or Spanish.', es: 'Cuenta a Maryann la ocasión, las fechas aproximadas y un rango de presupuesto. Responde en inglés o en español.' },
   },
+  terms: {
+    title: { en: 'Terms of Service', es: 'Condiciones del servicio' },
+    kicker: { en: 'Payments & cancellations', es: 'Pagos y cancelaciones' },
+    lead: { en: 'How payment, changes and cancellations work for each service. You accept these terms when you send an enquiry.', es: 'Cómo funcionan los pagos, los cambios y las cancelaciones en cada servicio. Aceptas estas condiciones al enviar una consulta.' },
+    jump: { en: 'Services', es: 'Servicios' },
+    seeLevels: { en: 'See the levels and prices', es: 'Ver niveles y precios' },
+  },
   // The map opening of the home page (components/MapHero.astro): every page is a place.
   mapHero: {
     alt: { en: 'Map of Europe: each place leads to a part of the site', es: 'Mapa de Europa: cada lugar lleva a una parte de la web' },
