@@ -1,0 +1,92 @@
+---
+/* The opening of the home page: a full-screen map that is also the site's navigation.
+   Every page is a place: Lisbon → travel planning, Mallorca → venue sourcing, Amalfi → weddings and proposals,
+   Iceland → destinations, Prague (where clients have travelled) → reviews, and the compass → about Maryann.
+   Tap a place: the plane flies there and its card opens; tap it again, or "Go", and the map zooms into that page
+   (scripts/map-hero.js). Without scripts every pin and chip is a plain link to its page. Map images and positions
+   come from scripts/build-map.mjs (frames heroDesk and heroPhone). */
+import MAP from '../data/map.json';
+import { SERVICES, PLACES, UI } from '../data/content.js';
+import { COPY, SERVICE_PAGES } from '../data/site.js';
+import { t, href, money } from '../lib/i18n.js';
+import { ICON } from '../lib/icons.js';
+
+interface Props { lang: string }
+const { lang } = Astro.props;
+const H = COPY.home, X = COPY.mapHero;
+const lines = H.heroLines[lang] || H.heroLines.en;
+const D = MAP.frames.heroDesk, P = MAP.frames.heroPhone;
+// On phones the map is scaled so the part where Europe sits (P.box) fills the band between the headline and the panel.
+const bt = (P.box[0][1] / P.h).toFixed(4), bh = ((P.box[1][1] - P.box[0][1]) / P.h).toFixed(4);
+const prague = MAP.gazetteer.find(g => g.label === 'Prague');
+const at = (p: any) => `--x:${p.heroDesk[0]}%;--y:${p.heroDesk[1]}%;--mx:${p.heroPhone[0]}%;--my:${p.heroPhone[1]}%`;
+const svc = (slug: string) => { const sp = SERVICE_PAGES.find(s => s.slug === slug); return SERVICES[sp.index]; };
+const door = (slug: string) => H.doors.find(d => d.slug === slug).lead;
+const place = (id: string) => PLACES.find(p => p.id === id);
+
+const WAYPOINTS = [
+  { id: 'travel', slug: 'travel', pos: at(MAP.places.lisbon), photo: '/images/places/lisbon-card-640.webp', kicker: t(place('lisbon').name, lang), title: t(svc('travel').short, lang), text: t(door('travel'), lang), from: svc('travel').tiers[0].price },
+  { id: 'venues', slug: 'venues', lab: 'lab-above', pos: at(MAP.places.mallorca), photo: '/images/places/mallorca-card-640.webp', kicker: t(place('mallorca').name, lang), title: t(svc('venues').short, lang), text: t(door('venues'), lang), from: svc('venues').tiers[0].price },
+  { id: 'weddings', slug: 'weddings', pos: at(MAP.places.amalfi), photo: '/images/places/amalfi-card-640.webp', kicker: t(place('amalfi').name, lang), title: t(svc('weddings').short, lang), text: t(door('weddings'), lang), from: svc('weddings').tiers[0].price },
+  { id: 'destinations', slug: 'destinations', lab: 'lab-right', pos: at(MAP.places.iceland), photo: '/images/places/iceland-card-640.webp', kicker: t(place('iceland').name, lang), title: t(COPY.destinations.title, lang), text: t(COPY.destinations.lead, lang) },
+  { id: 'reviews', slug: 'reviews', pos: at(prague), photo: '', kicker: t(X.reviewsKicker, lang), title: t(COPY.reviews.title, lang), text: t(COPY.reviews.lead, lang) },
+  { id: 'about', slug: 'about', pos: '--x:92%;--y:86%;--mx:85%;--my:34%', compass: true, photo: '/images/maryann-portrait-800.webp', kicker: t(X.aboutKicker, lang), title: t(X.compass, lang), text: t(X.aboutText, lang) },
+];
+const plane = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M21.5 12c0-.7-.6-1.2-1.3-1.2h-5.6L9.2 3H7.3l2.8 7.8H5.2L3.6 8.6H2l1 3.4-1 3.4h1.6l1.6-2.2h4.9L7.3 21h1.9l5.4-7.8h5.6c.7 0 1.3-.5 1.3-1.2Z"/></svg>';
+const compass = '<svg viewBox="0 0 48 48" width="46" height="46" aria-hidden="true"><circle cx="24" cy="24" r="21" fill="rgba(3,19,31,.55)" stroke="currentColor" stroke-opacity=".5"/><circle cx="24" cy="24" r="15" fill="none" stroke="currentColor" stroke-opacity=".2" stroke-dasharray="1 3"/><path d="M24 6l4 18-4 18-4-18z" fill="currentColor" fill-opacity=".9"/><path d="M24 6l4 18h-8z" fill="#E75B24"/><path d="M6 24l18-4 18 4-18 4z" fill="currentColor" fill-opacity=".35"/><text x="24" y="5" font-size="5" text-anchor="middle" fill="currentColor" font-family="Poppins,sans-serif">N</text></svg>';
+---
+<section class="mhero" data-mhero data-lang={lang}>
+  <div class="mhero-copy">
+    <span class="kicker" data-reveal>{t(H.eyebrow, lang)}</span>
+    <h1 class="display split">
+      {lines.map((ln, i) => <span class="ln"><span style={`--i:${i}`}>{i === 1 ? <em class="accent">{ln}</em> : ln}</span></span>)}
+    </h1>
+    <p class="lead mhero-lead" data-reveal style="--d:4">{t(UI.heroLead, lang)}</p>
+  </div>
+
+  <div class="mhero-band" style={`--bt:${bt};--bh:${bh}`}>
+  <div class="mhero-canvas" data-canvas style={`--ar:${D.w}/${D.h};--mar:${P.w}/${P.h};--kd:${(D.w / D.h).toFixed(4)};--km:${(P.w / P.h).toFixed(4)}`}>
+    <div class="mhero-tilt" data-tilt>
+      <picture>
+        <source media="(orientation: portrait), (max-width: 767px)" srcset="/maps/hero-phone.svg" width={P.w} height={P.h} />
+        <img src="/maps/hero-desk.svg" width={D.w} height={D.h} alt={t(X.alt, lang)} decoding="async" fetchpriority="high" />
+      </picture>
+      <svg class="tmap-routes" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="tmap-trail" data-trail d="" /></svg>
+      {WAYPOINTS.map((w, i) => (
+        <a class:list={['mpin', w.lab, { 'mpin-compass': w.compass }]} href={href(lang, w.slug)} data-wp={w.id} style={`${w.pos};--i:${i}`} aria-label={`${w.title}${w.compass ? '' : ' · ' + w.kicker}`}>
+          {w.compass ? <Fragment set:html={compass} /> : <i></i>}<span>{t(X.labels[w.id], lang)}</span>
+        </a>
+      ))}
+      <span class="tmap-plane mhero-plane" data-plane aria-hidden="true"><Fragment set:html={plane} /></span>
+    </div>
+  </div>
+  </div>
+
+
+  <div class="mhero-panel" data-panel>
+    <div class="mhero-intro" data-intro data-reveal style="--d:5">
+      <p class="mhero-hint"><span>{t(X.hint, lang)}</span><a class="mhero-how" href="#start">{t(X.how, lang)} ↓</a></p>
+      <nav class="mhero-chips" aria-label={t(X.navLabel, lang)}>
+        {WAYPOINTS.map(w => <a class="tmap-chip" href={href(lang, w.slug)} data-chip={w.id}>{t(X.labels[w.id], lang)}</a>)}
+      </nav>
+      <div class="mhero-actions">
+        <a class="btn btn-light" href={href(lang, 'enquire')}>{t(H.heroPrimary, lang)}<Fragment set:html={ICON.arrow} /></a>
+      </div>
+    </div>
+    {WAYPOINTS.map(w => (
+      <article class="mcard" data-wcard={w.id} hidden>
+        {w.photo ? <img src={w.photo} width="640" height="440" alt="" loading="lazy" decoding="async" /> : <div class="mcard-quote" data-reviews-stat><span>★★★★★</span></div>}
+        <div class="mcard-body">
+          <p class="mcard-kicker">{w.kicker}</p>
+          <h2>{w.title}</h2>
+          <p class="mcard-text">{w.text}</p>
+          {w.from && <p class="mcard-from">{t(UI.from, lang)} {money(w.from, lang)}</p>}
+          <div class="mcard-actions">
+            <a class="btn btn-light" href={href(lang, w.slug)} data-go><span class="go-long">{t(X.go, lang, { page: w.title })}</span><span class="go-short">{t(X.goShort, lang)}</span><Fragment set:html={ICON.arrow} /></a>
+          </div>
+        </div>
+        <button type="button" class="mcard-close" data-back aria-label={t(X.back, lang)}><Fragment set:html={ICON.close} /></button>
+      </article>
+    ))}
+  </div>
+</section>

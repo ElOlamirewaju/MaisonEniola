@@ -1,12 +1,11 @@
 ---
-/* Home: film hero → how it works (idea → tell Maison Eniola → the right service → start planning) → choose a service →
-   the portal opens into a place → the atlas, an interactive map → how Maryann works → voices → where to next. */
+/* Home: the map opening, which is also the navigation (components/MapHero.astro) → how it works (idea → tell Maison Eniola → the right service → start planning) → choose a service →
+   the portal opens into a place → how Maryann works → voices → where to next. */
 import Base from '../layouts/Base.astro';
 import Media from '../components/Media.astro';
-import PostcardGallery from '../components/PostcardGallery.astro';
 import Voices from '../components/Voices.astro';
 import FinalCall from '../components/FinalCall.astro';
-import TravelMap from '../components/TravelMap.astro';
+import MapHero from '../components/MapHero.astro';
 import { COPY, PLACE_META, SERVICE_PAGES } from '../data/site.js';
 import { SERVICES, PLACES, UI } from '../data/content.js';
 import { t, href, money } from '../lib/i18n.js';
@@ -18,31 +17,7 @@ const H = COPY.home, C = COPY.common;
 const lines = H.heroLines[lang] || H.heroLines.en;
 ---
 <Base lang={lang} title={t(H.title, lang)}>
-  <section class="hero">
-    <Media place="amalfi" lang={lang} video eager zoom parallax={0.25} decorative />
-    <div class="mist"></div><div class="mist b"></div>
-    <div class="shade"></div>
-    <div class="wrap hero-in">
-      <div>
-        <span class="kicker" data-reveal>{t(H.eyebrow, lang)}</span>
-        <h1 class="display split" style="margin-top:1.2rem">
-          {lines.map((ln, i) => <span class="ln"><span style={`--i:${i}`}>{i === 1 ? <em class="accent">{ln}</em> : ln}</span></span>)}
-        </h1>
-        <p class="lead" data-reveal style="--d:4;margin-top:1.6rem">{t(UI.heroLead, lang)}</p>
-        <div class="hero-actions" data-reveal style="--d:5">
-          <a class="btn btn-light" href={href(lang, 'enquire')}>{t(H.heroPrimary, lang)}<Fragment set:html={ICON.arrow} /></a>
-          <a class="btn btn-glass" href="#start">{t(H.heroSecondary, lang)}</a>
-        </div>
-        <p class="hero-meta" data-reveal style="--d:6">
-          <span>{t(PLACE_META.amalfi.town, lang)} · <b data-clock={PLACE_META.amalfi.tz}></b> {t(C.localTime, lang).toLowerCase()}</span>
-          <span>{PLACE_META.amalfi.coords}</span>
-          <span>EN · ES</span>
-        </p>
-      </div>
-      <PostcardGallery lang={lang} label={t(UI.heroPostcardHint, lang)} />
-    </div>
-    <a class="scroll-cue" href="#start" aria-hidden="true" tabindex="-1">{t(C.scroll, lang)}<i></i></a>
-  </section>
+  <MapHero lang={lang} />
 
   <section class="scene start" id="start">
     <div class="wrap">
@@ -98,16 +73,6 @@ const lines = H.heroLines[lang] || H.heroLines.en;
   </section>
 
 
-  <section class="scene mapsec" id="atlas">
-    <div class="wrap">
-      <div class="scene-head">
-        <span class="kicker" data-reveal>{t(H.atlasKicker, lang)}</span>
-        <h2 class="title-l" data-reveal style="--d:1">{t(H.atlasTitle, lang)}</h2>
-        <p class="lead" data-reveal style="--d:2">{t(H.atlasLead, lang)}</p>
-      </div>
-      <TravelMap lang={lang} />
-    </div>
-  </section>
 
   <section class="scene">
     <div class="wrap">

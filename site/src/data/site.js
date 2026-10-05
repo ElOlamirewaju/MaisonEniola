@@ -24,7 +24,7 @@ export const MENU = [
   { slug: 'travel', label: { en: 'Travel', es: 'Viajes' } },
   { slug: 'destinations', label: { en: 'Destinations', es: 'Destinos' } },
   { slug: 'reviews', label: { en: 'Reviews', es: 'Opiniones' } },
-  { slug: 'about', label: { en: 'About', es: 'Sobre mí' } },
+  { slug: 'about', label: { en: 'About', es: 'Sobre Maryann' } },
 ];
 
 /* Links to review and social profiles. Leave a value empty and its button is hidden.
@@ -138,6 +138,21 @@ export const COPY = {
     finalTitle: { en: 'Where to next?', es: '¿Adónde vamos?' },
     finalText: { en: 'Tell Maryann the occasion, rough dates and a budget range. She replies in English or Spanish.', es: 'Cuenta a Maryann la ocasión, las fechas aproximadas y un rango de presupuesto. Responde en inglés o en español.' },
   },
+  // The map opening of the home page (components/MapHero.astro): every page is a place.
+  mapHero: {
+    alt: { en: 'Map of Europe: each place leads to a part of the site', es: 'Mapa de Europa: cada lugar lleva a una parte de la web' },
+    hint: { en: 'Tap a place to go there', es: 'Toca un lugar para ir' },
+    goShort: { en: 'Go there', es: 'Ir allí' },
+    navLabel: { en: 'Places on the map', es: 'Lugares del mapa' },
+    labels: { travel: { en: 'Travel', es: 'Viajes' }, venues: { en: 'Venues', es: 'Espacios' }, weddings: { en: 'Weddings', es: 'Bodas' }, destinations: { en: 'Destinations', es: 'Destinos' }, reviews: { en: 'Reviews', es: 'Opiniones' }, about: { en: 'About', es: 'Maryann' } },
+    go: { en: 'Go to {page}', es: 'Ir a {page}' },
+    back: { en: 'All places', es: 'Todos los lugares' },
+    how: { en: 'How it works', es: 'Cómo funciona' },
+    reviewsKicker: { en: 'Prague and beyond', es: 'Praga y más allá' },
+    aboutKicker: { en: 'Who plans your trip', es: 'Quién planifica tu viaje' },
+    compass: { en: 'About Maryann', es: 'Sobre Maryann' },
+    aboutText: { en: 'Maryann Eniola plans trips, venues and guest travel, in English or Spanish, for one traveller or a hundred.', es: 'Maryann Eniola planifica viajes, espacios y viajes de invitados, en inglés o en español, para una persona o para cien.' },
+  },
   // The travel map (components/TravelMap.astro).
   map: {
     alt: { en: 'Map of Europe marking the destinations Maryann researches', es: 'Mapa de Europa con los destinos que investiga Maryann' },
@@ -227,7 +242,7 @@ export const COPY = {
     read: { en: 'Read more reviews', es: 'Leer más opiniones' },
   },
   about: {
-    title: { en: 'About', es: 'Sobre mí' },
+    title: { en: 'About', es: 'Sobre Maryann' },
     kicker: { en: 'About', es: 'Sobre mí' },
     heading: { en: 'Planning that tells you the truth about a place.', es: 'Una planificación que te cuenta la verdad de cada lugar.' },
     lead: { en: 'Maryann Eniola plans trips, finds wedding venues and organises travel for proposals, weddings and the guests who come to them, in English and Spanish. For one traveller or a hundred.', es: 'Maryann Eniola planifica viajes, busca espacios para bodas y organiza los desplazamientos de pedidas, bodas e invitados, en inglés y en español. Para una persona o para cien.' },

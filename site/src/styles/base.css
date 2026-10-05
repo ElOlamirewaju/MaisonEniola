@@ -120,8 +120,8 @@ em.accent{font-style:italic;color:var(--glow)}
    class arrives with the bundle. Transform only, no fade: Chrome does not count text that fades in from
    opacity 0 as the largest paint (LCP). */
 @media (prefers-reduced-motion: no-preference){
-  .hero [data-reveal],.page-hero [data-reveal],.motion .hero [data-reveal],.motion .page-hero [data-reveal]{animation:enter-hero .9s var(--luxury-ease) both;animation-delay:calc(var(--d,0) * 90ms + 120ms);transition:none;opacity:1;filter:none}
-  .hero .split .ln>span,.page-hero .split .ln>span,.motion .hero .split .ln>span,.motion .page-hero .split .ln>span{animation:rise 1.2s var(--luxury-ease) both;animation-delay:calc(var(--i,0) * 100ms + 100ms);transition:none}
+  .hero [data-reveal],.page-hero [data-reveal],.mhero [data-reveal],.motion .hero [data-reveal],.motion .page-hero [data-reveal],.motion .mhero [data-reveal]{animation:enter-hero .9s var(--luxury-ease) both;animation-delay:calc(var(--d,0) * 90ms + 120ms);transition:none;opacity:1;filter:none}
+  .hero .split .ln>span,.page-hero .split .ln>span,.mhero .split .ln>span,.motion .hero .split .ln>span,.motion .page-hero .split .ln>span,.motion .mhero .split .ln>span{animation:rise 1.2s var(--luxury-ease) both;animation-delay:calc(var(--i,0) * 100ms + 100ms);transition:none}
 }
 @keyframes enter-hero{from{transform:translate3d(0,22px,0)}to{transform:none}}
 @keyframes rise{from{transform:translate3d(0,108%,0) rotate(2deg)}to{transform:none}}

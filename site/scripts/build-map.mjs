@@ -3,6 +3,8 @@
    Writes:
      public/maps/europe-desk.svg   1000×620, Iceland to the eastern Mediterranean (desktop and tablet)
      public/maps/europe-phone.svg  400×330, a tighter frame for phones
+     public/maps/hero-desk.svg     1600×900, the opening map on wide screens, Europe set right of the headline
+     public/maps/hero-phone.svg    400×820, the opening map on phones, Europe between the headline and the bottom panel
      public/maps/contours.svg      a faint topographic texture for night sections
      src/data/map.json             where each destination and each known place falls on both maps, in percent
    Geography: Natural Earth via world-atlas (public domain), simplified with topojson-simplify. */
@@ -21,6 +23,9 @@ const borders = mesh(topo, topo.objects.countries, (a, b) => a !== b);
 const FRAMES = {
   desk: { w: 1000, h: 620, extent: [[-25, 66.8], [32, 66.8], [-12, 34.5], [30, 34.5]] },
   phone: { w: 400, h: 330, extent: [[-24.5, 66.6], [27, 66.6], [-10.5, 35.2], [27, 35.2]] },
+  // The opening map: `box` is where the extent is fitted, leaving the rest of the frame (still drawn) for text.
+  heroDesk: { w: 1600, h: 900, box: [[620, 90], [1540, 800]], extent: [[-25, 66.8], [32, 66.8], [-12, 34.5], [30, 34.5]], file: 'hero-desk' },
+  heroPhone: { w: 400, h: 820, box: [[18, 250], [382, 600]], extent: [[-24.5, 66.6], [22, 66.6], [-10.5, 36], [22, 36]], file: 'hero-phone' },
 };
 
 /* Places a review might mention, most specific first, so "Rome" wins over "Italy". [label, lat, lon, ...aliases] */
@@ -55,7 +60,7 @@ mkdirSync(new URL('../public/maps/', import.meta.url), { recursive: true });
 const projections = {};
 for (const [key, F] of Object.entries(FRAMES)) {
   const proj = geoConicConformal().rotate([-5, 0]).parallels([38, 60])
-    .fitExtent([[12, 12], [F.w - 12, F.h - 12]], { type: 'MultiPoint', coordinates: F.extent })
+    .fitExtent(F.box || [[12, 12], [F.w - 12, F.h - 12]], { type: 'MultiPoint', coordinates: F.extent })
     .clipExtent([[0, 0], [F.w, F.h]]);
   projections[key] = proj;
   const path = geoPath(proj).digits(1);
@@ -67,9 +72,10 @@ for (const [key, F] of Object.entries(FRAMES)) {
     + `<path d="${land}" fill="#0B3350" fill-opacity=".92" stroke="#F6F1E4" stroke-opacity=".34" stroke-width=".7" stroke-linejoin="round"/>`
     + `<path d="${path(borders)}" fill="none" stroke="#F6F1E4" stroke-opacity=".11" stroke-width=".5"/>`
     + `</svg>`;
-  writeFileSync(new URL(`../public/maps/europe-${key}.svg`, import.meta.url), svg);
-  out.frames[key] = { w: F.w, h: F.h };
-  console.log(`europe-${key}.svg`, svg.length, 'bytes');
+  const file = F.file || `europe-${key}`;
+  writeFileSync(new URL(`../public/maps/${file}.svg`, import.meta.url), svg);
+  out.frames[key] = { w: F.w, h: F.h, ...(F.box ? { box: F.box } : {}) };
+  console.log(`${file}.svg`, svg.length, 'bytes');
 }
 
 const at = (lat, lon) => {

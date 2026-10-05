@@ -8,6 +8,7 @@ import { mountEnquiry } from './enquiry.js';
 import { mountVoices } from './voices.js';
 import { mountReviewForm } from './review-form.js';
 import { mountTravelMaps, teardownTravelMaps } from './travel-map.js';
+import { mountMapHero, teardownMapHero } from './map-hero.js';
 
 function setup() {
   initChrome();
@@ -22,6 +23,7 @@ function setup() {
   const rf = document.getElementById('review-form');
   if (rf && !rf.dataset.mounted) { rf.dataset.mounted = '1'; mountReviewForm(rf); }
   mountTravelMaps();
+  mountMapHero();
   countView();
   bindPicks();
   applySettings();
@@ -99,6 +101,7 @@ function collapseInclusions() {
 function teardown() {
   teardownMotion();
   teardownTravelMaps();
+  teardownMapHero();
   teardownChrome();
 }
 
