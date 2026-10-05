@@ -36,11 +36,19 @@ export function mountEnquiry(form) {
     const id = 'q-' + qd.id, v = F.ans[qd.id] || '';
     const label = `<label for="${id}">${esc(t(qd.label))}${qd.req ? '' : ` <small>(${t(UI.optional)})</small>`}</label>`;
     let ctl;
+    if (qd.type === 'yesno') {
+      const opts = qd.opts.map((o, i) => `<label class="yn-opt"><input type="radio" name="${id}" id="${i ? `${id}-${i}` : id}" data-ans="${qd.id}" value="${i}" ${String(v) === String(i) ? 'checked' : ''}${i ? '' : inv(qd.id)}>${esc(t(o))}</label>`).join('');
+      return `<fieldset class="field yesno"><legend>${esc(t(qd.label))}</legend><div class="yn">${opts}</div>${errHTML(qd.id)}</fieldset>`;
+    }
     if (qd.type === 'select') ctl = `<select id="${id}" data-ans="${qd.id}" ${qd.req ? 'required' : ''}${inv(qd.id)}><option value="">${lang === 'es' ? 'Elige una opción' : 'Choose an option'}</option>${qd.opts.map((o, i) => `<option value="${i}" ${String(v) === String(i) ? 'selected' : ''}>${esc(t(o))}</option>`).join('')}</select>`;
     else if (qd.type === 'number') ctl = `<input type="number" inputmode="numeric" id="${id}" data-ans="${qd.id}" min="${qd.min}" max="${qd.max}" value="${esc(v)}" ${qd.req ? 'required' : ''}${inv(qd.id)}>`;
     else ctl = `<input type="text" id="${id}" data-ans="${qd.id}" value="${esc(v)}" placeholder="${esc(t(qd.ph))}" ${qd.req ? 'required' : ''}${inv(qd.id)}>`;
     return `<div class="field">${label}${ctl}${errHTML(qd.id)}</div>`;
   }
+
+  // A question with `when` is shown only while its condition holds (e.g. honeymoon, for destination weddings).
+  const shown = qd => !qd.when || String(F.ans[qd.when.q]) === String(qd.when.is);
+  const visibleQs = () => QUESTIONS[F.choice].filter(shown);
 
   function stepHTML() {
     let body = '';
@@ -48,7 +56,7 @@ export function mountEnquiry(form) {
       body = `<fieldset><legend>${t(UI.q1)}</legend><div class="choices">${PLAN_CHOICES.map(c => `<div class="opt"><input type="radio" name="plan" id="pc-${c.id}" value="${c.id}" ${F.choice === c.id ? 'checked' : ''} ${F.errors.choice ? 'aria-describedby="err-choice"' : ''}><label for="pc-${c.id}">${esc(t(c.label))}<small>${esc(t(c.hint))}</small></label></div>`).join('')}</div>${F.errors.choice ? `<p class="choice-err" id="err-choice">${esc(F.errors.choice)}</p>` : ''}</fieldset>`;
     } else if (F.step === 2) {
       const c = PLAN_CHOICES.find(x => x.id === F.choice);
-      body = `<fieldset><legend>${esc(t(c.label))}</legend>${QUESTIONS[F.choice].map(fieldHTML).join('')}</fieldset>`;
+      body = `<fieldset><legend>${esc(t(c.label))}</legend>${visibleQs().map(fieldHTML).join('')}</fieldset>`;
     } else {
       body = `<fieldset><legend>${t(UI.yourDetails)}</legend>
         ${F.estimate ? `<div class="attached"><div><b>${t(UI.estimateAttached)}</b><pre>${esc(F.estimate)}</pre></div><button type="button" data-detach>${t(UI.removeEstimate)}</button></div>` : ''}
@@ -81,7 +89,7 @@ export function mountEnquiry(form) {
   function validate() {
     F.errors = {};
     if (F.step === 1 && !F.choice) F.errors.choice = t(UI.choosePlan);
-    if (F.step === 2) QUESTIONS[F.choice].forEach(qd => { if (qd.req && (F.ans[qd.id] === undefined || String(F.ans[qd.id]).trim() === '')) F.errors[qd.id] = t(UI.required); });
+    if (F.step === 2) visibleQs().forEach(qd => { if (qd.req && (F.ans[qd.id] === undefined || String(F.ans[qd.id]).trim() === '')) F.errors[qd.id] = t(UI.required); });
     if (F.step === 3) {
       if (!F.name.trim()) F.errors.name = t(UI.required);
       if (!F.email.trim()) F.errors.email = t(UI.required);
@@ -105,9 +113,9 @@ export function mountEnquiry(form) {
     const c = PLAN_CHOICES.find(x => x.id === F.choice), L = [];
     L.push(lang === 'es' ? 'Hola Maryann, te escribo desde tu web.' : 'Hi Maryann, I’m getting in touch from your website.', '');
     L.push((lang === 'es' ? 'Planeo: ' : 'Planning: ') + t(c.label));
-    QUESTIONS[F.choice].forEach(qd => {
+    visibleQs().forEach(qd => {
       const v = F.ans[qd.id]; if (v === undefined || String(v).trim() === '') return;
-      L.push(`${t(qd.label)}: ${qd.type === 'select' ? t(qd.opts[+v]) : String(v).trim()}`);
+      L.push(`${t(qd.label)}: ${qd.type === 'select' || qd.type === 'yesno' ? t(qd.opts[+v]) : String(v).trim()}`);
     });
     if (F.estimate) L.push('', t(UI.estimateAttached) + ':', F.estimate);
     L.push('', `${t(UI.name)}: ${F.name.trim()}`, `${t(UI.email)}: ${F.email.trim()}`);
@@ -198,7 +206,17 @@ export function mountEnquiry(form) {
     const el = e.target;
     if (el.name === 'plan') { if (F.choice !== el.value) F.ans = {}; F.choice = el.value; delete F.errors.choice; return; }
     if (el.dataset.c) { F[el.dataset.c] = el.checked; return; }
-    if (el.dataset.ans) { F.ans[el.dataset.ans] = el.value; return; }
+    if (el.dataset.ans) {
+      F.ans[el.dataset.ans] = el.value; delete F.errors[el.dataset.ans];
+      // An answer that other questions depend on redraws the step, so they appear or disappear right below.
+      if (F.step === 2 && QUESTIONS[F.choice].some(q => q.when && q.when.q === el.dataset.ans)) {
+        QUESTIONS[F.choice].forEach(q => { if (!shown(q)) delete F.ans[q.id]; });
+        render(); $(`#q-${el.dataset.ans}`)?.focus();
+        const added = QUESTIONS[F.choice].find(q => q.when && q.when.q === el.dataset.ans && shown(q));
+        if (added) $(`#q-${added.id}`)?.closest('.field')?.classList.add('is-new');
+      }
+      return;
+    }
     if (el.dataset.f) F[el.dataset.f] = el.value;
   });
   form.addEventListener('input', e => {

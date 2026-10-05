@@ -140,7 +140,8 @@ const PLAN_CHOICES = [
   { id: 'trip', service: 'travel', tier: 0, label: { en: 'A trip or holiday', es: 'Un viaje o unas vacaciones' }, hint: { en: 'Solo, couple or group', es: 'Solo, en pareja o en grupo' } },
 ];
 
-// Step 2 questions per plan choice. type: text | select | number | textarea
+// Step 2 questions per plan choice. type: text | select | number | textarea | yesno
+// `when: { q, is }` shows a question only while question `q` has option index `is` selected (scripts/enquiry.js).
 const QUESTIONS = {
   proposal: [
     { id: 'dest', type: 'text', req: true, label: { en: 'Where are you thinking of?', es: '¿En qué lugar estás pensando?' }, ph: { en: 'A city, a country, or “not sure yet”', es: 'Una ciudad, un país o “aún no lo sé”' } },
@@ -154,7 +155,8 @@ const QUESTIONS = {
     { id: 'dates', type: 'text', req: true, label: { en: 'Rough dates', es: 'Fechas aproximadas' }, ph: { en: 'For example, September 2027', es: 'Por ejemplo, septiembre de 2027' } },
     { id: 'guests', type: 'select', req: true, label: { en: 'Guests travelling, not counting the couple', es: 'Invitados que viajan, sin contar a la pareja' }, opts: [{ en: 'Up to 20', es: 'Hasta 20' }, { en: '21 to 40', es: 'De 21 a 40' }, { en: 'More than 40', es: 'Más de 40' }] },
     { id: 'from', type: 'text', req: true, label: { en: 'Where guests are travelling from', es: 'Desde dónde viajan los invitados' }, ph: { en: 'For example, London, Lagos and Madrid', es: 'Por ejemplo, Londres, Lagos y Madrid' } },
-    { id: 'days', type: 'select', req: true, label: { en: 'How many event days?', es: '¿Cuántos días de evento?' }, opts: [{ en: 'One weekend', es: 'Un fin de semana' }, { en: 'Up to 4 days, with a honeymoon', es: 'Hasta 4 días, con luna de miel' }, { en: 'Not sure yet', es: 'Aún no lo sé' }] },
+    { id: 'days', type: 'select', req: true, label: { en: 'How many event days?', es: '¿Cuántos días de evento?' }, opts: [{ en: '1 day', es: '1 día' }, { en: '2 days', es: '2 días' }, { en: '3 to 4 days', es: 'De 3 a 4 días' }, { en: '5+ days', es: '5 días o más' }, { en: 'Not sure yet', es: 'Aún no lo sé' }] },
+    { id: 'honeymoon', type: 'yesno', req: true, when: { q: 'occasion', is: 0 }, label: { en: 'Are you planning to add a honeymoon to this trip?', es: '¿Vais a añadir una luna de miel a este viaje?' }, opts: [{ en: 'Yes', es: 'Sí' }, { en: 'No', es: 'No' }] },
   ],
   venue: [
     { id: 'stage', type: 'select', req: true, label: { en: 'Where are you up to?', es: '¿En qué punto estáis?' }, opts: [{ en: 'We haven’t chosen a country or region', es: 'No hemos elegido país ni región' }, { en: 'We have a destination and need venues', es: 'Tenemos destino y buscamos espacios' }, { en: 'We have venues in mind and want them checked', es: 'Tenemos espacios en mente y queremos comprobarlos' }] },
@@ -499,8 +501,8 @@ const LEGAL = {
   legal: {
     title: { en: 'Legal notice', es: 'Aviso legal' },
     body: {
-      en: '<p>This website is operated by <strong>Maryann Eniola</strong>, based in Spain. Business registration details will be added here once registration is complete.</p><dl><dt>Email</dt><dd>maisoneniola@gmail.com</dd><dt>WhatsApp</dt><dd>+34 663 412 843</dd></dl><p>The content of this website is for information. Prices and terms are confirmed in writing for each client before any work begins.</p>',
-      es: '<p>Esta web pertenece a <strong>Maryann Eniola</strong>, con base en España. Los datos de registro de la actividad se añadirán aquí cuando se complete el alta.</p><dl><dt>Correo electrónico</dt><dd>maisoneniola@gmail.com</dd><dt>WhatsApp</dt><dd>+34 663 412 843</dd></dl><p>El contenido de esta web es informativo. Los precios y condiciones se confirman por escrito a cada cliente antes de empezar cualquier trabajo.</p>'
+      en: '<p>This website is operated by <strong>Maryann</strong>, based in Spain. Business registration details will be added here once registration is complete.</p><dl><dt>Email</dt><dd>maisoneniola@gmail.com</dd><dt>WhatsApp</dt><dd>+34 663 412 843</dd></dl><p>The content of this website is for information. Prices and terms are confirmed in writing for each client before any work begins.</p>',
+      es: '<p>Esta web pertenece a <strong>Maryann</strong>, con base en España. Los datos de registro de la actividad se añadirán aquí cuando se complete el alta.</p><dl><dt>Correo electrónico</dt><dd>maisoneniola@gmail.com</dd><dt>WhatsApp</dt><dd>+34 663 412 843</dd></dl><p>El contenido de esta web es informativo. Los precios y condiciones se confirman por escrito a cada cliente antes de empezar cualquier trabajo.</p>'
     }
   },
   privacy: {

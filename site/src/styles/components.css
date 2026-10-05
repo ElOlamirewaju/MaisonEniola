@@ -80,6 +80,18 @@
 .ttabs-panel ul ul{margin:.5rem 0 .1rem;padding-left:1.1rem;display:grid;gap:.45rem;list-style:circle}
 @media (min-width:768px){.ttabs-panel{padding:1.5rem 1.8rem 1.7rem}.ttabs-tab{flex:0 0 auto;padding:.5rem 1.1rem;white-space:nowrap}}
 .check .err{display:block;margin-top:.35rem}
+/* yes/no question in the enquiry form */
+.yesno{border:0;padding:0;margin:0 0 1.1rem;min-width:0}
+.enq .yesno legend{font-family:var(--sans);font-weight:500;font-size:.92rem;line-height:1.45;color:var(--text);margin:0 0 .45rem;padding:0}
+.yn{display:flex;gap:.5rem;flex-wrap:wrap}
+.yn-opt{display:inline-flex;align-items:center;gap:.55rem;min-height:48px;min-width:96px;padding:0 1.15rem;border:1.5px solid var(--line-strong);border-radius:999px;background:var(--bg);cursor:pointer;font-weight:500}
+.yn-opt input{width:20px;height:20px;margin:0;accent-color:var(--teal)}
+.yn-opt:has(input:checked){border-color:var(--heading);box-shadow:inset 0 0 0 1.5px var(--heading)}
+.yn-opt:has(input:focus-visible){outline:3px solid var(--focus);outline-offset:2px}
+.yesno .err{display:block;margin-top:.4rem}
+.field.is-new{animation:field-in .5s var(--luxury-ease)}
+@keyframes field-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.field.is-new{animation:none}}
 .tab-short{display:none}
 @media (max-width:399px){.ttabs-tab:has(.tab-short) .tab-long{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.tab-short{display:inline}
   .ttabs.is-live .ttabs-list{gap:.15rem;padding:.35rem}.ttabs-tab{flex:1 1 auto;padding:.45rem .45rem;font-size:.82rem}}
