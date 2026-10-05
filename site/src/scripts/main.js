@@ -21,8 +21,20 @@ function setup() {
   const rf = document.getElementById('review-form');
   if (rf && !rf.dataset.mounted) { rf.dataset.mounted = '1'; mountReviewForm(rf); }
   countView();
+  bindPicks();
   applySettings();
   currencyOrder();
+}
+
+/* "Which fits you?" on a service page: the chosen level's card glows briefly after the scroll. */
+function bindPicks() {
+  if (window.__mePickBound) return; window.__mePickBound = true;
+  document.addEventListener('click', e => {
+    const a = e.target.closest('[data-pick]'); if (!a) return;
+    const el = document.querySelector(a.getAttribute('href')); if (!el) return;
+    el.classList.remove('is-picked'); void el.offsetWidth; el.classList.add('is-picked');
+    setTimeout(() => el.classList.remove('is-picked'), 2600);
+  });
 }
 
 /* One anonymous page count per view for the weekly digest: path only, no cookie, honours Do Not Track. */

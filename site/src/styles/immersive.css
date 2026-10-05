@@ -68,6 +68,29 @@
 .door:hover::after,.door:focus-visible::after{opacity:1}
 .door:hover .go svg{transform:translateX(6px)}
 
+/* ---- how it works: phone first, a vertical timeline; a row of four from 900px ---- */
+.journey{list-style:none;margin:0;padding:0;display:grid}
+.journey li{position:relative;padding:0 0 1.9rem 3.7rem}
+.journey li::before{content:"";position:absolute;left:1.2rem;top:2.7rem;bottom:.4rem;width:1px;background:linear-gradient(var(--moon-line),transparent)}
+.journey li:last-child{padding-bottom:0}.journey li:last-child::before{display:none}
+.journey .step-n{position:absolute;left:0;top:0;width:2.45rem;height:2.45rem;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(242,178,122,.45);font-size:.78rem;letter-spacing:.06em;color:var(--glow);background:rgba(246,241,228,.04)}
+.journey h3{font-size:clamp(1.3rem,2vw,1.5rem);line-height:1.2;margin:.3rem 0 .4rem}
+.journey p{color:var(--moon-soft);font-size:.96rem;max-width:42ch;margin:0}
+@media (min-width:900px){
+  .journey{grid-template-columns:repeat(4,1fr);gap:2rem}
+  .journey li{padding:3.7rem 0 0}
+  .journey li::before{left:3.2rem;right:-1.6rem;top:1.22rem;bottom:auto;width:auto;height:1px;background:linear-gradient(90deg,var(--moon-line),transparent)}
+}
+.start-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2.4rem}
+@media (max-width:479px){.start-actions .btn{flex:1 1 100%;justify-content:center}}
+.doors-help{margin-top:1.6rem;font-size:.95rem}.doors-help a,.hero-pick-help a{color:var(--moon);text-underline-offset:5px;text-decoration-color:var(--glow)}
+/* On phones the doors are a compact chooser, so the three services fit in about one screen. */
+@media (max-width:767px){
+  .door{min-height:300px;border-radius:150px 150px 14px 14px}
+  .door-body{padding:1.25rem 1.3rem 1.4rem;gap:.5rem}
+  .door h3{font-size:1.55rem}
+}
+
 /* ---- atlas: destinations travelled sideways ---- */
 .atlas{position:relative;background:var(--night);overflow:hidden}
 .atlas-head{padding-block:clamp(4rem,9vw,7rem) 2.5rem;display:grid;gap:1rem}
@@ -144,10 +167,13 @@
 .crumbs a{text-decoration:none;color:var(--moon-soft)}
 .crumbs a:hover{color:var(--moon)}
 .hero-index{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
-.hero-index a{display:grid;gap:.1rem;padding:.7rem 1.1rem;border-radius:14px;border:1px solid var(--moon-line);background:rgba(3,19,31,.3);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);text-decoration:none;min-width:160px;transition:border-color var(--luxury-duration) var(--luxury-ease),background-color var(--luxury-duration) var(--luxury-ease)}
+.hero-index a{flex:1 1 230px;display:grid;gap:.15rem;padding:.85rem 1.1rem;border-radius:14px;border:1px solid var(--moon-line);background:rgba(3,19,31,.3);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);text-decoration:none;min-width:160px;transition:border-color var(--luxury-duration) var(--luxury-ease),background-color var(--luxury-duration) var(--luxury-ease)}
 .hero-index a:hover{border-color:var(--moon-soft);background:rgba(3,19,31,.5)}
 .hero-index small{font-size:.72rem;color:var(--moon-faint);letter-spacing:.08em}
-.hero-index b{font-family:var(--serif);font-weight:400;font-size:1.15rem}
+.hero-index b{font-family:var(--serif);font-weight:400;font-size:1.15rem;line-height:1.25;color:var(--moon)}
+.hero-pick-label{margin:1.4rem 0 -.2rem;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:var(--moon);text-shadow:0 1px 2px rgba(3,19,31,.7)}
+.hero-pick-help{margin-top:.9rem;font-size:.92rem;text-shadow:0 1px 2px rgba(3,19,31,.7),0 2px 20px rgba(3,19,31,.9)}
+@media (max-width:479px){.hero-index{flex-direction:column}.hero-index a{flex:none}}
 .hero-index span{font-size:.82rem;color:var(--glow)}
 
 /* ---- destination page ---- */

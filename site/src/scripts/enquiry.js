@@ -4,13 +4,13 @@
 import { PLAN_CHOICES, QUESTIONS, SERVICES, UI, CONTACT } from '../data/content.js';
 import { t as tr, esc, pageLang, href } from '../lib/i18n.js';
 import { ICON } from '../lib/icons.js';
-import { ESTIMATE_KEY } from './calculator.js';
+import { ESTIMATE_KEY, checkDiscount } from './calculator.js';
 
 export function mountEnquiry(form) {
   const lang = pageLang();
   const t = (o, v) => tr(o, lang, v);
   const $ = (s, r = form) => r.querySelector(s);
-  const F = { step: 1, choice: null, ans: {}, name: '', email: '', phone: '', pref: '', notes: '', bound: false, privacy: false, estimate: null, errors: {}, website: '' };
+  const F = { step: 1, choice: null, ans: {}, name: '', email: '', phone: '', pref: '', notes: '', bound: false, privacy: false, estimate: null, errors: {}, website: '', code: '', codeOk: 0, codeMsg: '' };
 
   function preselect(svc, tier) {
     const key = SERVICES[svc]?.key; if (!key) return;
@@ -26,7 +26,7 @@ export function mountEnquiry(form) {
   if (q.get('plan') && QUESTIONS[q.get('plan')]) { F.choice = q.get('plan'); F.step = 2; if (q.get('dest')) F.ans.dest = q.get('dest'); }
   try {
     const raw = sessionStorage.getItem(ESTIMATE_KEY);
-    if (raw) { const e = JSON.parse(raw); F.estimate = e.summary; preselect(e.svc, e.tier); }
+    if (raw) { const e = JSON.parse(raw); F.estimate = e.summary; preselect(e.svc, e.tier); if (e.code) { F.code = e.code; F.codeOk = e.percent || 0; } }
   } catch (err) { /* ignore */ }
 
   const errHTML = k => (F.errors[k] ? `<span class="err" id="err-${k}">${esc(F.errors[k])}</span>` : '');
@@ -59,6 +59,10 @@ export function mountEnquiry(form) {
           <div class="field"><label for="f-pref">${t(UI.lang)}</label><select id="f-pref" data-f="pref"><option value="en" ${(F.pref || lang) === 'en' ? 'selected' : ''}>English</option><option value="es" ${(F.pref || lang) === 'es' ? 'selected' : ''}>Español</option></select></div>
         </div>
         <div class="field"><label for="f-notes">${t(UI.notes)} <small>(${t(UI.optional)})</small></label><textarea id="f-notes" data-f="notes">${esc(F.notes)}</textarea></div>
+        <div class="field promo">${F.codeOk
+          ? `<p class="promo-on">${t(UI.promoLabel)}: <b>${esc(F.code)}</b> · ${esc(t(UI.promoOk, { p: F.codeOk }))} <button type="button" class="linklike" data-unapply>${t(UI.promoRemove)}</button></p>`
+          : `<label for="f-code">${t(UI.promoLabel)} <small>(${t(UI.optional)})</small></label><div class="promo-row"><input id="f-code" data-f="code" value="${esc(F.code)}" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="done" maxlength="24"><button type="button" class="btn btn-ghost" data-apply>${t(UI.promoApply)}</button></div>`}
+          <p class="promo-msg" role="status">${esc(F.codeMsg)}</p><p class="promo-note">${t(UI.promoNote)}</p></div>
         <div class="bound"><h3>${t(UI.boundTitle)}</h3><p>${esc(t(UI.boundText))}</p></div>
         <div class="check"><input type="checkbox" id="f-bound" data-c="bound" ${F.bound ? 'checked' : ''}${inv('bound')}><div><label for="f-bound">${t(UI.tickBound)}</label>${errHTML('bound')}</div></div>
         <div class="check"><input type="checkbox" id="f-privacy" data-c="privacy" ${F.privacy ? 'checked' : ''}${inv('privacy')}><div><label for="f-privacy">${t(UI.tickPrivacy)}</label> <a href="${href(lang, 'privacy')}" target="_blank" rel="noopener">${t(UI.privacyLink)}</a>.${errHTML('privacy')}</div></div>
@@ -107,6 +111,7 @@ export function mountEnquiry(form) {
     L.push('', `${t(UI.name)}: ${F.name.trim()}`, `${t(UI.email)}: ${F.email.trim()}`);
     if (F.phone.trim()) L.push(`${t(UI.phone)}: ${F.phone.trim()}`);
     L.push(`${t(UI.lang)}: ${(F.pref || lang) === 'es' ? 'Español' : 'English'}`);
+    if (F.code.trim()) L.push(`${t(UI.promoLabel)}: ${F.code.trim().toUpperCase()}${F.codeOk ? ` (${t(UI.promoOk, { p: F.codeOk })})` : ''}`);
     if (F.notes.trim()) L.push('', F.notes.trim());
     return L.join('\n');
   }
@@ -127,6 +132,8 @@ export function mountEnquiry(form) {
     const b = e.target.closest('button'); if (!b) return;
     const d = b.dataset;
     if (d.detach !== undefined) { F.estimate = null; clearEstimate(); render(); return; }
+    if (d.apply !== undefined) { applyCode(); return; }
+    if (d.unapply !== undefined) { F.code = ''; F.codeOk = 0; F.codeMsg = ''; render(); $('#f-code')?.focus(); return; }
     if (d.next !== undefined) {
       if (!validate()) { render(); focusFirstError(); return; }
       F.step++; render(); focusLegend(); return;
@@ -143,7 +150,7 @@ export function mountEnquiry(form) {
         let ok = false;
         try {
           const r = await fetch('/api/enquiry', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({
-            name: F.name.trim(), email: F.email.trim(), phone: F.phone.trim(), lang: F.pref || lang, website: F.website,
+            name: F.name.trim(), email: F.email.trim(), phone: F.phone.trim(), lang: F.pref || lang, website: F.website, code: F.code.trim().toUpperCase(),
             subject: `${t(c.label)} — ${F.name.trim()}`, message: msg,
           }) });
           ok = r.ok && (await r.json()).ok === true;
@@ -196,6 +203,14 @@ export function mountEnquiry(form) {
     if (el.dataset.ans) F.ans[el.dataset.ans] = el.value;
     else if (el.dataset.f) F[el.dataset.f] = el.value;
   });
+  async function applyCode() {
+    const code = F.code.trim().toUpperCase(); if (!code) { $('#f-code')?.focus(); return; }
+    const msg = $('.promo-msg'); if (msg) msg.textContent = t(UI.promoChecking);
+    const r = await checkDiscount(code);
+    if (r.ok) { F.code = r.code; F.codeOk = r.percent; F.codeMsg = ''; render(); $('[data-unapply]')?.focus(); }
+    else { F.code = code; F.codeOk = 0; F.codeMsg = t(UI.promoErr[r.error]); render(); $('#f-code')?.focus(); }
+  }
+  form.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.id === 'f-code') { e.preventDefault(); applyCode(); } });
   form.addEventListener('submit', e => e.preventDefault());
 
   render();

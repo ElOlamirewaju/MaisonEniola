@@ -113,6 +113,28 @@ legend{font-family:var(--serif);font-size:1.3rem;color:var(--heading);margin-bot
 .total strong{display:block;font-family:var(--serif);font-weight:400;font-size:2.6rem;line-height:1.1;color:var(--heading)}
 .ticket .fine{font-size:.78rem;color:var(--muted);margin-top:.9rem}
 .ticket .btn{width:100%;margin-top:1.2rem}
+/* level chosen from "Which fits you?" */
+.tier{scroll-margin-top:100px;transition:box-shadow .6s var(--luxury-ease)}
+.tier.is-picked{box-shadow:0 0 0 3px var(--coral),var(--shadow)}
+/* discount code, in the estimate ticket and the enquiry form */
+.promo{margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--line)}
+.promo label{display:block;font-weight:500;font-size:.9rem;margin-bottom:.4rem}.promo label small{font-weight:400;color:var(--muted)}
+.promo-row{display:flex;gap:.5rem}
+.promo-row input{flex:1;min-width:0;min-height:48px;padding:.6rem .8rem;border:1.5px solid var(--line-strong);border-radius:var(--radius-s);background:var(--bg);text-transform:uppercase;letter-spacing:.06em}
+.promo-row input:focus{outline:3px solid var(--focus);outline-offset:1px;border-color:var(--focus)}
+.ticket .promo-row .btn,.promo-row .btn{width:auto;margin:0;flex:none;min-height:48px}
+.promo-msg{font-size:.85rem;color:var(--coral-ink);margin:.4rem 0 0;min-height:0}.promo-msg:empty{display:none}
+.promo-on{margin:0;font-size:.92rem}.promo-on b{letter-spacing:.06em}
+.promo-note{font-size:.8rem;color:var(--muted);margin:.4rem 0 0}
+.field.promo{border-top:0;padding-top:0;margin-top:0}
+/* running total above the phone action bar while the options scroll past; hidden from tablet width */
+.calc-strip{display:none}
+@media (max-width:767px){
+  .calc-strip{position:sticky;bottom:calc(80px + env(safe-area-inset-bottom));z-index:5;display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1.4rem;padding:.75rem 1.1rem;border-radius:999px;background:var(--ticket-head);color:var(--ticket-head-text);text-decoration:none;box-shadow:0 10px 30px -12px rgba(3,19,31,.6)}
+  .paper .calc-strip,.paper .calc-strip span,.paper .calc-strip b{color:var(--ticket-head-text)}
+  .calc-strip span{font-size:.82rem;opacity:.85}.calc-strip b{font-family:var(--serif);font-weight:400;font-size:1.35rem}
+  .ticket{position:static}
+}
 .status{font-size:.85rem;color:var(--teal-ink);margin-top:.6rem;min-height:1.3em}
 
 /* ---- enquiry ---- */

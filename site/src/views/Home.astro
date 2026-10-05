@@ -1,6 +1,6 @@
 ---
-/* Home: a journey. Film hero with floating postcards → the portal opens into a place → three doors →
-   the atlas travels sideways → how I work → voices → where to next. */
+/* Home: film hero → how it works (idea → tell Maison Eniola → the right service → start planning) → choose a service →
+   the portal opens into a place → the atlas travels sideways → how Maryann works → voices → where to next. */
 import Base from '../layouts/Base.astro';
 import Media from '../components/Media.astro';
 import PostcardGallery from '../components/PostcardGallery.astro';
@@ -29,8 +29,8 @@ const lines = H.heroLines[lang] || H.heroLines.en;
         </h1>
         <p class="lead" data-reveal style="--d:4;margin-top:1.6rem">{t(UI.heroLead, lang)}</p>
         <div class="hero-actions" data-reveal style="--d:5">
-          <a class="btn btn-light" href={href(lang, 'weddings')}>{t(UI.heroCta1, lang)}<Fragment set:html={ICON.arrow} /></a>
-          <a class="btn btn-glass" href={href(lang, 'estimate')}>{t(UI.heroCta2, lang)}</a>
+          <a class="btn btn-light" href={href(lang, 'enquire')}>{t(H.heroPrimary, lang)}<Fragment set:html={ICON.arrow} /></a>
+          <a class="btn btn-glass" href="#start">{t(H.heroSecondary, lang)}</a>
         </div>
         <p class="hero-meta" data-reveal style="--d:6">
           <span>{t(PLACE_META.amalfi.town, lang)} · <b data-clock={PLACE_META.amalfi.tz}></b> {t(C.localTime, lang).toLowerCase()}</span>
@@ -40,22 +40,26 @@ const lines = H.heroLines[lang] || H.heroLines.en;
       </div>
       <PostcardGallery lang={lang} label={t(UI.heroPostcardHint, lang)} />
     </div>
-    <a class="scroll-cue" href="#portal" aria-hidden="true" tabindex="-1">{t(C.scroll, lang)}<i></i></a>
+    <a class="scroll-cue" href="#start" aria-hidden="true" tabindex="-1">{t(C.scroll, lang)}<i></i></a>
   </section>
 
-  <section class="portal" id="portal" data-portal>
-    <div class="portal-window">
-      <Media place="iceland" lang={lang} video zoom decorative />
-      <div class="portal-after"></div>
-    </div>
-    <div class="portal-copy">
-      <span class="kicker">{t(H.portalKicker, lang)}</span>
-      <h2 class="title-xl">{t(H.portalTitle, lang)}</h2>
-      <p class="lead">{t(H.portalText, lang)}</p>
+  <section class="scene start" id="start">
+    <div class="wrap">
+      <div class="scene-head">
+        <span class="kicker" data-reveal>{t(H.startKicker, lang)}</span>
+        <h2 class="title-l" data-reveal style="--d:1">{t(H.startTitle, lang)}</h2>
+      </div>
+      <ol class="journey">
+        {H.steps.map((st, i) => <li data-reveal style={`--d:${i}`}><span class="step-n" aria-hidden="true">0{i + 1}</span><h3>{t(st.title, lang)}</h3><p>{t(st.text, lang)}</p></li>)}
+      </ol>
+      <div class="start-actions" data-reveal>
+        <a class="btn btn-light" href={href(lang, 'enquire')}>{t(H.heroPrimary, lang)}<Fragment set:html={ICON.arrow} /></a>
+        <a class="btn btn-glass" href={href(lang, 'estimate')}>{t(UI.heroCta2, lang)}</a>
+      </div>
     </div>
   </section>
 
-  <section class="scene">
+  <section class="scene choose" id="services" style="padding-top:0">
     <div class="wrap">
       <div class="scene-head">
         <span class="kicker" data-reveal>{t(H.doorsKicker, lang)}</span>
@@ -79,6 +83,19 @@ const lines = H.heroLines[lang] || H.heroLines.en;
       </div>
     </div>
   </section>
+
+  <section class="portal" id="portal" data-portal>
+    <div class="portal-window">
+      <Media place="iceland" lang={lang} video zoom decorative />
+      <div class="portal-after"></div>
+    </div>
+    <div class="portal-copy">
+      <span class="kicker">{t(H.portalKicker, lang)}</span>
+      <h2 class="title-xl">{t(H.portalTitle, lang)}</h2>
+      <p class="lead">{t(H.portalText, lang)}</p>
+    </div>
+  </section>
+
 
   <section class="atlas" data-atlas>
     <div class="wrap atlas-head">

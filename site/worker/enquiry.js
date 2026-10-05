@@ -1,5 +1,6 @@
 /* Enquiry relay plus a record so the reminder cron can nudge Maryann if it goes unanswered. */
 import { json, str, EMAIL_RE, send, notify, putJSON, getJSON, signedLink, checkSigned, html, esc } from './lib.js';
+import { lookup, redeem } from './discounts.js';
 
 export async function postEnquiry(request, env) {
   let d;
@@ -12,6 +13,11 @@ export async function postEnquiry(request, env) {
   const message = str(d.message, 8000);
   if (!name || !EMAIL_RE.test(email) || message.length < 20) return json({ ok: false, error: 'fields' }, 400);
 
+  // A discount code is checked again here; Maryann's copy says whether it was valid.
+  const promo = str(d.code, 30) ? await lookup(env, d.code) : null;
+  const promoNote = !promo ? '' : promo.ok
+    ? `\n\nDiscount code: ${promo.code}, ${promo.percent}% off the planning fee (valid; used ${promo.d.uses || 0} time${(promo.d.uses || 0) === 1 ? '' : 's'} before). Supplier costs are not discounted.`
+    : `\n\nDiscount code entered: ${promo.code} (not valid: ${promo.error}). No discount applies unless you decide otherwise.`;
   const id = crypto.randomUUID();
   const repliedLink = await signedLink(env, '/api/enquiry/replied', { id });
   const footer = lang === 'es'
@@ -19,12 +25,13 @@ export async function postEnquiry(request, env) {
     : `\n\n—\nSent from maisoneniola.bid. Reply to ${email}${phone ? ` · WhatsApp ${phone}` : ''}.`;
   const adminNote = `\n\nWhen you have replied, tap this so I stop reminding you: ${repliedLink}`;
   try {
-    await send(env, { to: env.ENQUIRY_TO, replyTo: email, subject: `[Enquiry] ${subject}`, text: message + footer + adminNote });
+    await send(env, { to: env.ENQUIRY_TO, replyTo: email, subject: `[Enquiry] ${subject}${promo?.ok ? ` · ${promo.code}` : ''}`, text: message + footer + promoNote + adminNote });
   } catch (e) {
     console.error('enquiry send failed', e && e.message);
     return json({ ok: false, error: 'send' }, 502);
   }
-  await putJSON(env, `enq:${id}`, { id, name, email, phone, lang, subject, receivedAt: new Date().toISOString(), repliedAt: null, reminders: 0 }, { expirationTtl: 60 * 60 * 24 * 60 });
+  if (promo?.ok) await redeem(env, promo.code);
+  await putJSON(env, `enq:${id}`, { id, name, email, phone, lang, subject, code: promo?.ok ? promo.code : '', receivedAt: new Date().toISOString(), repliedAt: null, reminders: 0 }, { expirationTtl: 60 * 60 * 24 * 60 });
 
   const copyIntro = lang === 'es'
     ? `Hola ${name},\n\nGracias por tu consulta. Aquí tienes una copia de lo que me has enviado. Te respondo personalmente lo antes posible.\n\nMaryann\nMaison Eniola\n\n——————————\n\n`

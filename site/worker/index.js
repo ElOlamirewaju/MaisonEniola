@@ -5,6 +5,7 @@ import { postEnquiry, markReplied } from './enquiry.js';
 import { submitReview, listReviews, moderate } from './reviews.js';
 import { getSlots, book, cancel } from './booking.js';
 import { hit, geo } from './hits.js';
+import { checkCode } from './discounts.js';
 import { admin } from './admin.js';
 import { daily, weekly, monthly } from './cron.js';
 import { settings } from './lib.js';
@@ -26,6 +27,7 @@ export default {
     if (p === '/api/book') return post(() => book(request, env));
     if (p === '/api/book/cancel') return cancel(request, env, url);
     if (p === '/api/hit') return post(() => hit(request, env));
+    if (p === '/api/discount') return post(() => checkCode(request, env));
     if (p === '/api/geo') return geo(request);
     if (p === '/api/settings') { const s = await settings(env); return json({ ok: true, nextStart: s.nextStart, hours: s.hours, tz: 'Europe/Madrid' }, 200, { 'cache-control': 'public, max-age=300' }); }
     if (p === '/admin' || p.startsWith('/admin/')) return admin(request, env, url);

@@ -3,7 +3,8 @@ import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import { COPY } from '../data/site.js';
 import { UI } from '../data/content.js';
-import { t } from '../lib/i18n.js';
+import { t, href } from '../lib/i18n.js';
+import { calcHTML, initialState } from '../scripts/calculator.js';
 
 interface Props { lang: string }
 const { lang } = Astro.props;
@@ -13,9 +14,9 @@ const { lang } = Astro.props;
   <div class="horizon"></div>
   <section class="paper section" style="padding-top:clamp(2rem,5vw,4rem)">
     <div class="wrap">
-      <div id="calc-main" class="est-grid" data-sent={t(COPY.estimate.sent, lang)}>
-        <noscript><p>{lang === 'es' ? 'El calculador necesita JavaScript. Los precios están en cada página de servicio.' : 'The calculator needs JavaScript. Prices are listed on each service page.'}</p></noscript>
-      </div>
+      {/* Rendered here so the calculator is complete before (or without) scripts; scripts/main.js makes it interactive. */}
+      <div id="calc-main" class="est-grid calc" data-sent={t(COPY.estimate.sent, lang)}><Fragment set:html={calcHTML(initialState(), lang, 'calc-main')} /></div>
+      <noscript><p class="est-muted" style="margin-top:1rem">{lang === 'es' ? 'Con JavaScript desactivado no se pueden cambiar las opciones. Cada nivel y su precio están en ' : 'With JavaScript off the options can’t be changed. Every level and its price is on '}<a href={href(lang, 'weddings')}>{lang === 'es' ? 'bodas' : 'weddings'}</a>, <a href={href(lang, 'venues')}>{lang === 'es' ? 'espacios' : 'venues'}</a>{lang === 'es' ? ' y ' : ' and '}<a href={href(lang, 'travel')}>{lang === 'es' ? 'viajes' : 'travel'}</a>.</p></noscript>
     </div>
   </section>
   <div class="horizon to-night"></div>

@@ -2,6 +2,7 @@
    Sections: reviews waiting, enquiries not yet replied, request a review, upcoming calls, availability and settings. */
 import { html, esc, str, EMAIL_RE, send, sign, verify, getJSON, putJSON, listJSON, settings, DEFAULT_SETTINGS, fmtZoned, TZ, signedLink } from './lib.js';
 import { shell, reviewCard, applyModeration, requestReview, topbar } from './reviews.js';
+import { listCodes, codeStatus, adminCodeAction } from './discounts.js';
 
 const COOKIE = 'me_admin';
 async function cookieOk(request, env) {
@@ -43,6 +44,7 @@ export async function admin(request, env, url) {
   if (request.method === 'POST') {
     const f = await request.formData(), action = String(f.get('action') || '');
     try {
+      if (action.startsWith('code-')) flash = await adminCodeAction(env, f, action);
       if (action === 'moderate') { const { done } = await applyModeration(env, String(f.get('id')), String(f.get('what'))); flash = `Review ${done}.`; }
       if (action === 'replied') { const k = `enq:${f.get('id')}`, e = await getJSON(env, k); if (e) { e.repliedAt = new Date().toISOString(); await putJSON(env, k, e, { expirationTtl: 60 * 60 * 24 * 60 }); flash = 'Marked as replied.'; } }
       if (action === 'request') {
@@ -69,6 +71,7 @@ export async function admin(request, env, url) {
   const enq = (await listJSON(env, 'enq:')).filter(e => !e.repliedAt).sort((a, b) => a.receivedAt < b.receivedAt ? -1 : 1);
   const calls = (await listJSON(env, 'bk:')).filter(b => !b.cancelledAt && Date.parse(b.start) > Date.now() - 3600e3).sort((a, b) => a.start < b.start ? -1 : 1);
   const rr = (await listJSON(env, 'rr:')).sort((a, b) => a.sentAt < b.sentAt ? 1 : -1).slice(0, 10);
+  const codes = await listCodes(env);
   // summary strip: last 7 days of page views
   const now = Date.now(); let views = 0;
   for (let i = 0; i < 7; i++) { const h = await getJSON(env, `hits:${new Date(now - i * 86400e3).toISOString().slice(0, 10)}`); if (h) views += h.total; }
@@ -86,16 +89,24 @@ ${flash ? `<p class="flash">${esc(flash)}</p>` : ''}
   <div class="stat"><b>${views}</b><span>page views · 7 days</span></div>
   <div class="stat"><b style="font-size:1.2rem;padding:.4rem 0;color:${mon ? (mon.ok ? 'var(--teal)' : 'var(--coral-soft)') : 'var(--faint)'}">${mon ? (mon.ok ? 'All good' : 'Problem') : 'No data'}</b><span>site monitor</span></div>
 </div>
-<div class="jump"><a href="#reviews">Reviews</a><a href="#enquiries">Enquiries</a><a href="#calls">Calls</a><a href="#ask">Ask for a review</a><a href="#settings">Availability & settings</a><a href="#published">Published</a></div>
+<div class="jump"><a href="#reviews">Reviews</a><a href="#enquiries">Enquiries</a><a href="#calls">Calls</a><a href="#codes">Discount codes</a><a href="#ask">Ask for a review</a><a href="#settings">Availability & settings</a><a href="#published">Published</a></div>
 
 <section>${h2('Reviews waiting', pending.length, 'reviews')}
 ${pending.length ? pending.map(r => reviewCard(r) + `<div class="actions" style="margin:-.4rem 0 1.2rem">${hid(r.id, 'approve', 'Approve and publish')}${hid(r.id, 'decline', 'Decline')}</div>`).join('') : '<p class="empty">Nothing waiting. New reviews arrive by email and appear here.</p>'}</section>
 
 <section>${h2('Enquiries not yet replied', enq.length, 'enquiries')}
-${enq.length ? enq.map(e => `<div class="card"><p class="meta"><span class="who">${esc(e.name)}</span> · <a href="mailto:${esc(e.email)}">${esc(e.email)}</a>${e.phone ? ` · ${esc(e.phone)}` : ''}<br>${esc(e.subject)} · received ${esc(e.receivedAt.slice(0, 10))}${e.reminders ? ` · reminded ${e.reminders}×` : ''}</p><div class="actions"><form method="post"><input type="hidden" name="action" value="replied"><input type="hidden" name="id" value="${esc(e.id)}"><button class="no">Mark as replied</button></form></div></div>`).join('') : '<p class="empty">All replied. You will be reminded here and by email after two working days.</p>'}</section>
+${enq.length ? enq.map(e => `<div class="card"><p class="meta"><span class="who">${esc(e.name)}</span> · <a href="mailto:${esc(e.email)}">${esc(e.email)}</a>${e.phone ? ` · ${esc(e.phone)}` : ''}<br>${esc(e.subject)} · received ${esc(e.receivedAt.slice(0, 10))}${e.code ? ` · code <b>${esc(e.code)}</b>` : ''}${e.reminders ? ` · reminded ${e.reminders}×` : ''}</p><div class="actions"><form method="post"><input type="hidden" name="action" value="replied"><input type="hidden" name="id" value="${esc(e.id)}"><button class="no">Mark as replied</button></form></div></div>`).join('') : '<p class="empty">All replied. You will be reminded here and by email after two working days.</p>'}</section>
 
 <section>${h2('Calls coming up', calls.length, 'calls')}
 ${calls.length ? calls.map(b => `<div class="card"><p class="meta"><span class="who">${esc(fmtZoned(new Date(b.start), TZ))}</span> Madrid time<br>${esc(b.name)} · <a href="mailto:${esc(b.email)}">${esc(b.email)}</a>${b.phone ? ` · ${esc(b.phone)}` : ''}${b.topic ? ` · ${esc(b.topic)}` : ''}</p><div class="actions"><form method="post"><input type="hidden" name="action" value="cancelcall"><input type="hidden" name="id" value="${esc(b.id)}"><button class="no">Cancel this call</button></form></div></div>`).join('') : '<p class="empty">No calls booked. Visitors can book one right after sending an enquiry.</p>'}</section>
+
+<section>${h2('Discount codes', codes.filter(c => codeStatus(c) === 'active').length, 'codes')}
+<p class="hint" style="margin:-.3rem 0 1rem">Codes take a percentage off your planning fee only. Flights, stays, venues and other supplier costs are never discounted. Visitors enter the code in the estimate or the enquiry form; the enquiry email tells you whether it was valid, and you honour it on your invoice.</p>
+<div class="card form"><form method="post"><input type="hidden" name="action" value="code-create">
+<div class="grid three"><div><label>Code</label><input name="code" placeholder="SUMMER50" required autocapitalize="characters" spellcheck="false" style="text-transform:uppercase"></div><div><label>% off the planning fee</label><input name="percent" type="number" min="1" max="100" value="10" required inputmode="numeric"></div><div><label>Expires <span class="hint" style="display:inline;margin:0">· optional</span></label><input name="expires" type="date"></div></div>
+<div class="grid"><div><label>Maximum uses <span class="hint" style="display:inline;margin:0">· optional, empty means unlimited</span></label><input name="maxUses" type="number" min="1" inputmode="numeric"></div><div><label>Private note <span class="hint" style="display:inline;margin:0">· only you see it</span></label><input name="note" placeholder="Instagram giveaway, October"></div></div>
+<div class="actions"><button class="ok">Create code</button></div></form></div>
+${codes.length ? codes.map(c => { const st = codeStatus(c); return `<div class="card"><p class="meta"><span class="who" style="font-family:var(--serif);font-size:1.3rem;letter-spacing:.04em">${esc(c.code)}</span> <span class="pill ${st === 'active' ? 'live' : ''}">${st}</span><br><b>${c.percent}% off</b> the planning fee · used ${c.uses || 0}${c.maxUses ? ` of ${c.maxUses}` : ''} time${(c.uses || 0) === 1 && !c.maxUses ? '' : 's'}${c.expires ? ` · until ${esc(c.expires)}` : ' · no expiry'}${c.note ? `<br>${esc(c.note)}` : ''}</p><div class="actions"><form method="post"><input type="hidden" name="action" value="code-toggle"><input type="hidden" name="code" value="${esc(c.code)}"><button class="no">${c.active ? 'Pause' : 'Resume'}</button></form><form method="post" onsubmit="return confirm('Delete ${esc(c.code)}? Anyone holding it can no longer use it.')"><input type="hidden" name="action" value="code-delete"><input type="hidden" name="code" value="${esc(c.code)}"><button class="no">Delete</button></form></div></div>`; }).join('') : '<p class="empty">No codes yet.</p>'}</section>
 
 <section>${h2('Ask a client for a review', undefined, 'ask')}
 <div class="card form"><form method="post"><input type="hidden" name="action" value="request">

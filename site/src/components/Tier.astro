@@ -16,7 +16,7 @@ const addonPrice = a => {
   return out;
 };
 ---
-<article class="tier" data-c={TIER_COLORS[ti]} aria-labelledby={`tn-${key}`} data-reveal style={`--d:${ti}`}>
+<article class="tier" id={`tier-${key}`} data-c={TIER_COLORS[ti]} aria-labelledby={`tn-${key}`} data-reveal style={`--d:${ti}`}>
   <div class="tier-head">
     <div>
       <div class="tier-num drift d1" aria-hidden="true">0{ti + 1}</div>

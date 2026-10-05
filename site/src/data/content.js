@@ -57,6 +57,22 @@ const UI = {
   estSend: { en: 'Add this estimate to my enquiry', es: 'Añadir este presupuesto a mi consulta' },
   estAdded: { en: 'Added to your enquiry below.', es: 'Añadido a tu consulta, más abajo.' },
   rushNote: { en: '+30% of the base fee', es: '+30 % sobre la tarifa base' },
+  // Discount codes (worker/discounts.js): a percentage off Maryann's planning fee only, never supplier costs.
+  estDiscount: { en: 'Discount {code} (−{p}%)', es: 'Descuento {code} (−{p} %)' },
+  promoLabel: { en: 'Discount code', es: 'Código de descuento' },
+  promoApply: { en: 'Apply', es: 'Aplicar' },
+  promoRemove: { en: 'Remove', es: 'Quitar' },
+  promoChecking: { en: 'Checking…', es: 'Comprobando…' },
+  promoOk: { en: '{p}% off the planning fee', es: '{p} % de descuento en los honorarios' },
+  promoErr: {
+    invalid: { en: 'That code isn’t valid.', es: 'Ese código no es válido.' },
+    expired: { en: 'That code has expired.', es: 'Ese código ha caducado.' },
+    used: { en: 'That code has already been used up.', es: 'Ese código ya se ha agotado.' },
+    rate: { en: 'Too many tries. Please try again later.', es: 'Demasiados intentos. Prueba más tarde.' },
+    network: { en: 'The code couldn’t be checked right now. Add it to your enquiry and Maryann will confirm it.', es: 'No se ha podido comprobar el código ahora. Añádelo a tu consulta y Maryann lo confirmará.' },
+  },
+  promoNote: { en: 'Codes apply to Maryann’s planning fee only, never to flights, stays, venues or other supplier costs.', es: 'Los códigos se aplican solo a los honorarios de planificación de Maryann, nunca a vuelos, alojamientos, espacios ni otros costes de proveedores.' },
+  estTotalShort: { en: 'Estimated fee', es: 'Honorarios estimados' },
   decrease: { en: 'Remove one', es: 'Quitar uno' },
   increase: { en: 'Add one', es: 'Añadir uno' },
   enqTitle: { en: 'Tell Maryann what you are planning', es: 'Cuenta a Maryann qué estás planeando' },
@@ -167,6 +183,7 @@ const MASS = { en: 'Mass disruption: widespread airline cancellations, strikes o
 /* 14-day cancellation right for distance contracts; the visa terms above follow the same pattern. */
 const CANCEL_14 = { en: 'You have a 14-day right to cancel. If you ask Maryann to begin work during this period and your consultation has already taken place, the 50% upfront payment may be non-refundable, to the extent permitted by applicable law.', es: 'Tienes un derecho de desistimiento de 14 días. Si pides a Maryann empezar el trabajo dentro de ese plazo y la llamada de consulta ya se ha realizado, el 50 % pagado por adelantado puede no ser reembolsable, en la medida en que lo permita la ley aplicable.' };
 const RUSH = { en: 'Rush add-ons are 30% of the base fee only. Other add-ons stay at their normal price and are not increased.', es: 'Los extras urgentes son el 30 % de la tarifa base únicamente. Los demás extras mantienen su precio normal y no se incrementan.' };
+const DISCOUNT = { en: 'Discount codes, when offered, take a percentage off the planning fee only. Flights, stays, venues, transfers and other supplier costs are never discounted. One code per booking.', es: 'Los códigos de descuento, cuando se ofrecen, descuentan un porcentaje solo de los honorarios de planificación. Vuelos, alojamientos, espacios, traslados y otros costes de proveedores nunca tienen descuento. Un código por reserva.' };
 const STATUTORY = { en: 'Nothing in these terms affects your statutory consumer rights.', es: 'Nada de estas condiciones afecta a tus derechos legales como consumidor.' };
 const PLAN_FEES = { en: 'Planning fees cover Maryann’s time and expertise only. Flights, hotels, venues, transfers, activities and government visa fees are paid by you directly to each supplier.', es: 'Los honorarios cubren solo el tiempo y la experiencia de Maryann. Vuelos, hoteles, espacios, traslados, actividades y tasas de visado los pagas tú directamente a cada proveedor.' };
 const NO_COMM = { en: 'No hidden commission is added to anything you pay a supplier. If a supplier offers Maryann a commission, she will tell you.', es: 'No se añade ninguna comisión oculta a lo que pagas a un proveedor. Si un proveedor ofrece una comisión a Maryann, te lo dirá.' };
@@ -181,7 +198,7 @@ const SERVICES = [
     lead: { en: 'Destination weddings, milestone trips and the proposal you have been imagining. Maryann handles the flights, the stays, the timing and everyone arriving where they should be.', es: 'Bodas en destino, viajes para celebrar y la pedida que llevas tiempo imaginando. Maryann se ocupa de los vuelos, el alojamiento, los horarios y de que todo el mundo llegue donde debe.' },
     tiers: [
       {
-        name: 'The Proposal', sub: { en: 'Just the two of you', es: 'Solo vosotros dos' }, price: 450, plus: false,
+        name: 'The Proposal', pick: { en: 'I’m planning a proposal', es: 'Estoy preparando una pedida' }, sub: { en: 'Just the two of you', es: 'Solo vosotros dos' }, price: 450, plus: false,
         best: { en: 'A surprise proposal abroad, planned in private', es: 'Una pedida sorpresa en el extranjero, planeada con discreción' },
         rows: [
           [{ en: 'Consultation call', es: 'Llamada de consulta' }, { en: 'A 60-minute call on your story, style, budget and dates. Everything agreed is confirmed to you in writing.', es: 'Una llamada de 60 minutos sobre vuestra historia, estilo, presupuesto y fechas. Todo lo acordado se confirma por escrito.' }],
@@ -202,7 +219,7 @@ const SERVICES = [
         ],
       },
       {
-        name: 'Guest Travel', sub: { en: 'Your people, handled', es: 'Tus invitados, atendidos' }, price: 950, plus: false,
+        name: 'Guest Travel', pick: { en: 'Our guests are travelling to us', es: 'Nuestros invitados viajan hasta nosotros' }, sub: { en: 'Your people, handled', es: 'Tus invitados, atendidos' }, price: 950, plus: false,
         best: { en: 'Couples and families bringing guests from several cities', es: 'Parejas y familias con invitados que llegan desde varias ciudades' },
         rows: [
           [{ en: 'Everything in The Proposal', es: 'Todo lo de The Proposal' }, { en: 'Consultation, planning and a held reservation where needed, plus flights and stays booked for the couple.', es: 'Consulta, planificación y reserva de mesa o lugar cuando haga falta, además de vuelos y alojamiento reservados para la pareja.' }],
@@ -224,7 +241,7 @@ const SERVICES = [
         ],
       },
       {
-        name: 'The Whole Event', sub: { en: 'Ceremony to honeymoon', es: 'De la ceremonia a la luna de miel' }, price: 2400, plus: true,
+        name: 'The Whole Event', pick: { en: 'We want the whole event handled', es: 'Queremos que se ocupe de todo el evento' }, sub: { en: 'Ceremony to honeymoon', es: 'De la ceremonia a la luna de miel' }, price: 2400, plus: true,
         best: { en: 'Multi-day destination weddings with a honeymoon', es: 'Bodas en destino de varios días, con luna de miel' },
         rows: [
           [{ en: 'Everything in Guest Travel', es: 'Todo lo de Guest Travel' }, { en: 'Full guest travel coordination, cost splitting, confirmations and weekend support.', es: 'Coordinación completa de viajes de invitados, reparto de costes, confirmaciones y apoyo durante el fin de semana.' }],
@@ -258,7 +275,7 @@ const SERVICES = [
         { en: 'The Proposal: 50% to begin and 50% when your plan and proposal-day timeline are delivered.', es: 'The Proposal: 50 % para empezar y 50 % al entregar tu plan y el horario del día de la pedida.' },
         { en: 'Guest Travel: 50% to begin and 50% when the guest itinerary is issued.', es: 'Guest Travel: 50 % para empezar y 50 % al entregar el itinerario de invitados.' },
         { en: 'The Whole Event: 50% to begin and 50% when the work is complete and your final plan is delivered.', es: 'The Whole Event: 50 % para empezar y 50 % cuando el trabajo esté completo y se entregue el plan final.' },
-        PLAN_FEES, NO_COMM, RUSH]],
+        PLAN_FEES, NO_COMM, RUSH, DISCOUNT]],
       [{ en: 'Changes and cancellations', es: 'Cambios y cancelaciones' }, [
         { en: 'You can cancel before the consultation call for a full refund.', es: 'Puedes cancelar antes de la llamada de consulta con reembolso íntegro.' },
         CANCEL_14,
@@ -277,7 +294,7 @@ const SERVICES = [
     lead: { en: 'Say fairytale and most people say Spain. Maryann might say Iceland, and show you why. She researches destinations and venues against the wedding you described, then tells you the truth about each one.', es: 'Dices boda de cuento y casi todos piensan en España. Maryann quizá diga Islandia, y te explique por qué. Investiga destinos y espacios según la boda que le describes y te cuenta la verdad de cada uno.' },
     tiers: [
       {
-        name: 'Destination Match', sub: { en: 'Where, and why there', es: 'Dónde, y por qué allí' }, price: 350, plus: false,
+        name: 'Destination Match', pick: { en: 'We don’t know where yet', es: 'Aún no sabemos dónde' }, sub: { en: 'Where, and why there', es: 'Dónde, y por qué allí' }, price: 350, plus: false,
         best: { en: 'Couples who haven’t chosen a country or region yet', es: 'Parejas que aún no han elegido país ni región' },
         rows: [
           [{ en: 'Consultation call', es: 'Llamada de consulta' }, { en: 'A 60-minute call on your vision, guest numbers, faith or ceremony needs, season and budget, captured as a written brief.', es: 'Una llamada de 60 minutos sobre vuestra idea, invitados, necesidades religiosas o de ceremonia, temporada y presupuesto, recogida en un briefing escrito.' }],
@@ -297,7 +314,7 @@ const SERVICES = [
         note: { en: 'The full €350 is credited against a Venue Shortlist booked within 30 days of the report.', es: 'Los 350 € se descuentan íntegros de un Venue Shortlist contratado en los 30 días siguientes al informe.' },
       },
       {
-        name: 'Venue Shortlist', sub: { en: 'Six to eight real options', es: 'De seis a ocho opciones reales' }, price: 850, plus: false, credit: 350,
+        name: 'Venue Shortlist', pick: { en: 'We know where, not which venue', es: 'Sabemos dónde, no qué espacio' }, sub: { en: 'Six to eight real options', es: 'De seis a ocho opciones reales' }, price: 850, plus: false, credit: 350,
         best: { en: 'Couples with a destination who need real venues compared', es: 'Parejas con destino que necesitan comparar espacios reales' },
         rows: [
           [{ en: 'Destination locked first', es: 'Destino fijado primero' }, { en: 'Built on your Destination Match, or on a destination you have already chosen.', es: 'A partir de vuestro Destination Match o de un destino que ya hayáis elegido.' }],
@@ -317,7 +334,7 @@ const SERVICES = [
         ],
       },
       {
-        name: 'Verified Sourcing', sub: { en: 'Maryann speaks to them directly', es: 'Maryann habla con ellos directamente' }, price: 1950, plus: true,
+        name: 'Verified Sourcing', pick: { en: 'We want venues contacted and checked', es: 'Queremos espacios contactados y comprobados' }, sub: { en: 'Maryann speaks to them directly', es: 'Maryann habla con ellos directamente' }, price: 1950, plus: true,
         best: { en: 'Couples who want certainty before paying a venue deposit', es: 'Parejas que quieren certeza antes de pagar la reserva de un espacio' },
         rows: [
           [{ en: 'Everything in Venue Shortlist', es: 'Todo lo de Venue Shortlist' }, { en: 'The full shortlist with comparison, restrictions, availability and ranking.', es: 'La selección completa con comparación, restricciones, disponibilidad y clasificación.' }],
@@ -351,7 +368,7 @@ const SERVICES = [
         { en: 'Verified Sourcing: 50% to begin and 50% when the work is complete and the final recommendation is delivered.', es: 'Verified Sourcing: 50 % para empezar y 50 % cuando el trabajo esté completo y se entregue la recomendación final.' },
         { en: 'Venue sourcing fees cover research and advice only. Venue deposits and hire fees are paid by you directly to the venue.', es: 'Estos honorarios cubren solo investigación y asesoramiento. Las reservas y el alquiler los pagáis directamente al espacio.' },
         { en: 'No commission is taken from venues without your knowledge. If a venue offers one, Maryann will tell you.', es: 'No se aceptan comisiones de espacios sin que lo sepáis. Si un espacio ofrece una, Maryann os lo dirá.' },
-        RUSH]],
+        RUSH, DISCOUNT]],
       [{ en: 'Good to know', es: 'Conviene saber' }, [
         { en: 'Availability and prices are confirmed at the time of checking. Venues can change them until you sign and pay a deposit.', es: 'La disponibilidad y los precios se confirman en el momento de consultarlos. Los espacios pueden cambiarlos hasta que firméis y paguéis la reserva.' },
         { en: 'Final decisions and contracts are between you and the venue.', es: 'Las decisiones finales y los contratos son entre vosotros y el espacio.' },
@@ -369,7 +386,7 @@ const SERVICES = [
     lead: { en: 'Travelling solo, as a couple, with family or as a group: tell Maryann your dream holiday and your budget. She comes back with real options, with costs compared, distances checked and everything considered.', es: 'Solo, en pareja, en familia o en grupo: cuenta a Maryann tu viaje soñado y tu presupuesto. Vuelve con opciones reales, costes comparados, distancias comprobadas y todo pensado.' },
     tiers: [
       {
-        name: 'Itinerary Only', sub: { en: 'You book it', es: 'Reservas tú' }, price: 120, plus: false,
+        name: 'Itinerary Only', pick: { en: 'I want a plan, I’ll book it myself', es: 'Quiero un plan y reservo yo' }, sub: { en: 'You book it', es: 'Reservas tú' }, price: 120, plus: false,
         best: { en: 'Solo travellers, couples and families who want a researched plan and book it themselves', es: 'Viajeros solos, parejas y familias que quieren un plan bien investigado y reservar por su cuenta' },
         rows: [
           [{ en: 'Consultation call', es: 'Llamada de consulta' }, { en: 'A 30-minute call on your travel style, budget ceiling, dates and must-sees.', es: 'Una llamada de 30 minutos sobre tu forma de viajar, presupuesto máximo, fechas e imprescindibles.' }],
@@ -391,7 +408,7 @@ const SERVICES = [
         ],
       },
       {
-        name: 'Planned & Booked', sub: { en: 'Booked for you', es: 'Reservado por Maryann' }, price: 280, plus: false,
+        name: 'Planned & Booked', pick: { en: 'Plan it and book it for me', es: 'Planifícalo y resérvalo por mí' }, sub: { en: 'Booked for you', es: 'Reservado por Maryann' }, price: 280, plus: false,
         best: { en: 'Individuals, couples and families who want the whole trip handled', es: 'Personas, parejas y familias que quieren olvidarse de todo el viaje' },
         rows: [
           [{ en: 'Everything in Itinerary Only', es: 'Todo lo de Itinerary Only' }, { en: 'Consultation, budget-matched options, flight options, day-by-day itinerary and entry checks.', es: 'Consulta, opciones según presupuesto, opciones de vuelo, itinerario día a día y requisitos de entrada.' }],
@@ -413,7 +430,7 @@ const SERVICES = [
         ],
       },
       {
-        name: 'Group & Occasion', sub: { en: 'Booked for everyone', es: 'Reservado para todos' }, price: 550, plus: true,
+        name: 'Group & Occasion', pick: { en: 'It’s for a group or an occasion', es: 'Es para un grupo o una ocasión' }, sub: { en: 'Booked for everyone', es: 'Reservado para todos' }, price: 550, plus: true,
         best: { en: 'Birthdays, anniversaries, family and friends trips', es: 'Cumpleaños, aniversarios y viajes en familia o con amigos' },
         rows: [
           [{ en: 'Everything in Planned & Booked', es: 'Todo lo de Planned & Booked' }, { en: 'Every booking made for you, a travel pack, on-trip support and cancellation cover.', es: 'Todas las reservas hechas, dossier de viaje, asistencia durante el viaje y cancelaciones cubiertas.' }],
@@ -443,7 +460,7 @@ const SERVICES = [
       [{ en: 'Payment', es: 'Pagos' }, [
         { en: 'Itinerary Only: paid in full to begin.', es: 'Itinerary Only: pago completo para empezar.' },
         { en: 'Planned & Booked and Group & Occasion: 50% to begin and 50% when the work is complete and your plan and bookings are delivered.', es: 'Planned & Booked y Group & Occasion: 50 % para empezar y 50 % cuando el trabajo esté completo y se entreguen el plan y las reservas.' },
-        PLAN_FEES, NO_COMM, RUSH]],
+        PLAN_FEES, NO_COMM, RUSH, DISCOUNT]],
       [{ en: 'Changes and cancellations', es: 'Cambios y cancelaciones' }, [
         { en: 'You can cancel before the consultation call for a full refund.', es: 'Puedes cancelar antes de la llamada de consulta con reembolso íntegro.' },
         CANCEL_14,
