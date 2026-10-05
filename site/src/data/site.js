@@ -141,7 +141,10 @@ export const COPY = {
   // The map opening of the home page (components/MapHero.astro): every page is a place.
   mapHero: {
     alt: { en: 'Map of Europe: each place leads to a part of the site', es: 'Mapa de Europa: cada lugar lleva a una parte de la web' },
-    hint: { en: 'Tap a place to go there', es: 'Toca un lugar para ir' },
+    hint: { en: 'Tap a place to explore', es: 'Toca un lugar para explorar' },
+    tip: { en: 'Tap a place to see what’s there', es: 'Toca un lugar para ver qué hay' },
+    tip2: { en: 'Tap it again to open the page', es: 'Tócalo otra vez para abrir la página' },
+    tipPhone: { en: 'Tap a place on the map', es: 'Toca un lugar del mapa' },
     goShort: { en: 'Go there', es: 'Ir allí' },
     navLabel: { en: 'Places on the map', es: 'Lugares del mapa' },
     labels: { travel: { en: 'Travel', es: 'Viajes' }, venues: { en: 'Venues', es: 'Espacios' }, weddings: { en: 'Weddings', es: 'Bodas' }, destinations: { en: 'Destinations', es: 'Destinos' }, reviews: { en: 'Reviews', es: 'Opiniones' }, about: { en: 'About', es: 'Maryann' } },

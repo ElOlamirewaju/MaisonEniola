@@ -22,9 +22,12 @@ export function mountMapHero() {
   const signal = abort.signal;
   const canvas = root.querySelector('[data-canvas]'), tilt = root.querySelector('[data-tilt]');
   const trail = root.querySelector('[data-trail]'), plane = root.querySelector('[data-plane]');
-  const intro = root.querySelector('[data-intro]');
+  const intro = root.querySelector('[data-intro]'), tip = root.querySelector('[data-tip]');
   root.classList.add('is-live');
-  let current = null, flight = 0;
+  let current = null, flight = 0, touched = false;
+  // The instruction bubble: in once the plane has landed, out at the first tap on a place.
+  const showTip = () => { if (!touched && tip) { tip.hidden = false; } };
+  const hideTip = () => { touched = true; if (!tip || tip.hidden) return; tip.classList.add('is-out'); setTimeout(() => { tip.hidden = true; }, 450); };
 
   // Pin centres in the map's own (untransformed) pixels: offsetLeft/Top ignore the tilt and the entrance zoom.
   const centre = el => [el.offsetLeft, el.offsetTop];
@@ -56,7 +59,7 @@ export function mountMapHero() {
   function select(id) {
     const el = pin(id); if (!el) return;
     const from = planeAt || centre(pin('travel'));
-    current = id; planeAt = centre(el);
+    current = id; planeAt = centre(el); hideTip();
     root.querySelectorAll('[data-wp], [data-chip]').forEach(b => b.classList.toggle('is-on', (b.dataset.wp || b.dataset.chip) === id));
     root.querySelectorAll('[data-wp]').forEach(b => b.setAttribute('aria-current', b.dataset.wp === id ? 'true' : 'false'));
     intro.hidden = true;
@@ -101,9 +104,9 @@ export function mountMapHero() {
   // Arrival: the plane comes in from the Atlantic and lands at Lisbon.
   const arrive = () => {
     const lis = centre(pin('travel')); planeAt = lis;
-    if (reduced()) { place(lis[0], lis[1], 0); plane.classList.add('is-on'); return; }
+    if (reduced()) { place(lis[0], lis[1], 0); plane.classList.add('is-on'); showTip(); return; }
     // From the south-west, so the route never crosses the headline on wide screens.
-    setTimeout(() => { if (!current) fly([lis[0] - Math.min(90, size()[0] * .1), lis[1] + Math.min(170, size()[1] * .2)], lis); }, 1300);
+    setTimeout(() => { if (!current) fly([lis[0] - Math.min(90, size()[0] * .1), lis[1] + Math.min(170, size()[1] * .2)], lis, () => setTimeout(showTip, 250)); }, 1300);
   };
   const img = canvas.querySelector('img');
   if (img && !img.complete) img.addEventListener('load', arrive, { once: true, signal }); else arrive();
