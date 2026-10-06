@@ -501,8 +501,8 @@ const LEGAL = {
   legal: {
     title: { en: 'Legal notice', es: 'Aviso legal' },
     body: {
-      en: '<p>This website is operated by <strong>Maryann</strong>, based in Spain. Business registration details will be added here once registration is complete.</p><dl><dt>Email</dt><dd>maisoneniola@gmail.com</dd><dt>WhatsApp</dt><dd>+34 663 412 843</dd></dl><p>The content of this website is for information. Prices and terms are confirmed in writing for each client before any work begins.</p>',
-      es: '<p>Esta web pertenece a <strong>Maryann</strong>, con base en España. Los datos de registro de la actividad se añadirán aquí cuando se complete el alta.</p><dl><dt>Correo electrónico</dt><dd>maisoneniola@gmail.com</dd><dt>WhatsApp</dt><dd>+34 663 412 843</dd></dl><p>El contenido de esta web es informativo. Los precios y condiciones se confirman por escrito a cada cliente antes de empezar cualquier trabajo.</p>'
+      en: '<p>This website is operated by <strong>Maryann</strong>, based in Spain.</p><dl><dt>Email</dt><dd>maisoneniola@gmail.com</dd><dt>WhatsApp</dt><dd>+34 663 412 843</dd></dl><p>The content of this website is for information. Prices and terms are confirmed in writing for each client before any work begins.</p>',
+      es: '<p>Esta web pertenece a <strong>Maryann</strong>, con base en España.</p><dl><dt>Correo electrónico</dt><dd>maisoneniola@gmail.com</dd><dt>WhatsApp</dt><dd>+34 663 412 843</dd></dl><p>El contenido de esta web es informativo. Los precios y condiciones se confirman por escrito a cada cliente antes de empezar cualquier trabajo.</p>'
     }
   },
   privacy: {
